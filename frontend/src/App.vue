@@ -2,7 +2,7 @@
   <div id="app">
     <h1>App 화면</h1>
     <!-- 비회원일 때 Main 화면 -->
-    <Intro />
+    <Introduction />
 
     <!-- 회원일 때 Main 화면 -->
     <Home/>
@@ -10,14 +10,13 @@
 </template>
 <script>
 import Home from '@/components/Home.vue'
-import Intro from '@/components/Intro.vue'
+import Introduction from '@/components/Introduction.vue'
 
 export default {
   name: 'App',
   components: {
     Home,
-    Intro
-
+    Introduction
   }
 }
 </script>
