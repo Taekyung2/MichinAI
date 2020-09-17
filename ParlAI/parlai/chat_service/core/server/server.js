@@ -39,9 +39,9 @@ nunjucks.configure(task_directory_name, {
 let server;
 if (LOCAL_HTTPS) {
   var options = {
-      ca: fs.readFileSync(HOME + '/.ssl/fullchain.pem'),
-      key: fs.readFileSync(HOME + '/.ssl/privkey.pem'),
-      cert: fs.readFileSync(HOME + '/.ssl/cert.pem'),
+      ca: fs.readFileSync(HOME + '/etc/letsencrypt/live/j3b306.p.ssafy.io/fullchain.pem'),
+      key: fs.readFileSync(HOME + '/etc/letsencrypt/live/j3b306.p.ssafy.io/privkey.pem;'),
+      cert: fs.readFileSync(HOME + '/etc/letsencrypt/ssl-dhparams.pem'),
   };
 
   server = https.createServer(options, app);
@@ -122,7 +122,7 @@ server.listen(PORT, function() {
 // Verify webhook
 app.get('/webhook', async function(req, res) {
   // webhook verification token
-  let VERIFY_TOKEN = 'Messenger4ParlAI';
+  let VERIFY_TOKEN = 'MICHIN_AI_VERIFY_TOKEN';
 
   // Parse the query params
   let mode = req.query['hub.mode'];
