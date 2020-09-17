@@ -16,7 +16,7 @@
 <script>
 import Home from '@/components/Home.vue'
 import Introduction from '@/components/Introduction.vue'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -25,11 +25,7 @@ export default {
   },
   methods:{
     ...mapGetters('Kakao', ['isLoggedIn']),
-    ...mapActions('Kakao', ['init'])
   },
-  created(){
-    this.init()
-  }
 }
 </script>
 <style>

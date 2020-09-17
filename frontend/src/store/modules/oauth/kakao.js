@@ -1,4 +1,4 @@
-
+import router from '@/router'
 const User = {
     userName: '',
     userId: '',
@@ -9,10 +9,9 @@ const Kakao = {
     namespaced: true,
     state: {
         account: User,
-        test : false
     },
     getters: {
-        isLoggedIn: state => !!state.account.accessToken
+        isLoggedIn: state => !!state.account.accessToken,
     },
 
     mutations: {
@@ -63,6 +62,7 @@ const Kakao = {
                 commit('SUCCESS_LOGOUT')
                 localStorage.clear();
             })
+            router.push('/')
         },
 
     },
