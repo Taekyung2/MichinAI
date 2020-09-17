@@ -29,14 +29,14 @@ const router = new VueRouter({
 
 // 페이지 검증
 router.beforeEach((to, from, next) => {
-  // // 로그인이 필요 없는 Page
-  const publicPages = ['/'] // Login 안해도 됨
+  // 로그인이 필요 없는 Page
+  const publicPages = ['/'] 
 
   const authRequired = !publicPages.includes(to.name) // Login 해야 함
   
   const isLoggedIn = !!window.Kakao.Auth.getAccessToken() // Login이 되어 있는지 
 
-  authRequired && isLoggedIn? next() : '/'
+  if(authRequired && isLoggedIn) next() 
   
 })
 
