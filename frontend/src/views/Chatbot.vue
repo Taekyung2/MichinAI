@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='container'>
         <h2>챗봇 화면</h2>
         <ChatList/>
     </div>

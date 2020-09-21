@@ -5,6 +5,11 @@ Vue.use(VueRouter)
 
 const routes = [
     {
+      path: '/conversation',
+      name: 'Conversation',
+      component: () => import('../views/Conversation.vue')
+    },
+    {
       path: '/chatbot',
       name: 'Chatbot',
       component: () => import('../views/Chatbot.vue')
