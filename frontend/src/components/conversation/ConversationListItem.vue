@@ -1,16 +1,16 @@
 <template>
 <div>
   <li>
-    {{wordbook.id}}번째, 단어장 아이템 입니다.
+    {{conversation.id}}번째, 회화 아이템 입니다.
   </li>
 </div>
 </template>
 
 <script>
 export default {
-    name: 'WordbookListItem',
+    name: 'ConversationListItem',
     props: {
-      wordbook: Object,
+      conversation: Object,
     }
 }
 </script>

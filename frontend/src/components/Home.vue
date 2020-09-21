@@ -1,6 +1,6 @@
 <template>
     <div>
-    <v-card>
+    <v-card class="nav">
         <v-app-bar
         color="#6A76AB"
         dark
@@ -48,5 +48,8 @@ export default {
 </script>
 
 <style>
-
+.nav{
+    position: sticky;
+    top: 0;
+}
 </style>
