@@ -23,8 +23,8 @@
         <template v-slot:extension>
             <v-tabs align-with-title>
             <v-tab router-link to='/conversation'>오늘의 회화</v-tab>   
-            <v-tab router-link to='/chatbot'>챗봇</v-tab>
-            <v-tab router-link to='/wordbook'>단어장</v-tab>
+            <v-tab router-link to='/chatbot/list'>챗봇</v-tab>
+            <v-tab router-link to='/wordbook/list'>단어장</v-tab>
             <v-tab router-link to='/score'>내점수</v-tab>
             </v-tabs>
         </template>
