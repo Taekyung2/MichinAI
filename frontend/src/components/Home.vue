@@ -44,6 +44,10 @@ export default {
      methods:{
         ...mapActions('Kakao', ['logout']),
     },
+    created() {
+        this.$router.push({name: 'Conversation'})
+    },
+
 }
 </script>
 

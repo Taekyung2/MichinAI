@@ -1,7 +1,7 @@
 <template>
 <div>
   <li @click="selectedWordbook(wordbook)">
-    {{wordbook.id}}번째, 단어장 아이템 입니다.
+    단어장 이름 : {{wordbook.id}}번째, 단어장 아이템 입니다. 
   </li>
 </div>
 </template>

@@ -4,6 +4,8 @@
       <Word 
         :word="word"
         v-for="word in wordList" :key="word.id"/>
+    
+      <WordCreate/>
       <p @click="back">뒤로가기</p>
   </div>
 </template>
@@ -11,6 +13,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Word from '@/components/wordbook/Word.vue'
+import WordCreate from '@/components/wordbook/WordCreate.vue'
 export default {
     name: 'WordbookDetail',
     data() {
@@ -32,7 +35,8 @@ export default {
       }
     },
     components: {
-      Word
+      Word,
+      WordCreate,
     }
 }
 </script>

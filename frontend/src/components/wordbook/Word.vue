@@ -1,15 +1,18 @@
 <template>
   <div class='word-container'>
       <span>{{ word.id}} {{ word.eng }} | {{ word.kor }} </span>
+      
   </div>
 </template>
 
 <script>
+
 export default {
     name: 'Word',
     props: {
       word: Object,
     },
+
 }
 </script>
 
