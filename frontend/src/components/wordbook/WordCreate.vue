@@ -14,9 +14,8 @@
           <v-card-title class="headline">단어 추가</v-card-title>
           <v-card-text>
             <div>
-            <v-text-field label="단어" :rules="rules" hide-details="auto"></v-text-field>
-            <v-text-field label="뜻" :rules="rules" hide-details="auto"></v-text-field>
-           
+                <v-text-field label="단어" :rules="rules" hide-details="auto"></v-text-field>
+                <v-text-field label="뜻" :rules="rules" hide-details="auto"></v-text-field>
             </div>
           </v-card-text>
 
