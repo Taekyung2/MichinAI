@@ -1,5 +1,5 @@
 Django==2.2.16
 djangorestframework==3.11.1
-mysqlclient==2.0.1
+mysqlclient @ file:///C:/Users/HEEJIN/Downloads/mysqlclient-1.4.6-cp37-cp37m-win32.whl
 pytz==2020.1
 sqlparse==0.3.1

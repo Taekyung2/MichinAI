@@ -5,7 +5,6 @@ from django.conf import settings
 class Wordbook(models.Model):
     name = models.CharField(max_length=100)
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    level = models.IntegerField()
 
 class Words(models.Model):
     wordbook_id = models.ForeignKey(Wordbook, on_delete=models.PROTECT)
@@ -13,6 +12,6 @@ class Words(models.Model):
     kor = models.CharField(max_length=200)
 
 class Default(models.Model):
-    level = models.IntegerField()
+    name = models.CharField(max_length=100)
     eng = models.CharField(max_length=200)
     kor = models.CharField(max_length=200)

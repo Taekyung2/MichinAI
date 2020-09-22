@@ -1,7 +1,13 @@
 from rest_framework import serializers
 from .models import Words, Wordbook
 
-class WordSerializer(serializers.ModelSerializer):
+class WordbookListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wordbook
+        field = ['id', 'name']
+
+class WordbookDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Words
-        field = ['id', 'i']
+        filed = '__all__'
+
