@@ -38,7 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # django-rest-auth
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+
+    # django-allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
 
     'word',
 
@@ -71,6 +82,16 @@ TEMPLATES = [
         },
     },
 ]
+
+# AUTHENTICATION_BACKENDS = [
+#     ...
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     'django.contrib.auth.backends.ModelBackend',
+#
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
+#     ...
+# ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -132,3 +153,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'kakao': {
+        'APP': {
+            'client_id': '10c941be465bfb603fc1f9a9f00d147a',
+            'secret': '483420',
+            'key': ''
+        }
+    }
+}
