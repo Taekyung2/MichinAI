@@ -4,7 +4,7 @@
       <Word 
         :word="word"
         v-for="word in wordList" :key="word.id"/>
-    
+          
       <WordCreate/>
       <p @click="back">뒤로가기</p>
   </div>

@@ -35,7 +35,7 @@
 
 <script>
   export default {
-    name: 'ChatScore',
+    name: 'WordScore',
     data: () => ({
       labels: [
         '12am',
