@@ -1,19 +1,15 @@
 <template>
-    <div>
+    <div class="container">
         <h2>챗봇 화면</h2>
-        <ChatList/>
+        <hr>
+        <router-view/>
     </div>
 </template>
 
 <script>
-import ChatList from '@/components/chatbot/ChatList.vue'
 
 export default {
     name: 'Chatbot',
-    components: {
-        ChatList
-    }
-
 }
 </script>
 

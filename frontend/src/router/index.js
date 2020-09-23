@@ -5,14 +5,45 @@ Vue.use(VueRouter)
 
 const routes = [
     {
+      path: '/conversation',
+      name: 'Conversation',
+      component: () => import('../views/Conversation.vue')
+    },
+    {
       path: '/chatbot',
       name: 'Chatbot',
-      component: () => import('../views/Chatbot.vue')
+      component: () => import('../views/Chatbot.vue'),
+      children: [
+        {
+          path: 'list',
+          name: 'ChatList',
+          component: () => import('@/components/chatbot/ChatList.vue')
+        },
+        {
+          path: 'detail',
+          name: 'ChatDetail',
+          component: () => import('@/components/chatbot/ChatDetail.vue')
+        },
+         
+      ]
     },
     {
       path: '/wordbook',
       name: 'Wordbook',
-      component: () => import('../views/Wordbook.vue')
+      component: () => import('../views/Wordbook.vue'),
+      children: [
+        {
+          path: 'list',
+          name: 'WordbookList',
+          component: () => import('@/components/wordbook/WordbookList.vue')
+        },
+        {
+          path: 'detail',
+          name: 'WordbookDetail',
+          component: () => import('@/components/wordbook/WordbookDetail.vue')
+        },
+      ]
+    
     },
     {
       path: '/score',

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='container'>
         <h2>점수 화면</h2>
     </div>
 </template>
