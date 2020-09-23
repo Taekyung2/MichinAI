@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
 
+    # 'auth',
+    'accounts',
     'word',
 
 ]
@@ -155,6 +157,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 SITE_ID = 1
+
+AUTH_USER_MODEL = 'accounts.User'
 
 SOCIALACCOUNT_PROVIDERS = {
     'kakao': {
