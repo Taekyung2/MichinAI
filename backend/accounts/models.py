@@ -3,6 +3,12 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
+    first_name = None
+    last_name = None
     nickname = models.CharField(max_length=50)
+    botId = models.CharField(max_length=100)
     exp = models.IntegerField(default=1)
+
+    REQUIRED_FIELDS = []
+    # objects = UserManager()
 
