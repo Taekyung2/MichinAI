@@ -2,13 +2,13 @@
 <div>
     <v-card
     class="mx-auto"
-    max-width="344"
+    max-width="33.3%"
     outlined
     @click="selectedWordbook(wordbook)"
   >
     <v-list-item three-line>
       <v-list-item-content>
-        <v-list-item-title class="headline mb-1">{{wordbook.id}}번째, 단어장 이름</v-list-item-title>
+        {{wordbook.name}}
       </v-list-item-content>
     </v-list-item>
 

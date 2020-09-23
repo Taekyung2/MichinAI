@@ -19,8 +19,8 @@ export default {
     data() {
       return {
         wordbookList : [
-            {id:'1'},
-            {id:'2'}
+            {id:'1',name:'workshop -1'},
+            {id:'2',name:'workshop -2'}
         ],
         
       }
