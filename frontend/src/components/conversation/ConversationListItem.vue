@@ -2,7 +2,6 @@
 <div>
   <v-card
     class="conversation-item mx-auto"
-   shaped
   >
     <v-card-title>
       {{conversation.id}}번째 영어 문장입니다.
