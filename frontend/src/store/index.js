@@ -17,6 +17,7 @@ export default new Vuex.Store({
   state: {
     selectedWordbook: null,
     selectedChat: null,
+    selectedQuizAll: false,
   },
   
   // state를 (가공해서) 가져올 함수들
@@ -26,6 +27,10 @@ export default new Vuex.Store({
     },
     chat(state){
       return state.selectedChat
+    },
+    quizAll(state){
+      console.log(state.selectedQuizAll )
+      return state.selectedQuizAll
     }
   },
 
@@ -39,6 +44,10 @@ export default new Vuex.Store({
     SET_SELECTED_CHAT(state, chat){
       console.log(chat.id)
       state.selectedChat = chat
+    },
+    SET_SELECTED_QUIZ_ALL(state){
+      console.log('quiz-all')
+      state.selectedQuizAll = !state.selectedQuizAll
     }
   },
 

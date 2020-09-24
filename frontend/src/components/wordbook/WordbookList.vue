@@ -9,7 +9,7 @@
       </v-row>
     </div>
     <div>
-      <WordbookFAB/>
+      <!-- <WordbookFAB/> -->
       <!-- <WordbookCreate /> -->
     </div>
 
@@ -19,7 +19,7 @@
 <script>
 import WordbookListItem from '@/components/wordbook/WordbookListItem.vue'
 // import WordbookCreate from '@/components/wordbook/WordbookCreate.vue'
-import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
+// import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
 
 export default {
     name: 'WordbookList',
@@ -41,7 +41,7 @@ export default {
     components: {
       WordbookListItem,
       // WordbookCreate,
-      WordbookFAB
+      // WordbookFAB
     }
 
 }

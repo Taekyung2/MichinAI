@@ -43,6 +43,8 @@ export default {
 :root{
   --red : #DC3545;
   --main-color : #7DB3D9;
+  --main-point-color :  #F48705;
+  
   /* --footer-color : #F2CC06; */
   --footer-color : #252525;
   --navigation-color : #7DB3D9;

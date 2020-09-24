@@ -1,24 +1,63 @@
 <template>
   <div class="wordbook-detail">
-      <h3>{{ wordbook.id }}번 단어장 Detail 입니다.</h3>
+      <h3>{{ wordbook.name }} 단어장 Detail 입니다.</h3>
+      <v-btn 
+        rounded
+        color="var(--main-point-color)" 
+        dark
+        @click="quizDialog = true"
+      >
+        Quiz
+      </v-btn>
       <Word 
         :word="word"
         v-for="word in wordList" :key="word.id"/>
           
-      <!-- <WordCreate/> -->
       <p @click="back">뒤로가기</p>
       <div class="wordbookFAB">
         <WordbookFAB/>
       </div>
+
+        <v-dialog
+        v-model="quizDialog"
+        max-width="500px"
+        >
+        <v-card>
+            <v-card-title>
+            퀴즈 선택
+            </v-card-title>
+            <v-card-text>
+            <v-btn
+                color="primary"
+                dark
+                @click="openQuizAll"
+            >
+                ALL
+            </v-btn>
+            <div v-if="quizAll">
+              <WordQuizAll/>
+            </div>
+
+            <v-btn
+                color="primary"
+                dark
+                @click="quizDialog = !quizDialog"
+            >
+                Random
+            </v-btn>
+          
+            </v-card-text>
+           
+        </v-card>
+        </v-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import Word from '@/components/wordbook/Word.vue'
-// import WordCreate from '@/components/wordbook/WordCreate.vue'
 import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
-
+import WordQuizAll from '@/components/wordbook/WordQuizAll.vue'
 export default {
     name: 'WordbookDetail',
     data() {
@@ -33,22 +72,36 @@ export default {
             {id:'7', eng: 'affair', kor: '사건, 일'},
             {id:'8', eng: 'comfort', kor: '안락, 위안'},
         ],
+        quizDialog: false,
+        selectAll: false,
+        selectRandom: false,
       }
     },
+
     computed: {
       ...mapGetters([
         'wordbook',
-      ])
+        'quizAll'
+      ]),
+
     },
     methods: {
+      ...mapMutations([
+        'SET_SELECTED_QUIZ_ALL',
+      ]),
       back(){
         this.$router.push({name:'WordbookList'})
+      },
+      openQuizAll(){
+        this.quizDialog = !this.quizDialog
+        this.SET_SELECTED_QUIZ_ALL()
+        console.log(this.quizAll)
       }
     },
     components: {
       Word,
-      // WordCreate,
-      WordbookFAB
+      WordbookFAB,
+      WordQuizAll
     }
 }
 </script>
