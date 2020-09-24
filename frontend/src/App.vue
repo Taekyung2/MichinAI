@@ -40,6 +40,19 @@ export default {
 }
 </script>
 <style>
+:root{
+  --red : #DC3545;
+  --main-color : #7DB3D9;
+  /* --footer-color : #F2CC06; */
+  --footer-color : #252525;
+  --navigation-color : #7DB3D9;
+  --font-base-color : #252525;
+  --font-soft-color : #a6a6a6;
+  --font-point-color : #F48705;
+  --hover-background-color : #f2f2f2;
+  --border-base-color : #a6a6a6;
+}
+
 #app{
   display: flex;
   flex-direction: column;
