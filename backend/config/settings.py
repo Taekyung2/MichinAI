@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'conversation.apps.ConversationConfig',
+    'kakaochat.apps.KakaochatConfig'
 ]
 
 MIDDLEWARE = [
