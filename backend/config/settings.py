@@ -56,7 +56,9 @@ INSTALLED_APPS = [
     'word',
 
     'conversation.apps.ConversationConfig',
-    'kakaochat.apps.KakaochatConfig'
+    'kakaochat.apps.KakaochatConfig',
+    
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -67,6 +69,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -103,11 +107,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+DATABASE_ROUTERS = [ 'word.dbrouter.MultiDBRouter', ]
+
+
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'michin',
         'USER': 'root',
@@ -115,8 +121,17 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4'},
+    },
+    'mongo': {
+        'ENGINE': 'djongo',
+        'NAME': 'michin',
+        'USER' : 'root',
+        'PASSWORD' : 'PIis3.@neFour!',
+        'HOST': '127.0.0.1',
+        'PORT': '27017',
     }
 }
+
 
 
 # Password validation
