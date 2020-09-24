@@ -2,8 +2,11 @@
   <div class='word-container'>
     <div class="my-2">
     <div class="word">
-    <span class="word-eng"> {{ word.eng }} </span> 
-    <span class="word-kor" v-if="isShowKor"> {{ word.kor }} </span>
+    <span :class="isShowEng? 'word-show': 'word-noshow'" > {{ word.eng }} </span> 
+    
+    <v-scroll-y-transition>
+    <span :class="isShowKor? 'word-show': 'word-noshow'" class ="word-kor"> {{ word.kor }} </span>
+    </v-scroll-y-transition>
     </div>
     
     <!-- <v-btn color="success" fab x-small dark >
@@ -23,7 +26,8 @@ export default {
     name: 'Word',
     props: {
       word: Object,
-      isShowKor: Boolean
+      isShowKor: Boolean,
+      isShowEng: Boolean
     },
 }
 </script>
@@ -42,6 +46,15 @@ export default {
   align-items: center;
 }
 .word-kor{
-  font-size: 16px;
+  font-size: 14px;
+  color: var(--font-base-color);
+}
+.word-show{
+  color: var(--font-base-color);
+  transition-duration: 1s;
+}
+.word-noshow{
+  color: white;
+  transition-duration: 0.3s;
 }
 </style>

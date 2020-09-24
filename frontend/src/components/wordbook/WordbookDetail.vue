@@ -11,15 +11,22 @@
         Quiz
       </v-btn>
       <div>
-      <span :class="isShowKor?switchKor[1]:switchKor[0]"> 뜻보기</span>
-       <v-switch 
-       class="switch-kor"
-        color="var(--main-color)" 
-        v-model="isShowKor"></v-switch>
+        <span :class="isShowEng?switchWord[1]:switchWord[0]"> 단어</span>
+        <v-switch 
+        class="switch-word"
+          color="var(--main-color)" 
+          v-model="isShowEng"></v-switch>
+
+        <span :class="isShowKor?switchWord[1]:switchWord[0]"> 뜻</span>
+        <v-switch 
+        class="switch-word"
+          color="var(--main-color)" 
+          v-model="isShowKor"></v-switch>
       </div>
       </div>
       <Word 
         :word="word"
+        :isShowEng="isShowEng"
         :isShowKor="isShowKor"
         v-for="word in wordList" :key="word.id"/>
           
@@ -86,7 +93,8 @@ export default {
         selectAll: false,
         selectRandom: false,
         isShowKor: true,
-        switchKor: ['switch-kor-before', 'switch-kor-after' ]
+        isShowEng: true,
+        switchWord: ['switch-kor-before', 'switch-kor-after' ]
       }
     },
 
@@ -125,7 +133,7 @@ export default {
   margin-right: 60px;
   margin-top: auto;
 }
-.switch-kor{
+.switch-word{
   display: inline-block;
 }
 .switch-kor-before{
