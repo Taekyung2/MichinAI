@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import login
@@ -59,7 +59,7 @@ def kakao_callback(req):
         profile_img = profile.get("thumnail_img_url")
 
         try:
-            user_in_db = models.User.objects.get(username=user_id)
+            user_in_db = models.User.objects.get_object_or_404(username=user_id)
             if user_in_db:
                 login(req, user_in_db, backend="django.contrib.auth.backends.ModelBackend")
                 user = models.User.objects.get(username=user_id)
