@@ -12,6 +12,7 @@ import requests
 import json
 
 from django.conf import settings
+from accounts.models import User
 
 BASE_URL = settings.BASE_URL
 CHAT_URL = settings.CHAT_URL
@@ -86,9 +87,11 @@ def connect_check(request):
         return JsonResponse(obj_to_dict(res.toResponse()))
 
 
-
 def connection_check(userBotId):
     # 희진이 호출!
+    botInDb = User.object.get(botKey=userBotId)
+    if botInDb:
+        return True
     return False
 
 
