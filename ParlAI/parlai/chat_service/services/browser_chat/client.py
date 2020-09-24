@@ -11,7 +11,6 @@ from parlai.core.params import ParlaiParser
 from parlai.scripts.interactive_web import WEB_HTML, STYLE_SHEET, FONT_AWESOME
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-
 SHARED = {}
 
 
@@ -29,6 +28,8 @@ class BrowserHandler(BaseHTTPRequestHandler):
     """
 
     def _interactive_running(self, reply_text):
+        # reply_text == request text
+
         data = {}
         data['text'] = reply_text.decode('utf-8')
         if data['text'] == "[DONE]":
@@ -36,6 +37,8 @@ class BrowserHandler(BaseHTTPRequestHandler):
             SHARED['ws'].close()
             SHARED['wb'].shutdown()
         json_data = json.dumps(data)
+
+        # 이 웹소켓으로 보내서 응답 메세지를 만들어 가져오나본데 // WebSocketApp
         SHARED['ws'].send(json_data)
 
     def do_HEAD(self):
@@ -50,20 +53,12 @@ class BrowserHandler(BaseHTTPRequestHandler):
         """
         Handle POST request, especially replying to a chat message.
         """
-        if self.path == '/interact':
-            content_length = int(self.headers['Content-Length'])
-            body = self.rfile.read(content_length)
-            self._interactive_running(body)
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            model_response = {'id': 'Model', 'episode_done': False}
-            message_available.wait()
-            model_response['text'] = new_message
-            message_available.clear()
-            json_str = json.dumps(model_response)
-            self.wfile.write(bytes(json_str, 'utf-8'))
-        elif self.path == '/reset':
+
+        if self.path == '/bot/start':
+            self.interact('begin')
+        elif self.path == '/bot/interact':
+            self.interact()
+        elif self.path == '/bot/reset':
             self._interactive_running(b"[RESET]")
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -98,6 +93,34 @@ class BrowserHandler(BaseHTTPRequestHandler):
         response = self._handle_http(opts['status'], self.path)
         self.wfile.write(response)
 
+    def interact(self, *options):
+        content_length = int(self.headers['Content-Length'])
+
+        # request text
+        body = self.rfile.read(content_length)
+
+        # send to web socket
+        self._interactive_running(body)
+
+        if len(options) != 0 and options[0] == 'begin':
+            message_available.wait()
+            message_available.clear()
+            self._interactive_running(b'begin')
+
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
+        model_response = {'id': 'Model', 'episode_done': False}
+
+        # generate new message
+        message_available.wait()
+        model_response['text'] = new_message
+        message_available.clear()
+        #
+
+        json_str = json.dumps(model_response)
+        self.wfile.write(bytes(json_str, 'utf-8'))
+
 
 def on_message(ws, message):
     """
@@ -106,6 +129,9 @@ def on_message(ws, message):
     :param ws: a WebSocketApp
     :param message: json with 'text' field to be printed
     """
+    # print(message)
+    # 이미 response가 만들어졌음
+
     incoming_message = json.loads(message)
     global new_message
     new_message = incoming_message['text']
@@ -173,7 +199,8 @@ def setup_args():
     )
     parser_grp.add_argument(
         '--serving_port',
-        default=8080,
+        # 통신 포트 변경
+        default=8999,
         type=int,
         help='Port used to configure the server',
     )
@@ -183,6 +210,7 @@ def setup_args():
 
 if __name__ == "__main__":
     opt = setup_args()
+    # 모델 포트
     port = opt.get('port', 34596)
     print("Connecting to port: ", port)
     ws = websocket.WebSocketApp(

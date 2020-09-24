@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'accounts',
     'word',
 
+    'conversation.apps.ConversationConfig',
+    'kakaochat.apps.KakaochatConfig'
 ]
 
 MIDDLEWARE = [
@@ -147,13 +149,14 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 SITE_ID = 1
@@ -169,3 +172,9 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+# 사용법
+# from django.conf import settings
+# BASE_URL = settings.BASE_URL
+BASE_URL = "https://cae9b60e616d.ngrok.io"
+CHAT_URL = BASE_URL + ":8999"
