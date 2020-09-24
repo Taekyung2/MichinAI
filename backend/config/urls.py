@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('word/', include('word.urls')),
     path('conversation/', include('conversation.urls')),
-    path('kako/', include('kakaochat.urls')),
+    path('kakao/', include('kakaochat.urls')),
 ]
