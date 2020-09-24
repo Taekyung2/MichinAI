@@ -6,9 +6,10 @@
         flat
         tile
         width="100%"
-        class="red lighten-1 text-center"
+        color="var(--footer-color) "
+        class="lighten-1 text-center"
       >
-        <v-card-text>
+        <!-- <v-card-text>
           <v-btn
             v-for="icon in icons"
             :key="icon"
@@ -19,7 +20,7 @@
           </v-btn>
         </v-card-text>
 
-        <v-divider></v-divider>
+        <v-divider></v-divider> -->
 
         <v-card-text class="white--text">
           {{ new Date().getFullYear() }} — <strong>Vuetify</strong>

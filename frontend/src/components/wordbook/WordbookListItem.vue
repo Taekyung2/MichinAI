@@ -1,8 +1,21 @@
 <template>
-<div>
-  <li @click="selectedWordbook(wordbook)">
-    단어장 이름 : {{wordbook.id}}번째, 단어장 아이템 입니다. 
-  </li>
+<div class="wordbook-list">
+    <v-card 
+    outlined
+    @click="selectedWordbook(wordbook)"
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+        <div class="wordbook-content">
+            <span class="wordbook-name">{{wordbook.name}}</span> 
+            <span class="wordbook-total">{{wordbook.total}}</span>
+        </div>
+        
+      </v-list-item-content>
+    </v-list-item>
+
+  </v-card>
+
 </div>
 </template>
 
@@ -20,5 +33,32 @@ export default {
 </script>
 
 <style>
+
+.wordbook-list{
+  flex: 1;
+  background: white;
+  margin : 10px 5px;
+  flex-basis: 40%;
+
+}
+
+.wordbook-list :hover{
+  background: var(--hover-background-color);
+}
+
+.wordbook-content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordbook-name{
+  font-size: 20px;
+  color: var(--font-base-color);
+}
+.wordbook-total{
+  float: right;
+  color: var(--font-soft-color);
+}
 
 </style>

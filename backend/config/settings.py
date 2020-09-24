@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'accounts',
     'word',
 
+    'conversation.apps.ConversationConfig',
+    'kakaochat.apps.KakaochatConfig'
 ]
 
 MIDDLEWARE = [
@@ -154,6 +156,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 SITE_ID = 1

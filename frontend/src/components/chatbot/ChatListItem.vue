@@ -1,7 +1,17 @@
 <template>
-<li @click="selectedChat(chat)">
-  {{chat.id}}번째, 챗봇 채팅 아이템 입니다.
-</li>
+    <v-card
+    class="mx-auto"
+    max-width="344"
+    outlined
+   @click="selectedChat(chat)"
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+        <v-list-item-title class="headline mb-1">{{chat.id}}번째, 챗봇 채팅</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+
+  </v-card>
 </template>
 
 <script>
