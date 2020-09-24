@@ -1,6 +1,7 @@
 <template>
   <div class="wordbook-detail">
       <h3>{{ wordbook.name }} 단어장 Detail 입니다.</h3>
+      <div align="right">
       <v-btn 
         rounded
         color="var(--main-point-color)" 
@@ -9,8 +10,17 @@
       >
         Quiz
       </v-btn>
+      <div>
+      <span :class="isShowKor?switchKor[1]:switchKor[0]"> 뜻보기</span>
+       <v-switch 
+       class="switch-kor"
+        color="var(--main-color)" 
+        v-model="isShowKor"></v-switch>
+      </div>
+      </div>
       <Word 
         :word="word"
+        :isShowKor="isShowKor"
         v-for="word in wordList" :key="word.id"/>
           
       <p @click="back">뒤로가기</p>
@@ -75,6 +85,8 @@ export default {
         quizDialog: false,
         selectAll: false,
         selectRandom: false,
+        isShowKor: true,
+        switchKor: ['switch-kor-before', 'switch-kor-after' ]
       }
     },
 
@@ -112,5 +124,14 @@ export default {
   float: bottom;
   margin-right: 60px;
   margin-top: auto;
+}
+.switch-kor{
+  display: inline-block;
+}
+.switch-kor-before{
+color: var(--font-soft-color);
+}
+.switch-kor-after{
+color: var(--main-color);
 }
 </style>

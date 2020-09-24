@@ -3,7 +3,7 @@
     <div class="my-2">
     <div class="word">
     <span class="word-eng"> {{ word.eng }} </span> 
-    <span class="word-kor"> {{ word.kor }} </span>
+    <span class="word-kor" v-if="isShowKor"> {{ word.kor }} </span>
     </div>
     
     <!-- <v-btn color="success" fab x-small dark >
@@ -23,6 +23,7 @@ export default {
     name: 'Word',
     props: {
       word: Object,
+      isShowKor: Boolean
     },
 }
 </script>
