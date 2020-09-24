@@ -172,3 +172,9 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+# 사용법
+# from django.conf import settings
+# BASE_URL = settings.BASE_URL
+BASE_URL = "https://cae9b60e616d.ngrok.io"
+CHAT_URL = BASE_URL + ":8999"
