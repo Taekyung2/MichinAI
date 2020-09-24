@@ -7,9 +7,8 @@ class User(AbstractUser):
     last_name = None
     email = models.EmailField(null=True)
     nickname = models.CharField(max_length=50)
-    botKey = models.CharField(max_length=100)
+    botKey = models.CharField(max_length=100, null=True)
     exp = models.IntegerField(default=1)
 
     REQUIRED_FIELDS = []
 
-    objects = UserManager()

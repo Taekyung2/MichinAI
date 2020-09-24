@@ -9,7 +9,6 @@ from .serializers import UserSerializer
 
 import urllib
 
-# Create your views here.
 REST_API_KEY = "10c941be465bfb603fc1f9a9f00d147a"
 MICHIN_DOMAIN = "http://127.0.0.1:8000"
 
@@ -25,7 +24,6 @@ def kakao_login(request):
 
 @api_view(['GET'])
 def kakao_callback(req):
-    print('*******In Callback********')
     try:
         redirect_uri = MICHIN_DOMAIN + "/account/login/kakao/callback/"
         user_code = req.GET.get("code")
@@ -59,13 +57,12 @@ def kakao_callback(req):
         profile = kakao_account.get("profile")
         nickname = profile.get("nickname")
         profile_img = profile.get("thumnail_img_url")
-        print('img', profile_img)
 
         try:
             user_in_db = models.User.objects.get(username=user_id)
             if user_in_db:
                 login(req, user_in_db, backend="django.contrib.auth.backends.ModelBackend")
-                user = models.User.object.filter(username=user_id)
+                user = models.User.objects.get(username=user_id)
                 serializer = UserSerializer(user)
                 return Response(serializer.data)
 
@@ -84,7 +81,7 @@ def kakao_callback(req):
                 backend="django.contrib.auth.backends.ModelBackend"
             )
 
-            user = models.User.object.filter(username=user_id)
+            user = models.User.objects.get(username=user_id)
             serializer = UserSerializer(user)
             return Response(serializer.data)
 
