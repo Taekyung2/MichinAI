@@ -21,6 +21,7 @@ export default new Vuex.Store({
     isSelectedQuiz: false,
     isSelectedQuizAll: false,
     isSelectedQuizRandom: false,
+    userBotKey: '',
   },
   
   // state를 (가공해서) 가져올 함수들
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     isSelectedQuizAll(state){
       return state.isSelectedQuizAll
     },
+    userBotKey(state){
+      return state.userBotKey
+    }
   },
 
   // state를 변경하는 함수 (commit을 통해 실행)
@@ -54,17 +58,18 @@ export default new Vuex.Store({
     SET_SELECTED_QUIZ_ALL(state){
       state.isSelectedQuizAll = !state.isSelectedQuizAll
     },
+    SET_USERBOT_KEY(state, botKey){
+      state.userBotKey = botKey
+    },
   },
 
   // 범용적인 함수들 (dispatch를 통해 실행)
   actions: {
     selectedWordbook({commit}, wordbook){
-      console.log('action - wordbook')
       commit('SET_SELECTED_WORDBOOK', wordbook)
       router.push({name:'WordbookDetail'})
     },
     selectedChat({commit}, chat){
-      console.log('action - chat')
       commit('SET_SELECTED_CHAT', chat)
       router.push({name: 'ChatDetail'})
     }

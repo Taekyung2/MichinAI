@@ -4,6 +4,7 @@
       <div class="main-container">
         <!-- 비회원일 때 Main 화면 -->
         <div v-if="!isLoggedIn()">
+
           <Introduction />
         </div>
         
@@ -37,6 +38,7 @@ export default {
   methods:{
     ...mapGetters('Kakao', ['isLoggedIn']),
   },
+  
 }
 </script>
 <style>
