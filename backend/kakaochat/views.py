@@ -1,4 +1,3 @@
-from bson import json_util
 from django.shortcuts import render
 from django.http.response import JsonResponse
 from requests import Response
