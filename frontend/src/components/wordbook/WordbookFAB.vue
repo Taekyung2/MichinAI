@@ -22,7 +22,7 @@
         small
         color="green"
       >
-        <v-icon>mdi-pencil</v-icon>
+      <v-icon>mdi-pencil</v-icon>
       </v-btn>
       <v-btn
         fab

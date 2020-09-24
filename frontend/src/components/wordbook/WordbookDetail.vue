@@ -1,28 +1,33 @@
 <template>
-  <div class="wordbook-detail">
-      <h3>{{ wordbook.name }} 단어장 Detail 입니다.</h3>
-      <div align="right">
-      <v-btn 
-        rounded
-        color="var(--main-point-color)" 
-        dark
-        @click="quizDialog = true"
-      >
-        Quiz
-      </v-btn>
+  <div class="wordbook-detail" align="center">
+      <h2>{{ wordbook.name }}</h2> 
+      <span class="wordList-lenght">단어({{ wordList.length }})</span>
       <div>
-        <span :class="isShowEng?switchWord[1]:switchWord[0]"> 단어</span>
-        <v-switch 
-        class="switch-word"
-          color="var(--main-color)" 
-          v-model="isShowEng"></v-switch>
+        <div class="switch-container">
+          <span class="quiz-container">
+            <v-btn 
+              rounded
+              color="var(--main-point-color)" 
+              dark
+              @click="SET_SELECTED_QUIZ"
+            > 
+              Quiz
+            </v-btn>
+          </span>
+          <span :class="isShowEng?switchWord[1]:switchWord[0]"> 단어</span>
+          <v-switch 
+            class="switch-word"
+            color="var(--main-color)" 
+            v-model="isShowEng">
+          </v-switch>
 
-        <span :class="isShowKor?switchWord[1]:switchWord[0]"> 뜻</span>
-        <v-switch 
-        class="switch-word"
-          color="var(--main-color)" 
-          v-model="isShowKor"></v-switch>
-      </div>
+          <span :class="isShowKor?switchWord[1]:switchWord[0]"> 뜻</span>
+          <v-switch 
+            class="switch-word"
+            color="var(--main-color)" 
+            v-model="isShowKor">
+          </v-switch>
+        </div>
       </div>
       <Word 
         :word="word"
@@ -34,39 +39,9 @@
       <div class="wordbookFAB">
         <WordbookFAB/>
       </div>
-
-        <v-dialog
-        v-model="quizDialog"
-        max-width="500px"
-        >
-        <v-card>
-            <v-card-title>
-            퀴즈 선택
-            </v-card-title>
-            <v-card-text>
-            <v-btn
-                color="primary"
-                dark
-                @click="openQuizAll"
-            >
-                ALL
-            </v-btn>
-            <div v-if="quizAll">
-              <WordQuizAll/>
-            </div>
-
-            <v-btn
-                color="primary"
-                dark
-                @click="quizDialog = !quizDialog"
-            >
-                Random
-            </v-btn>
-          
-            </v-card-text>
-           
-        </v-card>
-        </v-dialog>
+      <div v-if="isSelectedQuiz">
+        <WordQuiz :wordList="wordList"/>
+      </div>
   </div>
 </template>
 
@@ -74,7 +49,8 @@
 import { mapGetters, mapMutations } from 'vuex'
 import Word from '@/components/wordbook/Word.vue'
 import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
-import WordQuizAll from '@/components/wordbook/WordQuizAll.vue'
+import WordQuiz from '@/components/wordbook/WordQuiz.vue'
+
 export default {
     name: 'WordbookDetail',
     data() {
@@ -101,27 +77,22 @@ export default {
     computed: {
       ...mapGetters([
         'wordbook',
-        'quizAll'
+        'isSelectedQuiz'
       ]),
 
     },
     methods: {
       ...mapMutations([
-        'SET_SELECTED_QUIZ_ALL',
+        'SET_SELECTED_QUIZ',
       ]),
       back(){
         this.$router.push({name:'WordbookList'})
-      },
-      openQuizAll(){
-        this.quizDialog = !this.quizDialog
-        this.SET_SELECTED_QUIZ_ALL()
-        console.log(this.quizAll)
       }
     },
     components: {
       Word,
       WordbookFAB,
-      WordQuizAll
+      WordQuiz
     }
 }
 </script>
@@ -142,4 +113,17 @@ color: var(--font-soft-color);
 .switch-kor-after{
 color: var(--main-color);
 }
+
+.switch-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.quiz-container{
+  margin-right: auto;
+}
+.wordList-lenght{
+  color: var(--font-soft-color);
+}
+
 </style>

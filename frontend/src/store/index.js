@@ -17,7 +17,10 @@ export default new Vuex.Store({
   state: {
     selectedWordbook: null,
     selectedChat: null,
-    selectedQuizAll: false,
+
+    isSelectedQuiz: false,
+    isSelectedQuizAll: false,
+    isSelectedQuizRandom: false,
   },
   
   // state를 (가공해서) 가져올 함수들
@@ -28,27 +31,29 @@ export default new Vuex.Store({
     chat(state){
       return state.selectedChat
     },
-    quizAll(state){
-      console.log(state.selectedQuizAll )
-      return state.selectedQuizAll
-    }
+    isSelectedQuiz(state){
+      return state.isSelectedQuiz
+    },
+    isSelectedQuizAll(state){
+      return state.isSelectedQuizAll
+    },
   },
 
   // state를 변경하는 함수 (commit을 통해 실행)
   // 상수 이름으로 작성 - 중요함을 나타냄
   mutations: {
     SET_SELECTED_WORDBOOK(state, wordbook){
-      console.log(wordbook.id)
       state.selectedWordbook = wordbook
     },
     SET_SELECTED_CHAT(state, chat){
-      console.log(chat.id)
       state.selectedChat = chat
     },
+    SET_SELECTED_QUIZ(state){
+      state.isSelectedQuiz = !state.isSelectedQuiz
+    },
     SET_SELECTED_QUIZ_ALL(state){
-      console.log('quiz-all')
-      state.selectedQuizAll = !state.selectedQuizAll
-    }
+      state.isSelectedQuizAll = !state.isSelectedQuizAll
+    },
   },
 
   // 범용적인 함수들 (dispatch를 통해 실행)
