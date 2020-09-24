@@ -15,16 +15,21 @@ from django.conf import settings
 from accounts.models import User
 
 BASE_URL = settings.BASE_URL
-CHAT_URL = settings.CHAT_URL
+# CHAT_URL = settings.CHAT_URL
+CHAT_URL = "http://j3b306.p.ssafy.io/test"
 
 
-@api_view(['POST','GET'])
+@api_view(['POST', 'GET'])
 def chat_start(request):
     req = JSONParser().parse(request)
     if connection_check(req['userRequest']['user']['id']):
-        res = requests.post(CHAT_URL + "/bot/start", "")
-        print(res)
-        pass
+        res = requests.post(CHAT_URL + "/bot/start", "begin")
+        res = res.json()
+
+        resTextTemplate = SkillTemplate()
+        resTextTemplate.addSimpleText(SimpleText(res['text']))
+
+        return JsonResponse(obj_to_dict(resTextTemplate))
     else:
         res = ConnectBlock(req['userRequest']['user']['id'])
         return JsonResponse(obj_to_dict(res))
@@ -33,8 +38,8 @@ def chat_start(request):
 @api_view(['POST'])
 def chat(request):
     req = JSONParser().parse(request)
-    if len(req['contexts']) == 0 or len(req['contexts'][0]['params'])==0:
-        res =PollBackCarousel()
+    if len(req['contexts']) == 0 or len(req['contexts'][0]['params']) == 0:
+        res = PollBackCarousel()
         return JsonResponse(obj_to_dict(res))
     else:
         contexts = req['contexts'][0]['name']
@@ -42,12 +47,17 @@ def chat(request):
         if contexts == 'chat_state':
             utterance = req['userRequest']['utterance']
             res = requests.post(CHAT_URL + "/bot/interact", utterance)
-            print(res)
+            res = res.json()
+
+            resTextTemplate = SkillTemplate()
+            resTextTemplate.addSimpleText(SimpleText(res['text']))
+
+            return JsonResponse(obj_to_dict(resTextTemplate))
 
     res = SkillTemplate()
-    res.addSimpleImage(SimpleImage("https://i.pinimg.com/originals/d9/82/f4/d982f4ec7d06f6910539472634e1f9b1.png","이미지 실패"))
+    res.addSimpleImage(
+        SimpleImage("https://i.pinimg.com/originals/d9/82/f4/d982f4ec7d06f6910539472634e1f9b1.png", "이미지 실패"))
     return JsonResponse(obj_to_dict(res))
-
 
 
 @api_view(['POST'])
@@ -68,6 +78,7 @@ def wordbook_list(request):
     else:
         return JsonResponse(SimpleText("연동이완료되지 않았습니다! 연동을 진행해주세요"))
 
+
 @api_view(['POST'])
 def word_list(request):
     req = JSONParser().parse(request)
@@ -75,6 +86,7 @@ def word_list(request):
         pass
     else:
         return JsonResponse(SimpleText("연동이완료되지 않았습니다! 연동을 진행해주세요"))
+
 
 @api_view(['POST'])
 def connect_check(request):
@@ -93,6 +105,3 @@ def connection_check(userBotId):
     if botInDb:
         return True
     return False
-
-
-
