@@ -5,8 +5,9 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     first_name = None
     last_name = None
+    email = models.EmailField(null=True)
     nickname = models.CharField(max_length=50)
-    botId = models.CharField(max_length=100)
+    botKey = models.CharField(max_length=100)
     exp = models.IntegerField(default=1)
 
     REQUIRED_FIELDS = []
