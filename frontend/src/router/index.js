@@ -68,7 +68,7 @@ router.beforeEach((to, from, next) => {
   // 로그인이 필요 없는 Page
   const publicPages = ['/']
 
-  console.log('key : ' + to.query.userBotKey)
+  // console.log('key : ' + to.query.userBotKey)
   if(to.query.userBotKey)
     localStorage.setItem('userBotKey', to.query.userBotKey)
 

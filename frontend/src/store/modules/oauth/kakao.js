@@ -28,11 +28,11 @@ const Kakao = {
             // window.Kakao.init(process.env.VUE_APP_KAKAO_API_KEY)
         },
         getAuthUserInfo({ commit },authObj){
-            console.log(authObj)
+            // console.log(authObj)
             window.Kakao.API.request({
                 url:'/v2/user/me',
                 success: res => {
-                    console.log(res)
+                    // console.log(res)
                     const kakao = res.kakao_account
                     const authUser = {
                         userName: kakao.profile.nickname,
@@ -51,6 +51,7 @@ const Kakao = {
             window.Kakao.Auth.loginForm({
                 scope : 'account_email, profile',
                 success: res => dispatch('getAuthUserInfo',res),
+                // success: res => console.log(res),
                 fail: error => console.log(error)
             })
         },
