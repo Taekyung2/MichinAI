@@ -47,9 +47,9 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import Word from '@/components/wordbook/Word.vue'
+import Word from '@/components/wordbook/word/Word.vue'
 import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
-import WordQuiz from '@/components/wordbook/WordQuiz.vue'
+import WordQuiz from '@/components/wordbook/quiz/WordQuiz.vue'
 
 export default {
     name: 'WordbookDetail',

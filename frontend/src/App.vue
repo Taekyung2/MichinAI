@@ -3,8 +3,7 @@
     <div id="app">
       <div class="main-container">
         <!-- 비회원일 때 Main 화면 -->
-        <div v-if="!isLoggedIn()">
-
+        <div v-if="!isLoggedIn || isMobileLogin">
           <Introduction />
         </div>
         
@@ -27,7 +26,7 @@ import Home from '@/components/Home.vue'
 import Introduction from '@/components/Introduction.vue'
 import Footer from '@/components/Footer.vue'
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -35,10 +34,19 @@ export default {
     Introduction,
     Footer,
   },
-  methods:{
-    ...mapGetters('Kakao', ['isLoggedIn']),
+  computed :{
+    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin']),
   },
-  
+  methods: {
+    ...mapMutations('Kakao', ['SET_MOBILE_LOGIN'])
+  },
+  updated(){
+    this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
+  },
+  created(){
+    this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
+  }
+
 }
 </script>
 <style>

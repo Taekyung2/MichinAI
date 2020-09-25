@@ -5,9 +5,9 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-      path: '/connect',
+      path: '/connect:userBotKey',
       name: 'Login',
-      component: () => import('../views/Login.vue')
+      component: () => import('@/components/Introduction.vue')
     },
     {
       path: '/conversation',
@@ -68,10 +68,9 @@ router.beforeEach((to, from, next) => {
   // 로그인이 필요 없는 Page
   const publicPages = ['/']
 
-  // console.log('key : ' + to.query.userBotKey)
-  if(to.query.userBotKey)
+  if(to.query.userBotKey){
     localStorage.setItem('userBotKey', to.query.userBotKey)
-
+  }
   const authRequired = !publicPages.includes(to.name) // Login 해야 함
   const isLoggedIn = !!window.Kakao.Auth.getAccessToken() // Login이 되어 있는지 
  

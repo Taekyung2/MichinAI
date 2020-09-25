@@ -35,7 +35,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import WordQuizAll from '@/components/wordbook/WordQuizAll.vue'
+import WordQuizAll from '@/components/wordbook/quiz/WordQuizAll.vue'
 export default {
     name: 'WordQuiz',
     computed:{
