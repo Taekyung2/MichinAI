@@ -1,7 +1,7 @@
 class MultiDBRouter(object):
 
     def __init__(self):
-        self.model_list = ['default', 'mongo']
+        self.model_list = ["default", "mongo"]
 
     def db_for_read(self, model, **hints):
         if model._meta.app_label in self.model_list:
@@ -14,11 +14,12 @@ class MultiDBRouter(object):
         return None
 
     def allow_relation(self, obj1, obj2, **hints):
-        if obj1._meta.app_label in self.model_list or obj2._meta.app.label in self.model_list:
+        if obj1._meta.app_label in self.model_list or obj2._meta.app_label in self.model_list:
             return True
         return None
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
-        if app_label in self.model_list:
-            return db == app_label
+        if app_label == 'mongo':
+            return db == 'mongo'
         return None
+

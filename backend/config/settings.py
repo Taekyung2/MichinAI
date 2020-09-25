@@ -53,11 +53,12 @@ INSTALLED_APPS = [
 
     # 'auth',
     'accounts',
-    'word',
+    # from django.core.exceptions import ValidationError
+
 
     'conversation.apps.ConversationConfig',
     'kakaochat.apps.KakaochatConfig',
-    
+    'word.apps.WordConfig',
     'corsheaders'
 ]
 
@@ -125,13 +126,12 @@ DATABASES = {
     'mongo': {
         'ENGINE': 'djongo',
         'NAME': 'michin',
-        'USER' : 'root',
-        'PASSWORD' : 'PIis3.@neFour!',
-        'HOST': '127.0.0.1',
-        'PORT': '27017',
+        'CLIENT': {
+            'host': '127.0.0.1',
+            'port': 27017,
+        }
     }
 }
-
 
 
 # Password validation
