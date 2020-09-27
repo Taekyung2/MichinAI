@@ -11,7 +11,7 @@
             <v-btn icon dark @click="SET_SELECTED_QUIZ_OPTION">
             <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-toolbar-title> 퀴즈 선택</v-toolbar-title>
+            <v-toolbar-title> 퀴즈 옵션</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text>
@@ -20,7 +20,7 @@
             시간 | 최대 30초, 3초 5초 10초 15초 20초 30초 <hr>
             단어 개수 | 전체, 20개, 사용자 지정<hr>
             순서 | 순서대로, 랜덤<hr>
-            
+
             <v-btn
                 color="primary"
                 dark
