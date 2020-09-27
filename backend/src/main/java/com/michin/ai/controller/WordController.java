@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.michin.ai.controller.command.AddWordCommand;
 import com.michin.ai.controller.command.CreateWordbookCommand;
+import com.michin.ai.controller.payload.AddWordPayload;
 import com.michin.ai.controller.payload.CreateWordbookPayload;
 import com.michin.ai.controller.result.ApiResult;
 import com.michin.ai.controller.result.WordbookResult;
@@ -41,5 +43,13 @@ public class WordController {
 	public ResponseEntity<ApiResult> getWordbookAll(@PathVariable("id") String user_id) {
 		List<Wordbook> wb_list = wordService.getWordbook(user_id);
 		return WordbookResult.build(wb_list);
+	}
+	
+	
+	@PostMapping("/add/word")
+	public ResponseEntity<ApiResult> addWord(@RequestBody AddWordPayload payload) {
+		AddWordCommand command = payload.toCommand();
+		Wordbook wb = wordService.addWord(command);
+		return WordbookResult.build(wb);
 	}
 }
