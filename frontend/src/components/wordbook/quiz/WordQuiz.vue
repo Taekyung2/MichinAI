@@ -9,8 +9,9 @@
             <v-spacer></v-spacer>
         </v-toolbar>
         <div v-for="(word,index) in wordList" :key="index">
-            {{word.eng}} | {{word.kor}}
-        
+            <WordQuizQuestion :eng="word.eng"/>
+            <WordQuizAnswer :kor="word.kor"/>
+            <hr>
         </div>
         <v-divider></v-divider>
         </v-card>
@@ -19,14 +20,11 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import WordQuizQuestion from '@/components/wordbook/quiz/WordQuizQuestion.vue'
+import WordQuizAnswer from '@/components/wordbook/quiz/WordQuizAnswer.vue'
 
 export default {
     name: 'WordQuiz',
-    data(){
-        return{
-        ss : true,
-        }
-    },
     props:{
         selectAll : Boolean,
         wordList : Array,
@@ -41,6 +39,10 @@ export default {
             'SET_SELECTED_QUIZ_OPTION',
             'SET_STARTED_QUIZ',
         ]),
+    },
+    components:{
+        WordQuizQuestion,
+        WordQuizAnswer
     }
 }
 </script>

@@ -51,7 +51,6 @@ export default {
 </script>
 <style>
 :root{
-  --red : #DC3545;
   --main-color : #7DB3D9;
   --main-sub-color : #F2CC06;
   --main-point-color :  #F48705;
@@ -60,6 +59,7 @@ export default {
   --footer-color : #252525;
   --navigation-color : #7DB3D9;
   --font-base-color : #252525;
+  --font-sub-color : #777777;
   --font-soft-color : #a6a6a6;
   --font-point-color : #F48705;
   --hover-background-color : #f2f2f2;

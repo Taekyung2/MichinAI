@@ -10,6 +10,7 @@
               color="var(--main-point-color)" 
               dark
               @click="SET_SELECTED_QUIZ_OPTION"
+              :wordList="wordList"
             > 
               Quiz
             </v-btn>
@@ -40,7 +41,7 @@
         <WordbookFAB/>
       </div>
       <div v-if="isSelectedQuizOption">
-        <WordQuiz :wordList="wordList"/>
+        <WordQuizOption :wordList="wordList"/>
       </div>
   </div>
 </template>
@@ -49,7 +50,7 @@
 import { mapGetters, mapMutations } from 'vuex'
 import Word from '@/components/wordbook/word/Word.vue'
 import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
-import WordQuiz from '@/components/wordbook/quiz/WordQuizOption.vue'
+import WordQuizOption from '@/components/wordbook/quiz/WordQuizOption.vue'
 
 export default {
     name: 'WordbookDetail',
@@ -91,7 +92,7 @@ export default {
     components: {
       Word,
       WordbookFAB,
-      WordQuiz
+      WordQuizOption
     }
 }
 </script>

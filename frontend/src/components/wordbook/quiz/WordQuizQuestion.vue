@@ -1,10 +1,15 @@
 <template>
-  <div></div>
+  <div>
+      {{ eng }}
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'WordQuizQuestion'
+    name: 'WordQuizQuestion',
+    props:{
+        eng: String,
+    }
 }
 </script>
 
