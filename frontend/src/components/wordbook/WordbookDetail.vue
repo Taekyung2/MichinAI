@@ -9,7 +9,7 @@
               rounded
               color="var(--main-point-color)" 
               dark
-              @click="SET_SELECTED_QUIZ"
+              @click="SET_SELECTED_QUIZ_OPTION"
             > 
               Quiz
             </v-btn>
@@ -39,7 +39,7 @@
       <div class="wordbookFAB">
         <WordbookFAB/>
       </div>
-      <div v-if="isSelectedQuiz">
+      <div v-if="isSelectedQuizOption">
         <WordQuiz :wordList="wordList"/>
       </div>
   </div>
@@ -49,7 +49,7 @@
 import { mapGetters, mapMutations } from 'vuex'
 import Word from '@/components/wordbook/word/Word.vue'
 import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
-import WordQuiz from '@/components/wordbook/quiz/WordQuiz.vue'
+import WordQuiz from '@/components/wordbook/quiz/WordQuizOption.vue'
 
 export default {
     name: 'WordbookDetail',
@@ -67,7 +67,6 @@ export default {
         ],
         quizDialog: false,
         selectAll: false,
-        selectRandom: false,
         isShowKor: true,
         isShowEng: true,
         switchWord: ['switch-kor-before', 'switch-kor-after' ]
@@ -77,13 +76,13 @@ export default {
     computed: {
       ...mapGetters([
         'wordbook',
-        'isSelectedQuiz'
+        'isSelectedQuizOption'
       ]),
 
     },
     methods: {
       ...mapMutations([
-        'SET_SELECTED_QUIZ',
+        'SET_SELECTED_QUIZ_OPTION',
       ]),
       back(){
         this.$router.push({name:'WordbookList'})

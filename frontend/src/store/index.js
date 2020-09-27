@@ -18,9 +18,8 @@ export default new Vuex.Store({
     selectedWordbook: null,
     selectedChat: null,
 
-    isSelectedQuiz: false,
-    isSelectedQuizAll: false,
-    isSelectedQuizRandom: false,
+    isSelectedQuizOption: false,
+    isStartedQuiz: false,
     userBotKey: '',
   },
   
@@ -32,11 +31,11 @@ export default new Vuex.Store({
     chat(state){
       return state.selectedChat
     },
-    isSelectedQuiz(state){
-      return state.isSelectedQuiz
+    isSelectedQuizOption(state){
+      return state.isSelectedQuizOption
     },
-    isSelectedQuizAll(state){
-      return state.isSelectedQuizAll
+    isStartedQuiz(state){
+      return state.isStartedQuiz
     },
     userBotKey(state){
       return state.userBotKey
@@ -52,11 +51,11 @@ export default new Vuex.Store({
     SET_SELECTED_CHAT(state, chat){
       state.selectedChat = chat
     },
-    SET_SELECTED_QUIZ(state){
-      state.isSelectedQuiz = !state.isSelectedQuiz
+    SET_SELECTED_QUIZ_OPTION(state){
+      state.isSelectedQuizOption = !state.isSelectedQuizOption
     },
-    SET_SELECTED_QUIZ_ALL(state){
-      state.isSelectedQuizAll = !state.isSelectedQuizAll
+    SET_STARTED_QUIZ(state){
+      state.isStartedQuiz = !state.isStartedQuiz
     },
     SET_USERBOT_KEY(state, botKey){
       state.userBotKey = botKey
