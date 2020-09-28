@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.michin.ai.conversation.service.ConversationService;
+import com.michin.ai.conversation.service.ConvService;
 
 @RestController
 @RequestMapping("/conv")
 public class ConversationController {
 	@Autowired
-	private ConversationService convService;
+	private ConvService convService;
 
 	@GetMapping(value = { "/{date}", "/" })
 	public ResponseEntity conversationList(
 			@PathVariable(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 
-		System.out.println(convService.scrapingConversation(null));
+		System.out.println(convService.loadConversation(date));
 		return null;
 	}
 }

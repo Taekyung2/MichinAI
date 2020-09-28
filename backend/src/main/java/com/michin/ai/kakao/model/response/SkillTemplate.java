@@ -11,13 +11,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.michin.ai.kakao.model.response.common.QuickReply;
-import com.michin.ai.kakao.model.response.output.BasicCard;
-import com.michin.ai.kakao.model.response.output.Carousel;
-import com.michin.ai.kakao.model.response.output.ListCard;
-import com.michin.ai.kakao.model.response.output.Output;
-import com.michin.ai.kakao.model.response.output.SimpleImage;
-import com.michin.ai.kakao.model.response.output.SimpleText;
+import com.michin.ai.kakao.dto.response.common.QuickReply;
+import com.michin.ai.kakao.dto.response.component.BasicCard;
+import com.michin.ai.kakao.dto.response.component.Carousel;
+import com.michin.ai.kakao.dto.response.component.Component;
+import com.michin.ai.kakao.dto.response.component.ListCard;
+import com.michin.ai.kakao.dto.response.component.SimpleImage;
+import com.michin.ai.kakao.dto.response.component.SimpleText;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -33,7 +33,7 @@ public class SkillTemplate {
 		quickReplies = new ArrayList<>();
 	}
 
-	public SkillTemplate addOutputs(Output output) {
+	public SkillTemplate addOutputs(Component output) {
 		outputs.add(output.toJsonObjcet());
 		return this;
 
