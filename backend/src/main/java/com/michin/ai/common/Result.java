@@ -1,4 +1,4 @@
-package com.michin.ai.controller.result;
+package com.michin.ai.common;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

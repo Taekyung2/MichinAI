@@ -1,6 +1,4 @@
-package com.michin.ai.controller.payload;
-
-import com.michin.ai.controller.command.AddWordCommand;
+package com.michin.ai.word.dto.payload;
 
 import lombok.Data;
 

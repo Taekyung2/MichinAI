@@ -19,11 +19,14 @@ public class Wordbook {
 	
 	private String user_id;
 	
+	private String name;
+	
 	private List<Word> words = new ArrayList<Word>();
 	
-	public static Wordbook create(String user_id) {
+	public static Wordbook create(String user_id, String name) {
 		Wordbook wb = new Wordbook();
 		wb.setUser_id(user_id);
+		wb.setName(name);
 		return wb;
 	}
 	

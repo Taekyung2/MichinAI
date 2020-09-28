@@ -1,4 +1,4 @@
-package com.michin.ai.controller.command;
+package com.michin.ai.word.dto.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateWordbookCommand {
 	private String user_id;
+	private String name;
 }
