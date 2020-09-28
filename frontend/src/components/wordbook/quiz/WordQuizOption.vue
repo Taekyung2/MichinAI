@@ -23,7 +23,7 @@
                     </v-list-item-title>
                     <v-list-item-subtitle>
                         <v-chip-group
-                            v-model="selectedType"
+                            v-model="quizOption.selectedType"
                             column
                             mandatory 
                             :active-class="selectedTag"
@@ -50,7 +50,7 @@
                     </v-list-item-title>
                     <v-list-item-subtitle>
                         <v-select
-                        v-model="selectedTime"
+                        v-model="quizOption.selectedTime"
                         :items="quizTimeList"
                         menu-props="auto"
                         label="제한시간"
@@ -64,6 +64,34 @@
                 </v-list-item-content>
             </v-list-item>
 
+
+            <v-list-item>
+                <v-list-item-content>
+                    <v-list-item-title>
+                        <h5 class="option-title">순서</h5>
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                        <v-chip-group
+                            v-model="quizOption.selectedSequence"
+                            column
+                            mandatory 
+                            :active-class="selectedTag"
+                        >
+                            <v-chip
+                                filter
+                                outlined
+                                v-for="(quizSequence,index) in quizSequenceList"
+                                :key="index"
+                                :value="quizSequence"
+                            >
+                            {{ quizSequence }}
+                            </v-chip>
+                        </v-chip-group>
+                    </v-list-item-subtitle>
+                    <v-divider></v-divider>
+                </v-list-item-content>
+            </v-list-item>
+            
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title>
@@ -71,7 +99,7 @@
                     </v-list-item-title>
                     <v-list-item-subtitle>
                     <v-chip-group
-                        v-model="selectedCountName"
+                        v-model="quizOption.selectedQuestionNumber.type"
                         column
                         mandatory 
                         :active-class="selectedTag"
@@ -79,7 +107,7 @@
                         <v-chip
                             filter
                             outlined
-                            v-for="(quizCount,index) in quizCountList"
+                            v-for="(quizCount,index) in quizQuestionNumberList"
                             :key="index"
                             :value="quizCount"
                         >
@@ -88,20 +116,14 @@
                         
                     </v-chip-group>
                     </v-list-item-subtitle>
-                    <div v-if="selectedCountName==quizCountList[2]">
-                            <!-- <v-text-field
-                                v-model="title"
-                                :rules="rules"
-                                label="원하시는 퀴즈 문항수를 작성해주세요."
-                            ></v-text-field> -->
-                     
+                    <div v-if="quizOption.selectedQuestionNumber.type==quizQuestionNumberList[2]">
                         <v-slider
-                        v-model="selectedCount"
+                        v-model="quizOption.selectedQuestionNumber.number"
                         thumb-label
                         ticks
                         :max="wordList.length"
                         min="1"
-                        :messages="selectedCount + ' / ' + wordList.length"
+                        :messages="quizOption.selectedQuestionNumber.number + ' / ' + wordList.length"
                         >
                             <template v-slot:prepend>
                                 <v-icon
@@ -123,39 +145,13 @@
                                 </v-icon>
                             </template>
                         </v-slider>
+                         
                     </div>
                     <v-divider></v-divider>
                 </v-list-item-content>
             </v-list-item>
-
             <v-list-item>
-                <v-list-item-content>
-                    <v-list-item-title>
-                        <h5 class="option-title">순서</h5>
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                        <v-chip-group
-                            v-model="selectedSequence"
-                            column
-                            mandatory 
-                            :active-class="selectedTag"
-                        >
-                            <v-chip
-                                filter
-                                outlined
-                                v-for="(quizSequence,index) in quizSequenceList"
-                                :key="index"
-                                :value="quizSequence"
-                            >
-                            {{ quizSequence }}
-                            </v-chip>
-                        </v-chip-group>
-                    </v-list-item-subtitle>
-                    <v-divider></v-divider>
-                </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-                <v-list-item-content>
+                <v-list-item-content>s
                     <v-btn
                         color="primary"
                         dark
@@ -168,7 +164,10 @@
         </div>
 
         <div v-if="isStartedQuiz">
-            <WordQuiz :wordList="wordList"/>
+            <WordQuiz 
+            :wordList="wordList"
+            :quizOption="quizOption"
+            />
         </div>
     </v-card>
     </v-dialog>
@@ -181,15 +180,18 @@ export default {
     name: 'WordQuizOption',
     data(){
         return{
-            selectedType:'',
-            selectedTime:'제한없음',
-            selectedSequence:'',
-            selectedCountName: '',
-            selectedCount: 1,
-
+            quizOption:{
+                selectedType:'',
+                selectedTime:'제한없음',
+                selectedSequence:'',
+                selectedQuestionNumber: {
+                    type : '',
+                    number: 1,
+                },
+            },
             quizTypeList: ['OX', '객관식'],
             quizTimeList: ['제한없음','3초','5초','10초','20초','30초'],
-            quizCountList: ['전체','미암기 단어','사용자 정의'],
+            quizQuestionNumberList: ['전체','미암기 단어','사용자 정의'],
             quizSequenceList: ['순서대로','랜덤'],
             selectedTag: 'selected-tag',
         }
@@ -215,10 +217,10 @@ export default {
             this.SET_STARTED_QUIZ()
         },
         countDecrement () {
-            this.selectedCount--
+            this.selectedQuestionNumber.number--
         },
         countIncrement () {
-            this.selectedCount++
+            this.selectedQuestionNumber.numer++
         },
 
        
@@ -238,7 +240,7 @@ export default {
     margin-top: 0px;
 }
 .v-messages__message{
-    color: var(--main-color);
+    color: var(--font-sub-color);
     float: right;
     font-size: 14px;
     margin-bottom: 10px;
@@ -246,5 +248,8 @@ export default {
 }
 .count-change-btn{
     margin: 0 5px;
+}
+.slide-fade-enter-active {
+  transition: all .3s ease;
 }
 </style>

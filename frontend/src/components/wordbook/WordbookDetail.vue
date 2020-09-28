@@ -57,14 +57,14 @@ export default {
     data() {
       return {
         wordList : [
-            {id:'1', eng: 'culture', kor: '문화, 교양'},
-            {id:'2', eng: 'experience', kor: '경험'},
-            {id:'3', eng: 'education', kor: '교육'},
-            {id:'4', eng: 'symbol', kor: '상징'},
-            {id:'5', eng: 'effect', kor: '결과, 영향, 효과'},
-            {id:'6', eng: 'liberty', kor: '자유'},
-            {id:'7', eng: 'affair', kor: '사건, 일'},
-            {id:'8', eng: 'comfort', kor: '안락, 위안'},
+            {id:'1', eng: 'communicate ', kor: '연락을 주고받다, 의사소통을 하다.', check: false},
+            {id:'2', eng: 'experience', kor: '경험', check: true},
+            {id:'3', eng: 'education', kor: '교육', check: true},
+            {id:'4', eng: 'symbol', kor: '상징', check: true},
+            {id:'5', eng: 'effect', kor: '결과, 영향, 효과', check: false},
+            {id:'6', eng: 'liberty', kor: '자유', check: true},
+            {id:'7', eng: 'affair', kor: '사건, 일', check: false},
+            {id:'8', eng: 'comfort', kor: '안락, 위안', check: true},
         ],
         quizDialog: false,
         selectAll: false,

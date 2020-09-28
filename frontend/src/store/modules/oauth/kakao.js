@@ -4,7 +4,7 @@ import SERVER from '@/api/spring.js'
 
 const User = {
     userName: '',
-    userId: '',
+    userId: 0,
     profileImg: '',
     accessToken: ''
 }
@@ -42,7 +42,7 @@ const Kakao = {
             window.Kakao.API.request({
                 url:'/v2/user/me',
                 success: res => {
-                    // console.log(res.id)
+                    console.log(res.id)
                     const kakao = res.kakao_account
                     const authUser = {
                         userName: kakao.profile.nickname,
@@ -55,7 +55,7 @@ const Kakao = {
                     localStorage.setItem('userBotKey','')
                     
                     axios.post(SERVER.URL + SERVER.ROUTES.login , authUser)
-                    .then(res=>{console.log(res)})
+                    .then(res=>{console.log(res)}) 
                     .catch(err => console.log(err))
                 },
                 fail: error => console.log(error)
