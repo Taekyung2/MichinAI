@@ -39,6 +39,7 @@ public class WordController {
 	public ResponseEntity<ApiResult> addWordBook(@RequestBody CreateWordbookPayload payload) {
 		CreateWordbookCommand command = payload.toCommand();
 		Wordbook wb = wordService.createWordbook(command);
+		if(wb == null) return Result.failure("중복된 이름입니다.");
 		return WordbookResult.build(wb);
 	}
 	

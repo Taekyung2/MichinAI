@@ -33,8 +33,13 @@ public class WordServiceImpl implements WordService{
 	@Override
 	public Wordbook createWordbook(CreateWordbookCommand command) {
 		Wordbook wb = Wordbook.create(command.getUser_id(), command.getName());
-		wordBookRepo.insert(wb);
-		return wb;
+		Wordbook wb_exist = null;
+		wb_exist = wordBookRepo.findByNameAndUserId(command.getUser_id(), command.getName());
+		if(wb_exist == null) {
+			wordBookRepo.insert(wb);
+			return wb;
+		}
+		return null;
 	}
 
 	@Override
