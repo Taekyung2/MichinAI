@@ -10,6 +10,7 @@
               color="var(--main-point-color)" 
               dark
               @click="SET_SELECTED_QUIZ_OPTION"
+              :wordList="wordList"
             > 
               Quiz
             </v-btn>
@@ -40,7 +41,7 @@
         <WordbookFAB/>
       </div>
       <div v-if="isSelectedQuizOption">
-        <WordQuiz :wordList="wordList"/>
+        <WordQuizOption :wordList="wordList"/>
       </div>
   </div>
 </template>
@@ -49,21 +50,23 @@
 import { mapGetters, mapMutations } from 'vuex'
 import Word from '@/components/wordbook/word/Word.vue'
 import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
-import WordQuiz from '@/components/wordbook/quiz/WordQuizOption.vue'
+import WordQuizOption from '@/components/wordbook/quiz/WordQuizOption.vue'
 
 export default {
     name: 'WordbookDetail',
     data() {
       return {
         wordList : [
-            {id:'1', eng: 'culture', kor: '문화, 교양'},
-            {id:'2', eng: 'experience', kor: '경험'},
-            {id:'3', eng: 'education', kor: '교육'},
-            {id:'4', eng: 'symbol', kor: '상징'},
-            {id:'5', eng: 'effect', kor: '결과, 영향, 효과'},
-            {id:'6', eng: 'liberty', kor: '자유'},
-            {id:'7', eng: 'affair', kor: '사건, 일'},
-            {id:'8', eng: 'comfort', kor: '안락, 위안'},
+            {id:'1', eng: 'communicate ', kor: '경험, 연락을 주고받다, 의사소통을 하다.', check: false},
+            {id:'2', eng: 'experience', kor: '경험', check: true},
+            {id:'3', eng: 'education', kor: '교육', check: true},
+            {id:'4', eng: 'symbol', kor: '상징', check: true},
+            {id:'5', eng: 'effect', kor: '결과, 영향, 효과', check: false},
+            {id:'6', eng: 'liberty', kor: '자유', check: true},
+            {id:'7', eng: 'affair', kor: '사건, 일', check: false},
+            {id:'8', eng: 'comfort', kor: '안락, 위안', check: true},
+            {id:'9', eng: 'progress', kor: '진전, 진척, 진행', check: false},
+            {id:'10', eng: 'inadequate', kor: '불충분한, 부적당한', check: false},
         ],
         quizDialog: false,
         selectAll: false,
@@ -91,7 +94,7 @@ export default {
     components: {
       Word,
       WordbookFAB,
-      WordQuiz
+      WordQuizOption
     }
 }
 </script>

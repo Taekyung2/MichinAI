@@ -1,10 +1,15 @@
 <template>
-  <div></div>
+  <div>
+      {{ kor }}
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'WordQuizAnswer'
+    name: 'WordQuizAnswer',
+    props:{
+        kor: String,
+    },
 }
 </script>
 
