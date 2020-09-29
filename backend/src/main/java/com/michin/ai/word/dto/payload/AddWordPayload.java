@@ -1,14 +1,15 @@
 package com.michin.ai.word.dto.payload;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class AddWordPayload {
 	private String wordbook_id;
-	private String eng;
-	private String kor;
+	List<Word_content> contents;
 	
 	public AddWordCommand toCommand() {
-		return new AddWordCommand(eng, kor, wordbook_id);
+		return new AddWordCommand(wordbook_id, contents);
 	}
 }
