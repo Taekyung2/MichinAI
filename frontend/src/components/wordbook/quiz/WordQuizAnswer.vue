@@ -9,7 +9,7 @@ export default {
     name: 'WordQuizAnswer',
     props:{
         kor: String,
-    }
+    },
 }
 </script>
 

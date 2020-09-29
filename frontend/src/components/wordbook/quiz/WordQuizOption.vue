@@ -151,7 +151,7 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item>
-                <v-list-item-content>s
+                <v-list-item-content>
                     <v-btn
                         color="primary"
                         dark
