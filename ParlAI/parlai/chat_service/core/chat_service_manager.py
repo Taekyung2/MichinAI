@@ -449,6 +449,7 @@ class ChatServiceManager(ABC):
             agent = agent_state.get_active_agent()
             if len(agent.message_partners) == 0:
                 self.handle_bot_read(agent.id)  # type: ignore
+
             agent.put_data(message)
 
     def add_agent_to_pool(self, agent: AgentState, world_type: str = 'default'):

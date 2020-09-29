@@ -25,8 +25,6 @@ from parlai.utils.world_logging import WorldLogger
 from parlai.agents.local_human.local_human import LocalHumanAgent
 import parlai.utils.logging as logging
 
-import random
-
 
 def setup_args(parser=None):
     if parser is None:
@@ -75,6 +73,7 @@ def setup_args(parser=None):
 
 
 def interactive(opt):
+    # 결국 애를 실행시킴
     if isinstance(opt, ParlaiParser):
         logging.error('interactive should be passed opt not Parser')
         opt = opt.parse_args()
@@ -83,6 +82,7 @@ def interactive(opt):
     agent = create_agent(opt, requireModelExists=True)
     agent.opt.log()
     human_agent = LocalHumanAgent(opt)
+
     # set up world logger
     world_logger = WorldLogger(opt) if opt.get('outfile') else None
     world = create_task(opt, [human_agent, agent])
@@ -118,5 +118,6 @@ class Interactive(ParlaiScript):
 
 
 if __name__ == '__main__':
-    random.seed(42)
-    Interactive.main()
+    Interactive.main(
+        model_file='zoo:blender/blender_90M/model'
+    )

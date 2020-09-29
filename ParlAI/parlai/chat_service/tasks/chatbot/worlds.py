@@ -74,6 +74,9 @@ class MessengerBotChatTaskWorld(World):
                 self.model.reset()
                 self.agent.observe({"text": "[History Cleared]", "episode_done": False})
             else:
+                from time import time
+
+                start_time = time()
                 print("===act====")
                 print(a)
                 print("~~~~~~~~~~~")
@@ -83,6 +86,7 @@ class MessengerBotChatTaskWorld(World):
                 print(response)
                 print("~~~~~~~~~~~")
                 self.agent.observe(response)
+                print('답변 생성 시간 : {}'.format(time() - start_time))
 
     def episode_done(self):
         return self.episodeDone
