@@ -100,6 +100,10 @@ class ParlaiScript(object):
 
         You may not combine both args and kwargs.
         """
+        print('------------------------------------------------')
+        # model_file
+        print(kwargs)
+        print('------------------------------------------------')
         assert not (bool(args) and bool(kwargs))
         if args:
             return cls._run_args(args)

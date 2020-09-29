@@ -1,21 +1,9 @@
-#!/usr/bin/env python3
-
-# Copyright (c) Facebook, Inc. and its affiliates.
-# This source code is licensed under the MIT license found in the
-# LICENSE file in the root directory of this source tree.
-"""
-Agent does gets the local keyboard input in the act() function.
-
-Example: parlai eval_model -m local_human -t babi:Task1k:1 -dt valid
-"""
-
 from parlai.core.agents import Agent
 from parlai.core.message import Message
-from parlai.utils.misc import display_messages, load_cands
-from parlai.utils.strings import colorize
+from parlai.utils.misc import load_cands
 
 
-class LocalHumanAgent(Agent):
+class HumanAgent(Agent):
     def add_cmdline_args(argparser):
         """
         Add command-line arguments specifically for this agent.
@@ -41,35 +29,18 @@ class LocalHumanAgent(Agent):
         self.episodeDone = False
         self.finished = False
         self.fixedCands_txt = load_cands(self.opt.get('local_human_candidates_file'))
-        print(
-            colorize(
-                "Enter [DONE] if you want to end the episode, [EXIT] to quit.",
-                'highlight',
-            )
-        )
 
     def epoch_done(self):
         return self.finished
 
     def observe(self, msg):
-        # msg에 response가 이미 만들어져 있음
-        print(
-            # 여기서 Display Response
-            display_messages(
-                [msg],
-                ignore_fields=self.opt.get('display_ignore_fields', ''),
-                prettify=self.opt.get('display_prettify', False),
-            )
-        )
+        # msg는 response
+        return msg
 
-    def act(self):
+    def act(self, msg):
         reply = Message()
         reply['id'] = self.getID()
-        try:
-            reply_text = input(colorize("Enter Your Message:", 'text') + ' ')
-        except EOFError:
-            self.finished = True
-            return {'episode_done': True}
+        reply_text = msg
 
         reply_text = reply_text.replace('\\n', '\n')
         reply['episode_done'] = False
