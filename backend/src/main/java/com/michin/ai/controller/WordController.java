@@ -19,6 +19,10 @@ import com.michin.ai.common.ApiResult;
 import com.michin.ai.common.Result;
 import com.michin.ai.word.dto.payload.AddWordCommand;
 import com.michin.ai.word.dto.payload.AddWordPayload;
+import com.michin.ai.word.dto.payload.ChangeCheckCommand;
+import com.michin.ai.word.dto.payload.ChangeCheckPayload;
+import com.michin.ai.word.dto.payload.ChangeContentCommand;
+import com.michin.ai.word.dto.payload.ChangeContentPayload;
 import com.michin.ai.word.dto.payload.CreateWordbookCommand;
 import com.michin.ai.word.dto.payload.CreateWordbookPayload;
 import com.michin.ai.word.dto.payload.EditNameCommand;
@@ -72,16 +76,21 @@ public class WordController {
 	@DeleteMapping("/{wordbook_id}/{word_id}")
 	public ResponseEntity<ApiResult> delWord(@PathVariable("wordbook_id") String wordbook_id,
 												@PathVariable("word_id") String word_id) {
-		Wordbook wb = wordService.delWord(wordbook_id, word_id);
+		wordService.delWord(wordbook_id, word_id);
+		return Result.ok();
+	}
+	
+	@PutMapping("/check")
+	public ResponseEntity<ApiResult> changeCheck(@RequestBody ChangeCheckPayload payload) {
+		ChangeCheckCommand command = payload.toCommand();
+		Wordbook wb = wordService.changeCheck(command);
 		return WordbookResult.build(wb);
 	}
 	
-	@PutMapping("/{wordbook_id}/{word_id}")
-	public ResponseEntity<ApiResult> changeCheck(@PathVariable("wordbook_id") String wordbook_id,
-													@PathVariable("word_id") String word_id) {
-		Wordbook wb = wordService.changeCheck(wordbook_id, word_id);
+	@PutMapping("/word/content")
+	public ResponseEntity<ApiResult> changeContent(@RequestBody ChangeContentPayload payload) {
+		ChangeContentCommand command = payload.toCommand();
+		Wordbook wb = wordService.changeContent(command);
 		return WordbookResult.build(wb);
 	}
-	
-	
 }

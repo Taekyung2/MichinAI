@@ -6,17 +6,13 @@ import java.util.List;
 import javax.persistence.Id;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
 @Data
 @Document(collection = "wordbooks")
-@CompoundIndex(def = "{'user_id': 1, 'name': -1}", unique = true)
 public class Wordbook {
-	
 	@Id
 	private ObjectId id;
 	
@@ -32,5 +28,4 @@ public class Wordbook {
 		wb.setName(name);
 		return wb;
 	}
-	
 }

@@ -8,8 +8,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.michin.ai.word.dto.payload.AddWordCommand;
+import com.michin.ai.word.dto.payload.ChangeCheckCommand;
+import com.michin.ai.word.dto.payload.ChangeContentCommand;
 import com.michin.ai.word.dto.payload.CreateWordbookCommand;
 import com.michin.ai.word.dto.payload.EditNameCommand;
+import com.michin.ai.word.dto.payload.Word_content;
 import com.michin.ai.word.model.Word;
 import com.michin.ai.word.model.Wordbook;
 import com.michin.ai.word.repository.BaseWordBookRepository;
@@ -29,6 +32,11 @@ public class WordServiceImpl implements WordService{
 	public List<Wordbook> getWordbook(String user_id) {
 		return wordBookRepo.findAll(Sort.by(Sort.Direction.ASC, "id"));
 	}
+	
+	@Override
+	public Wordbook getWordbook(String user_id, String name) {
+		return wordBookRepo.findByNameAndUserId(user_id, name);
+	}
 
 	@Override
 	public Wordbook createWordbook(CreateWordbookCommand command) {
@@ -41,16 +49,15 @@ public class WordServiceImpl implements WordService{
 		}
 		return null;
 	}
-
+	
 	@Override
 	public Wordbook addWord(AddWordCommand command) {
-		Word word = Word.create(command.getEng(), command.getKor());
-		Wordbook wb = wordBookRepo.findById(new ObjectId(command.getWordbook_id())).get();
-		List<Word> list = wb.getWords();
-		list.add(word);
-		wb.setWords(list);
-		wordBookRepo.save(wb);
-		return wb;
+		List<Word_content> content_list = command.getContents();
+		for(Word_content wc : content_list) {
+			Word word = Word.create(wc.getEng(), wc.getKor());
+			wordBookRepo.addWord(word, command.getWordbook_id());			
+		}
+		return wordBookRepo.findById(new ObjectId(command.getWordbook_id())).get();
 	}
 
 	@Override
@@ -62,36 +69,16 @@ public class WordServiceImpl implements WordService{
 	}
 	
 	@Override
-	public Wordbook delWord(String wordbook_id, String word_id) {
-		Wordbook wb = wordBookRepo.findById(new ObjectId(wordbook_id)).get();
-		List<Word> list = wb.getWords();
-		for(Word word : list) {
-			if(word.getId().toString().equals(word_id)) {
-				list.remove(word);
-				System.out.println(word);
-				break;
-			}
-		}
-		wb.setWords(list);
-		wordBookRepo.save(wb);
-		return wb;
+	public void delWord(String wordbook_id, String word_id) {
+		wordBookRepo.delWord(wordbook_id, word_id);
 	}
 
 	@Override
-	public Wordbook changeCheck(String wordbook_id, String word_id) {
-		Wordbook wb = wordBookRepo.findById(new ObjectId(wordbook_id)).get();
-		List<Word> list = wb.getWords();
-		for(int i = 0; i < list.size(); i++) {
-			if(list.get(i).getId().toString().equals(word_id)) {
-				Word word = list.get(i);
-				word.setCheck(!word.isCheck());
-				list.set(i, word);
-				break;
-			}
-		}
-		wb.setWords(list);
-		wordBookRepo.save(wb);
-		return wb;
+	public Wordbook changeCheck(ChangeCheckCommand command) {
+		List<Word> word_list = command.getWords();
+		for(Word word : word_list) 
+			wordBookRepo.changeCheck(command.getWordbook_id(), word);
+		return wordBookRepo.findById(new ObjectId(command.getWordbook_id())).get();
 	}
 
 	@Override
@@ -100,4 +87,13 @@ public class WordServiceImpl implements WordService{
 		wordBookRepo.delete(wb);
 		return wordBookRepo.findAll(Sort.by(Sort.Direction.ASC, "id"));
 	}
+
+	@Override
+	public Wordbook changeContent(ChangeContentCommand command) {
+		List<Word> word_list = command.getWords();
+		for(Word word : word_list)
+			wordBookRepo.changeContent(command.getWordbook_id(), word);
+		return wordBookRepo.findById(new ObjectId(command.getWordbook_id())).get();
+	}
+	
 }
