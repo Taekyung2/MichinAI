@@ -51,7 +51,6 @@ class InteractiveWorld(DialogPartnerWorld):
         """
         if self.turn_cnt == 0:
             self.p1, self.p2 = self.get_contexts()
-
         acts = self.acts
         agents = self.agents
         if self.turn_cnt == 0 and self.p1 != '':
@@ -61,6 +60,8 @@ class InteractiveWorld(DialogPartnerWorld):
             )
             agents[0].observe(validate(context_act))
         try:
+            # .act() 에서 입력 받는데??
+            # parlai/agents/local_human/act
             act = deepcopy(agents[0].act())
         except StopIteration:
             self.reset()
@@ -76,10 +77,14 @@ class InteractiveWorld(DialogPartnerWorld):
             agents[1].observe(validate(context_act))
         agents[1].observe(validate(act))
         acts[1] = agents[1].act()
+        # agents : [localhuman, transformergenerator]
+        # [Display Response]
         agents[0].observe(validate(acts[1]))
         self.update_counters()
         self.turn_cnt += 1
 
+        # from pprint import pprint
+        # pprint(acts)
         if act['episode_done']:
             self.finalize_episode()
             self.turn_cnt = 0

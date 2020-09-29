@@ -52,7 +52,9 @@ class LocalHumanAgent(Agent):
         return self.finished
 
     def observe(self, msg):
+        # msg에 response가 이미 만들어져 있음
         print(
+            # 여기서 Display Response
             display_messages(
                 [msg],
                 ignore_fields=self.opt.get('display_ignore_fields', ''),

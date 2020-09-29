@@ -10,6 +10,7 @@ import threading
 from parlai.core.params import ParlaiParser
 from parlai.scripts.interactive_web import WEB_HTML, STYLE_SHEET, FONT_AWESOME
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from time import time
 
 SHARED = {}
 
@@ -94,6 +95,8 @@ class BrowserHandler(BaseHTTPRequestHandler):
         self.wfile.write(response)
 
     def interact(self, *options):
+        start_time = time()
+
         content_length = int(self.headers['Content-Length'])
 
         # request text
@@ -120,6 +123,8 @@ class BrowserHandler(BaseHTTPRequestHandler):
 
         json_str = json.dumps(model_response)
         self.wfile.write(bytes(json_str, 'utf-8'))
+
+        print("응답시간 : {}".format(time() - start_time))
 
 
 def on_message(ws, message):
