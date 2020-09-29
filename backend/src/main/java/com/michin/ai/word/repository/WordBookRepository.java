@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 import com.michin.ai.word.model.Wordbook;
 
 @Repository
-public interface WordBookRepository extends MongoRepository<Wordbook, ObjectId> {
-
+public interface WordBookRepository extends MongoRepository<Wordbook, ObjectId>, WordBookCustomRepository {
 }

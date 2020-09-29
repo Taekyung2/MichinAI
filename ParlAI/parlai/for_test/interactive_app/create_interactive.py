@@ -1,29 +1,16 @@
-#!/usr/bin/env python3
-
-# Copyright (c) Facebook, Inc. and its affiliates.
-# This source code is licensed under the MIT license found in the
-# LICENSE file in the root directory of this source tree.
-"""
-Basic script which allows local human keyboard input to talk to a trained model.
-
-## Examples
-
-```shell
-parlai interactive -m drqa -mf "models:drqa/squad/model"
-```
-
-When prompted, enter something like: `Bob is Blue.\\nWhat is Bob?`
-
-Input is often model or task specific, but in drqa, it is always
-`context '\\n' question`.
-"""
-from parlai.core.params import ParlaiParser
+# from parlai.scripts.interactive import Interactive
+#
+# Interactive.main(
+#     model_file='zoo:blender/blender_90M/model'
+# )
 from parlai.core.agents import create_agent
-from parlai.core.worlds import create_task
-from parlai.core.script import ParlaiScript, register_script
+from parlai.core.loader import register_script
+from parlai.core.params import ParlaiParser
+from parlai.core.script import ParlaiScript
+from parlai.for_test.interactive_app.human_agent import HumanAgent
+from parlai.for_test.interactive_app.multi_client_interactive_world import MultiClientInteractiveWorld
+from parlai.utils import logging
 from parlai.utils.world_logging import WorldLogger
-from parlai.agents.local_human.local_human import LocalHumanAgent
-import parlai.utils.logging as logging
 
 
 def setup_args(parser=None):
@@ -56,7 +43,7 @@ def setup_args(parser=None):
         '--outfile',
         type=str,
         default='',
-        help='Saves a jsonl file containing all of the task examples and '
+        help='Saves a json file containing all of the task examples and '
         'model replies. Set to the empty string to not save at all',
     )
     parser.add_argument(
@@ -67,13 +54,12 @@ def setup_args(parser=None):
         help='Format to save logs in. conversations is a jsonl format, parlai is a text format.',
     )
     parser.set_defaults(interactive_mode=True, task='interactive')
-    LocalHumanAgent.add_cmdline_args(parser)
+    HumanAgent.add_cmdline_args(parser)
     WorldLogger.add_cmdline_args(parser)
     return parser
 
 
-def interactive(opt):
-    # 결국 애를 실행시킴
+def create_world(opt):
     if isinstance(opt, ParlaiParser):
         logging.error('interactive should be passed opt not Parser')
         opt = opt.parse_args()
@@ -81,30 +67,32 @@ def interactive(opt):
     # Create model and assign it to the specified task
     agent = create_agent(opt, requireModelExists=True)
     agent.opt.log()
-    human_agent = LocalHumanAgent(opt)
+    human_agent = HumanAgent(opt)
 
     # set up world logger
     world_logger = WorldLogger(opt) if opt.get('outfile') else None
-    world = create_task(opt, [human_agent, agent])
+    world = MultiClientInteractiveWorld(opt, [human_agent, agent])
 
     # Show some example dialogs:
-    while not world.epoch_done():
-        world.parley()
-        if world.epoch_done() or world.get_total_parleys() <= 0:
-            # chat was reset with [DONE], [EXIT] or EOF
-            if world_logger is not None:
-                world_logger.reset()
-            continue
+    # while not world.epoch_done():
+    #     world.parley()
+    #     if world.epoch_done() or world.get_total_parleys() <= 0:
+    #         # chat was reset with [DONE], [EXIT] or EOF
+    #         if world_logger is not None:
+    #             world_logger.reset()
+    #         continue
+    #
+    #     if world_logger is not None:
+    #         world_logger.log(world)
+    #     if opt.get('display_examples'):
+    #         print("---")
+    #         print(world.display())
+    #
+    # if world_logger is not None:
+    #     # dump world acts to file
+    #     world_logger.write(opt['outfile'], world, file_format=opt['save_format'])
 
-        if world_logger is not None:
-            world_logger.log(world)
-        if opt.get('display_examples'):
-            print("---")
-            print(world.display())
-
-    if world_logger is not None:
-        # dump world acts to file
-        world_logger.write(opt['outfile'], world, file_format=opt['save_format'])
+    return world
 
 
 @register_script('interactive', aliases=['i'])
@@ -114,10 +102,4 @@ class Interactive(ParlaiScript):
         return setup_args()
 
     def run(self):
-        return interactive(self.opt)
-
-
-if __name__ == '__main__':
-    Interactive.main(
-        model_file='zoo:blender/blender_90M/model'
-    )
+        return create_world(self.opt)

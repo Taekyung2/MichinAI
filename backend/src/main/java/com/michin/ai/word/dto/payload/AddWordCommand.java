@@ -1,4 +1,4 @@
-package com.michin.ai.controller.command;
+package com.michin.ai.word.dto.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

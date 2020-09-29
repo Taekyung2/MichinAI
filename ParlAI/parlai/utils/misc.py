@@ -601,7 +601,6 @@ def display_messages(
         lines.append(
             colorize('- - - - - - - END OF EPISODE - - - - - - - - - -', 'highlight')
         )
-
     return '\n'.join(lines)
 
 

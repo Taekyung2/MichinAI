@@ -7,7 +7,6 @@ import com.michin.ai.conversation.model.Conversation;
 
 public interface ConvService {
 
-	List<Conversation> scrapingConversation(LocalDate date);
 
 	List<Conversation> loadConversation(LocalDate date);
 
