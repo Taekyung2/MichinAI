@@ -36,6 +36,15 @@ public class SkillTemplate {
 	public SkillTemplate addOutputs(Component output) {
 		outputs.add(output.toJsonObjcet());
 		return this;
+	}
 
+	public SkillTemplate addQuickReplies(List<QuickReply> quickReplies) {
+		this.quickReplies = quickReplies;
+		return this;
+	}
+
+	public SkillTemplate addQuickReply(QuickReply quickReply) {
+		quickReplies.add(quickReply);
+		return this;
 	}
 }
