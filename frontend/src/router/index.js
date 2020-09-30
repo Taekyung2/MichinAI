@@ -5,6 +5,11 @@ Vue.use(VueRouter)
 
 const routes = [
     {
+      path: '/',
+      name: 'Home',
+      component: () => import('@/components/Home.vue')
+    },
+    {
       path: '/connect:userBotKey',
       name: 'Login',
       component: () => import('@/components/Introduction.vue')
@@ -74,9 +79,8 @@ router.beforeEach((to, from, next) => {
   const authRequired = !publicPages.includes(to.name) // Login 해야 함
   const isLoggedIn = !!window.Kakao.Auth.getAccessToken() // Login이 되어 있는지 
  
-  
-  if(authRequired && isLoggedIn) next() 
-   
+  if(authRequired && isLoggedIn) next()
+  else if(to.path!=='/') next('/')
 })
 
 export default router

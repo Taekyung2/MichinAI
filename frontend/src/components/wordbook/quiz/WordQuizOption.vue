@@ -38,6 +38,12 @@
                             {{ quizType }}
                             </v-chip>
                         </v-chip-group>
+                        <p v-if="quizOption.selectedType=='OX'" class="quiz-type-explanation">
+                            단어를 보고 뜻을 '아는지', '모르는지' 체크하는 간단한 단어 암기 방법
+                        </p>
+                        <p v-if="quizOption.selectedType=='객관식'" class="quiz-type-explanation">
+                            4개의 지문 중에서 단어와 알맞은 뜻을 고르는 단어 퀴즈 
+                         </p>
                     </v-list-item-subtitle>
                     <v-divider></v-divider>
                 </v-list-item-content>
@@ -249,7 +255,11 @@ export default {
 .count-change-btn{
     margin: 0 5px;
 }
-.slide-fade-enter-active {
-  transition: all .3s ease;
+.quiz-type-explanation{
+    white-space: pre-line;
+    font-size: 12px;
+    color: var(--font-sub-color);
+    padding: 5px;
+
 }
 </style>

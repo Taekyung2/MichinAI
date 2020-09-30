@@ -30,12 +30,13 @@
           </v-switch>
         </div>
       </div>
-      <Word 
-        :word="word"
-        :isShowEng="isShowEng"
-        :isShowKor="isShowKor"
-        v-for="word in wordList" :key="word.id"/>
-          
+      <div class="wordList-container">
+        <Word 
+          :word="word"
+          :isShowEng="isShowEng"
+          :isShowKor="isShowKor"
+          v-for="word in wordList" :key="word.id"/>
+      </div>
       <p @click="back">뒤로가기</p>
       <div class="wordbookFAB">
         <WordbookFAB/>
@@ -57,7 +58,7 @@ export default {
     data() {
       return {
         wordList : [
-            {id:'1', eng: 'communicate ', kor: '경험, 연락을 주고받다, 의사소통을 하다.', check: false},
+            {id:'1', eng: 'communicate ', kor: '연락을 주고받다, 의사소통을 하다, (정보 등을) 전달하다.', check: false},
             {id:'2', eng: 'experience', kor: '경험', check: true},
             {id:'3', eng: 'education', kor: '교육', check: true},
             {id:'4', eng: 'symbol', kor: '상징', check: true},
@@ -126,6 +127,10 @@ color: var(--main-color);
 }
 .wordList-lenght{
   color: var(--font-soft-color);
+}
+.wordList-container{
+  margin-bottom: auto;
+  overflow: auto;
 }
 
 </style>

@@ -2,7 +2,7 @@
   <div class='word-container'>
     <div class="my-2">
     <div class="word">
-    <span :class="isShowEng? 'word-show': 'word-noshow'" > {{ word.eng }} </span> 
+    <span class="word-eng" :class="isShowEng? 'word-show': 'word-noshow'" > {{ word.eng }} </span> 
     
     <v-scroll-y-transition>
     <span :class="isShowKor? 'word-show': 'word-noshow'" class ="word-kor"> {{ word.kor }} </span>
@@ -45,9 +45,17 @@ export default {
   font-size: 20px;
   align-items: center;
 }
+.word-eng{
+  width: 60%;
+  text-align: left;
+  word-break:break-all;
+}
 .word-kor{
-  font-size: 14px;
-  color: var(--font-base-color);
+  margin-left: 10px;
+  font-size: 13px;
+  color: var(--font-sub-color);
+  text-align: right;
+  word-break: keep-all;
 }
 .word-show{
   color: var(--font-base-color);

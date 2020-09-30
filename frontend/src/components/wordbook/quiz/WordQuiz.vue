@@ -15,6 +15,10 @@
                 </div>
 
                 <div>
+                    {{quizWordIndex}}/{{quizWordList.length}}
+                </div>
+
+                <div>
                     <h1>{{quizWordList[0].eng}}</h1>
                     <v-divider></v-divider>
                     <h4>{{quizWordList[0].kor}}</h4>
@@ -23,7 +27,11 @@
                     <TypeOX/>
                 </div>
                 <div v-else class="quiz-type-container">
-                    <TypeChoiceKor :choiceKorList="choiceKorList"/>
+                    <TypeChoiceKor 
+                    :choiceKorList="choiceKorList"
+                    :quizAnswer="quizWordList[quizWordIndex]"
+                    @next-quiz="nextQuiz"
+                    />
                 </div>
                 
                 <div>
@@ -56,16 +64,15 @@ export default {
         return{
             playIcon: ['mdi-play','mdi-pause'],
             timer: 0,
-            quizWordList: [
-                {id:'', eng: ' ', kor: '', check: false}
-            ],
+            quizWordList: this.wordList,
             quizType: this.quizOption.selectedType,
             choiceKorList: [],
+            quizWordIndex: 0,
+            wrongCount: 0,
 
         }
     },
     props:{
-        selectAll: Boolean,
         wordList: Array,
         quizOption: Object,
     },
@@ -159,7 +166,11 @@ export default {
             this.initTime()
             this.initWordList()
             this.setChoiceKorList(this.wordList[0])
+        },
 
+        nextQuiz(check){
+
+            console.log('다음 문제!' , check)
         }
     },
 
