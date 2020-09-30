@@ -1,4 +1,4 @@
-package com.michin.ai.util;
+package com.michin.ai.common.util;
 
 import java.io.IOException;
 import java.util.List;

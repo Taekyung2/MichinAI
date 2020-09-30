@@ -12,16 +12,21 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.michin.ai.conversation.model.Conversation;
 import com.michin.ai.conversation.repository.ConvRepository;
-import com.michin.ai.util.BaseProperties;
 
 @Service
 public class ScrapingConvService {
+	@Value("${WEB_DRIVER_ID}")
+	private String WEB_DRIVER_ID;
+	@Value("${WEB_DRIVER_PATH}")
+	private String WEB_DRIVER_PATH;
 
 	@Autowired
 	private ConvRepository convRepo;
@@ -34,8 +39,10 @@ public class ScrapingConvService {
 		System.out.println("SCRAPING CONVERSATION : " + date);
 		String dateStr = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-		System.setProperty(BaseProperties.WEB_DRIVER_ID, BaseProperties.WEB_DRIVER_PATH);
-		driver = new ChromeDriver();
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		ChromeOptions options = new ChromeOptions();
+		options.setHeadless(true);
+		driver = new ChromeDriver(options);
 		String url = "https://learn.dict.naver.com/conversation#/endic/" + dateStr;
 		driver.get(url);
 		try {
