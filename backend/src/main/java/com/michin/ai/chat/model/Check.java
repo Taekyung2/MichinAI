@@ -13,8 +13,6 @@ import lombok.Data;
 @Data
 @Document
 public class Check {
-	@Id
-	private ObjectId id = new ObjectId();
 
 	private int fromPos;
 	private int toPos;

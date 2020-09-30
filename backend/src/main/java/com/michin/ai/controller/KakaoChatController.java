@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.michin.ai.chat.model.BotChat;
 import com.michin.ai.chat.service.ChatService;
 import com.michin.ai.conversation.model.Conversation;
 import com.michin.ai.conversation.service.ConvService;
+import com.michin.ai.kakao.dto.payload.Context;
 import com.michin.ai.kakao.dto.payload.SkillPayload;
 import com.michin.ai.kakao.dto.response.common.ButtonAction;
 import com.michin.ai.kakao.dto.response.common.QuickReply;
@@ -25,19 +27,22 @@ import com.michin.ai.kakao.dto.response.component.SimpleText;
 import com.michin.ai.kakao.dto.response.sample.SampleResponse;
 import com.michin.ai.kakao.model.response.SkillResponse;
 import com.michin.ai.kakao.model.response.SkillTemplate;
-import com.michin.ai.util.BaseProperties;
-import com.michin.ai.util.LanguageToolUtil;
 import com.michin.ai.word.model.Word;
 import com.michin.ai.word.model.Wordbook;
+import com.michin.ai.word.service.WordService;
 
 @RestController
 @RequestMapping("/kakao")
 public class KakaoChatController {
+
+	@Value("${BASE_URL}")
+	private String BASE_URL;
 	@Autowired
 	private ConvService convService;
 	@Autowired
 	private ChatService chatService;
-	private LanguageToolUtil lt;
+	@Autowired
+	private WordService wordService;
 
 	private Map<String, String> emojiMap;
 
@@ -59,7 +64,7 @@ public class KakaoChatController {
 			BotChat botChat = chatService.interactBot(userBotKey, "[BEGIN]");
 
 			return new SkillResponse(new SkillTemplate().addOutputs(
-					new SimpleText(botChat == null ? "대화를 시작하던 중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
+					new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
 							.toJson();
 		}
 
@@ -69,15 +74,17 @@ public class KakaoChatController {
 
 	@PostMapping("/chat")
 	public String chat(@RequestBody SkillPayload payload) {
-		if (payload.getContexts().size() == 0 || !payload.getContexts().get(0).getName().equals("chat_state"))
+		List<Context> contextList = payload.getContexts();
+		if (contextList.size() == 0 || contextList.get(0).getParams().size() == 0)
 			return new SampleResponse().fallBackCarousel().toJson();
 
 		String userBotKey = payload.getUserRequest().getUser().getId();
 		String utterance = payload.getUserRequest().getUtterance();
+		chatService.saveChat(userBotKey, "user", utterance);
 		BotChat botChat = chatService.interactBot(userBotKey, utterance);
 
 		return new SkillResponse(new SkillTemplate().addOutputs(
-				new SimpleText(botChat == null ? "대화를 시작하던 중 에러가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
+				new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
 						.toJson();
 	}
 
@@ -124,22 +131,20 @@ public class KakaoChatController {
 	@PostMapping("/wb_list")
 	public String wordbookList(@RequestBody SkillPayload payload) {
 		// 1. 유저 키로 유저 받아오기
+		String userId = "";
 
 		// 2. 유저 아이디로 단어장 리스트 찾기
-		List<Wordbook> wbList = new ArrayList<>();
-		IntStream.range(0, 10).forEach(i -> wbList.add(new Wordbook()));
+		List<Wordbook> wbList = wordService.getWordbook(userId);
 
 		if (wbList.isEmpty() || wbList.size() == 0) {
 			return new SkillResponse(new SkillTemplate().addOutputs(new BasicCard("생성한 단어장이 없습니다.", "단어장을 추가해보세요!",
-					null, null,
-					ButtonAction.WEBLINK.create("단어장 만들러 가기", BaseProperties.BASE_SERVER_URL + "/wordbook/list"))))
-							.toJson();
+					null, null, ButtonAction.WEBLINK.create("단어장 만들러 가기", BASE_URL + "/wordbook/list")))).toJson();
 		}
 
 		SimpleText text = new SimpleText("단어장을 선택해 주세요");
 		List<QuickReply> wbQuickReplies = new ArrayList<>();
 		for (Wordbook wb : wbList) {
-			wbQuickReplies.add(QuickReplyAction.BLOCK.create("WORDBOOK", "5f719021e842c7724277efba"));
+			wbQuickReplies.add(QuickReplyAction.BLOCK.create(wb.getName(), "5f719021e842c7724277efba"));
 		}
 
 		return new SkillResponse(new SkillTemplate().addOutputs(text).addQuickReplies(wbQuickReplies)).toJson();
@@ -147,9 +152,11 @@ public class KakaoChatController {
 
 	@PostMapping("/wb")
 	public SkillResponse wordbook(@RequestBody SkillPayload payload) {
+		String userId = "";
 		String wbName = payload.getUserRequest().getUtterance();
-		Wordbook wb = new Wordbook();
-		IntStream.range(0, 20).forEach(i -> wb.getWords().add(new Word()));
+//		Wordbook wb = new Wordbook();
+//		IntStream.range(0, 20).forEach(i -> wb.getWords().add(new Word()));
+		Wordbook wb = wordService.getWordbook(userId, wbName);
 
 		StringBuilder wordStr = new StringBuilder();
 		for (Word word : wb.getWords()) {
@@ -165,7 +172,7 @@ public class KakaoChatController {
 	public String connectWeb(@RequestBody SkillPayload payload) {
 		String userBotKey = payload.getUserRequest().getUser().getId();
 
-		if (true) { // check User connection
+		if (false) { // check User connection
 			return new SampleResponse().alreadyConnectBlock().toJson();
 		} else {
 			return new SampleResponse().connectBlock(userBotKey).toJson();

@@ -26,7 +26,6 @@ public class MatterMostSender {
 				Attachments attachments = new Attachments(excpetion, uri, params);
 
 				String payload = new Gson().toJson(attachments);
-				System.out.println(payload);
 
 				RestTemplate restTemplate = new RestTemplate();
 				HttpHeaders headers = new HttpHeaders();

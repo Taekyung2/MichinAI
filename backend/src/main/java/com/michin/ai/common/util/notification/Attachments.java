@@ -48,7 +48,7 @@ class Attachment {
 
 	public Attachment() {
 		this.color = "#ff5d52";
-		this.pretext = "@here";
+//		this.pretext = "@here";
 		this.author_name = "Back-End ERROR";
 		this.author_icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRO_K5_S6MDApkQ-jfChAWwy_iyWn-Nl-DhbA&usqp=CAU";
 	}

@@ -9,7 +9,7 @@ public class ApiResult extends HashMap<String, Object> {
 	  private static final long serialVersionUID = 877825499039674411L;
 
 	  private static final String MESSAGE_KEY = "message";
-	  private static final String ERROR_CODE_KEY = "errorReferenceCode";
+	  private static final String ERROR_CODE_KEY = "errorCode";
 
 	  public static ApiResult blank() {
 	    return new ApiResult();

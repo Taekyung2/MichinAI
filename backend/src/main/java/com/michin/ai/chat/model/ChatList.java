@@ -9,18 +9,21 @@ import javax.persistence.Id;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @Document
 public class ChatList {
 
 	@Id
+	@Builder.Default
 	private ObjectId id = new ObjectId();
-	
-	private String sender;
+
+	private String userId;
 	private LocalDate date;
-	
-	private List<Chat> chats =new ArrayList<>();
-	
+
+	private List<Chat> chats = new ArrayList<>();
+
 }
