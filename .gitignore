@@ -310,3 +310,4 @@ fabric.properties
 # pytype static type analyzer
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,django
+/.metadata/
