@@ -1,14 +1,14 @@
 <template>
     <div class="choice-container">
-        <v-btn 
+        <button
             v-for="(choiceKor, index) in choiceKorList" 
             :key="index"
             class="choice-btn"
             @click="submitUserAnswer(choiceKor)"
             v-text="choiceKor"
-            :disabled="isClickWord==true"
+            :disabled="isClickWord"
         >
-        </v-btn>
+        </button>
     </div>
 </template>
 
@@ -26,26 +26,32 @@ export default {
     },
     methods:{
         submitUserAnswer(choiceKor){
+
+            event.target.classList.remove('v-btn--disabled')
+            event.target.classList.remove('success--text')
             this.isClickWord = true
             if(this.quizAnswer.kor == choiceKor){
-                this.$emit('next-quiz',true)
+                this.$emit('next-choice-quiz','O')
                 event.target.classList.add('answer-word')
-                console.log('정답이다ㅏㅏ')
             }
             else{
-                this.$emit('next-quiz',false)
+                this.$emit('next-choice-quiz','X')
                 event.target.classList.add('wrong-word')
-                console.log('틀렸다ㅏ아ㅏ! 뭉충아아ㅏㅏㄴ')
+                for(let i=0; i<this.choiceKorList.length; i++){
+                    const korEl = document.getElementsByClassName('choice-btn')[i]
+                    if(korEl.textContent==this.quizAnswer.kor)
+                        korEl.classList.add('answer-word')
+                }
             }
             const eventClass = event.target.classList
             setTimeout(
                 function(){
-                    eventClass.remove('answer-word')
                     eventClass.remove('wrong-word')
-                    console.log(this.isClickWord)
-               }
-            ,2500)
-
+                    console.log(document.getElementsByClassName('answer-word')[0])
+                    document.getElementsByClassName('answer-word')[0].classList.remove('answer-word')
+                    this.isClickWord = false
+               }.bind(this)
+            ,1000)
         }
     },
 }
@@ -55,17 +61,36 @@ export default {
 .choice-container{
     display: flex;
     flex-direction: column;
+   
+    align-items: center;
+    height: 250px;
+    justify-content: space-between;
+
 }
 .choice-btn{
+    width: 85%;
     margin: 5px 0;
+    word-break: keep-all;
+    white-space: pre-wrap;
+    flex: 1 1 auto;
+    border-radius: 5px;
+    border: 1px solid var(--border-base-color);
+    padding: 10px;
+    text-transform: uppercase;
+    transition-duration: .28s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
 }
 .answer-word{
-    background: #B2FF59 !important;
+   background: #4caf50 !important;
 }
 .wrong-word{
-    background: #f85369 !important;
+   background: #ff5252 !important;
 }
-.disable-events {
-  pointer-events: none
+/* button:disabled {
+  opacity: 0.6;
+  background: tomato;
+} */
+.disabled{
+  pointer-events: none;
 }
 </style>

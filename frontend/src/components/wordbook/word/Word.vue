@@ -49,6 +49,7 @@ export default {
   width: 60%;
   text-align: left;
   word-break:break-all;
+  font-size: 18px;
 }
 .word-kor{
   margin-left: 10px;

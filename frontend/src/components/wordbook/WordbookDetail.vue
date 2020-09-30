@@ -9,7 +9,7 @@
               rounded
               color="var(--main-point-color)" 
               dark
-              @click="SET_SELECTED_QUIZ_OPTION"
+              @click="initQuiz"
               :wordList="wordList"
             > 
               Quiz
@@ -86,17 +86,20 @@ export default {
     },
     methods: {
       ...mapMutations([
-        'SET_SELECTED_QUIZ_OPTION',
+        'INIT_QUIZ',
       ]),
       back(){
         this.$router.push({name:'WordbookList'})
+      },
+      initQuiz(){
+        this.INIT_QUIZ()
       }
     },
     components: {
       Word,
       WordbookFAB,
       WordQuizOption
-    }
+    },
 }
 </script>
 

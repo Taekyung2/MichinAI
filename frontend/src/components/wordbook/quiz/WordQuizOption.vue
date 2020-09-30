@@ -39,10 +39,10 @@
                             </v-chip>
                         </v-chip-group>
                         <p v-if="quizOption.selectedType=='OX'" class="quiz-type-explanation">
-                            단어를 보고 뜻을 '아는지', '모르는지' 체크하는 간단한 단어 암기 방법
+                            단어를 보고 뜻을 '아는지', '모르는지' 체크하는 간단한 단어 암기법
                         </p>
                         <p v-if="quizOption.selectedType=='객관식'" class="quiz-type-explanation">
-                            4개의 지문 중에서 단어와 알맞은 뜻을 고르는 단어 퀴즈 
+                            4지 선다형으로 단어와 알맞은 뜻을 고르는 단어 퀴즈 
                          </p>
                     </v-list-item-subtitle>
                     <v-divider></v-divider>
