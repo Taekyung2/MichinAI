@@ -13,7 +13,7 @@
 
             <div class="quiz-container">
                 <div v-if="quizOption.selectedTime != '제한없음' ">
-                    <h3>시간</h3>
+                    <h3>{{ timer }}</h3>
                 </div>
 
                 <div>
@@ -125,7 +125,7 @@ export default {
                 this.timer = null
             else{
                 let time = this.quizOption.selectedTime
-                this.timer = time.substring(0, time.length-1)
+                this.timer = time.substring(0, time.length-1) * 60
             }
         },
         initWordList(){
@@ -216,9 +216,7 @@ export default {
     created(){
          this.initOption()
     },
-    mounted(){
-        // this.initOption()
-    }
+
 }
 </script>
 

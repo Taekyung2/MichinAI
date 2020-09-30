@@ -1,7 +1,19 @@
 <template>
   <div class="wordbook-detail" align="center">
+     
+      <v-progress-circular
+        :rotate="-90"
+        :size="60"
+        :width="10"
+        :value="progress"
+        color="var(--main-color)"
+        class="wordbook-progress"
+      >
+        {{ progress }}
+      </v-progress-circular>
       <h2>{{ wordbook.name }}</h2> 
       <span class="wordList-lenght">단어({{ wordList.length }})</span>
+      <v-divider style="margin:10px 0px 5px 0px"></v-divider>
       <div>
         <div class="switch-container">
           <span class="quiz-container">
@@ -73,7 +85,8 @@ export default {
         selectAll: false,
         isShowKor: true,
         isShowEng: true,
-        switchWord: ['switch-kor-before', 'switch-kor-after' ]
+        switchWord: ['switch-kor-before', 'switch-kor-after' ],
+        progress: 0,
       }
     },
 
@@ -99,6 +112,18 @@ export default {
       Word,
       WordbookFAB,
       WordQuizOption
+    },
+    created () {
+      let count=0
+      this.wordList.forEach(word => {
+         if(word.check) {
+              count++
+        }
+      });
+        
+      this.interval = setInterval(() => {
+        return this.progress = (count/this.wordList.length)*100
+      }, 1000)
     },
 }
 </script>
@@ -135,5 +160,7 @@ color: var(--main-color);
   margin-bottom: auto;
   overflow: auto;
 }
-
+.wordbook-progress{
+  margin: 10px 0px;
+}
 </style>

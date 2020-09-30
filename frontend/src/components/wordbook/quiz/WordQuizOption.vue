@@ -49,7 +49,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item>
+            <!-- <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title>
                         <h5 class="option-title">제한시간</h5>
@@ -68,7 +68,7 @@
                     </v-list-item-subtitle>
                     <v-divider></v-divider>
                 </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
 
 
             <v-list-item>
@@ -156,7 +156,7 @@
                     <v-divider></v-divider>
                 </v-list-item-content>
             </v-list-item>
-            <v-list-item>
+            <v-list-item class="option-start">
                 <v-list-item-content>
                     <v-btn
                         color="primary"
@@ -234,7 +234,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .option-title{
     color: var(--font-sub-color);
 }
@@ -243,7 +243,8 @@ export default {
 }
 .select-time{
     padding-top: 0px;
-    margin-top: 0px;
+    margin-top: 8px;
+    margin-bottom: 12px;
 }
 .v-messages__message{
     color: var(--font-sub-color);
@@ -261,5 +262,13 @@ export default {
     color: var(--font-sub-color);
     padding: 5px;
 
+}
+.v-list-item__content{
+    padding:10px 0px;
+    padding-bottom: 0px;
+}
+.option-start{
+    padding: 10px;
+    padding-bottom: 15px;
 }
 </style>
