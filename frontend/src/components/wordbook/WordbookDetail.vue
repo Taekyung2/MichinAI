@@ -80,6 +80,8 @@ export default {
             {id:'8', eng: 'comfort', kor: '안락, 위안', check: true},
             {id:'9', eng: 'progress', kor: '진전, 진척, 진행', check: false},
             {id:'10', eng: 'inadequate', kor: '불충분한, 부적당한', check: false},
+            {id:'11', eng: 'test', kor: '테스트, 시도', check: false},
+   
         ],
         quizDialog: false,
         selectAll: false,
