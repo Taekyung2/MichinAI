@@ -110,7 +110,7 @@ export default {
         this.INIT_QUIZ()
       }
     },
-    components: {
+    components: {       
       Word,
       WordbookFAB,
       WordQuizOption
@@ -124,7 +124,7 @@ export default {
       });
         
       this.interval = setInterval(() => {
-        return this.progress = (count/this.wordList.length)*100
+        return this.progress = Math.round((count/this.wordList.length)*100)
       }, 1000)
     },
 }

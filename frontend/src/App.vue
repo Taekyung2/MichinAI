@@ -13,18 +13,12 @@
         </div>
         
       </div>
-
-      <div class="footer-container">
-        <Footer/>
-      </div>
-      
     </div>
   </v-app>
 </template>
 <script>
 import Home from '@/components/Home.vue'
 import Introduction from '@/components/Introduction.vue'
-import Footer from '@/components/Footer.vue'
 
 import { mapGetters, mapMutations } from 'vuex'
 export default {
@@ -32,7 +26,6 @@ export default {
   components: {
     Home,
     Introduction,
-    Footer,
   },
   computed :{
     ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin']),
@@ -66,15 +59,7 @@ export default {
   --border-base-color : #a6a6a6;
 }
 
-#app{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-#nav{
-  margin-bottom: auto;
-}
-.footer-container{
-  margin-top: auto;
+.container{
+   /* background-color: rgb(250, 250, 250); */
 }
 </style>
