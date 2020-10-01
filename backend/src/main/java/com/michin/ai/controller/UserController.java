@@ -24,24 +24,12 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<ApiResult> login(@RequestBody SaveUserPayload payload)  {
+		
+		if (payload.getUserId() == 0) {
+			return Result.failure("userId가 존재하지 않습니다.");
+		}
 		User user = userService.save(payload.toCommand());
 		
 		return Result.ok();
-	}
-	
-	@PostMapping("/link")
-	public ResponseEntity<ApiResult> LinkToBot(@RequestBody SaveUserPayload payload) {
-		
-		long id = payload.getUserId();
-		String botKey = payload.getUserBotKey();
-		
-		if (botKey == null || botKey.length() == 0) {
-			return Result.failure("botKey가 존재하지 않습니다.");
-		} else if (id == 0) {
-			return Result.failure("userId가 존재하지 않습니다.");
-		} else {
-			User user = userService.link(payload.toCommand());
-			return Result.ok();
-		}
 	}
 }

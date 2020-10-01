@@ -20,6 +20,8 @@ public class UserServiceImpl implements UserService{
 		if (user != null) {
 			if (!command.getName().equals(user.getName()))
 				user.setName(command.getName());
+			if (user.getBotKey() == null || user.getBotKey().length() == 0)
+				user.setBotKey(command.getBotKey());
 		} else {
 			user = new User(command.getId(), command.getName(), command.getBotKey());
 		}
@@ -27,19 +29,6 @@ public class UserServiceImpl implements UserService{
 		return userRepository.save(user);
 	}
 	
-	@Override
-	public User link(SaveUserCommand command) {
-		User user = findById(command.getId());
-		
-		if (user.getBotKey() == null || user.getBotKey().length() == 0) {
-			user.setBotKey(command.getBotKey());
-			return userRepository.save(user);
-		}
-		
-		return null;
-		
-	}
-
 	@Override
 	public User findById(Long id) {
 		return userRepository.findById(id).orElse(null);
