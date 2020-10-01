@@ -1,6 +1,7 @@
 package com.michin.ai.kakao.dto.response.sample;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.michin.ai.kakao.dto.response.common.Button;
 import com.michin.ai.kakao.dto.response.common.ButtonAction;
@@ -10,6 +11,7 @@ import com.michin.ai.kakao.dto.response.component.Component;
 import com.michin.ai.kakao.model.response.SkillResponse;
 import com.michin.ai.kakao.model.response.SkillTemplate;
 
+@ComponentScan
 public class SampleResponse {
 	@Value("${BASE_URL}")
 	private String BASE_URL;
@@ -26,6 +28,7 @@ public class SampleResponse {
 	}
 
 	public Button connectButton(String userBotKey) {
+		System.out.println(BASE_URL);
 		return ButtonAction.WEBLINK.create("연동하기", BASE_URL + "/connection?userBotKey=" + userBotKey);
 	}
 
@@ -34,7 +37,7 @@ public class SampleResponse {
 	}
 
 	public SkillResponse connectErrorBlock(String userBotKey) {
-		return this.toResponse(new BasicCard("카카오톡 연동하기", "등록되지 않은 사용자입니다.\n 미친AI에 이메일을 연결해주세요!",
+		return this.toResponse(new BasicCard("카카오톡 연동하기", "등록되지 않은 사용자입니다.\n미친AI에 이메일을 연결해주세요!",
 				new Thumbnail("https://i.ibb.co/SB9Y1Yw/Kakao-Talk-20200919-194442791.png"), null,
 				connectButton(userBotKey)));
 	}
