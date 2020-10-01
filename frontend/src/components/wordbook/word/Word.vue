@@ -2,7 +2,10 @@
   <div class='word-container'>
     <div class="my-2">
     <div class="word">
-    <span class="word-eng" :class="isShowEng? 'word-show': 'word-noshow'" > {{ word.eng }} </span> 
+    <span class="word-eng" :class="isShowEng? 'word-show': 'word-noshow'" >
+      <v-icon v-if="!word.check"  style="color:var(--border-base-color)">mdi-star-outline</v-icon> 
+      <v-icon v-if="word.check" style="color:var(--main-sub-color)">mdi-star</v-icon>
+      {{ word.eng }} </span> 
     
     <v-scroll-y-transition>
     <span :class="isShowKor? 'word-show': 'word-noshow'" class ="word-kor"> {{ word.kor }} </span>
@@ -49,6 +52,7 @@ export default {
   width: 60%;
   text-align: left;
   word-break:break-all;
+  font-size: 18px;
 }
 .word-kor{
   margin-left: 10px;

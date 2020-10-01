@@ -1,7 +1,19 @@
 <template>
   <div class="wordbook-detail" align="center">
+     
+      <v-progress-circular
+        :rotate="-90"
+        :size="60"
+        :width="10"
+        :value="progress"
+        color="var(--main-color)"
+        class="wordbook-progress"
+      >
+        {{ progress }}
+      </v-progress-circular>
       <h2>{{ wordbook.name }}</h2> 
       <span class="wordList-lenght">단어({{ wordList.length }})</span>
+      <v-divider style="margin:10px 0px 5px 0px"></v-divider>
       <div>
         <div class="switch-container">
           <span class="quiz-container">
@@ -9,7 +21,7 @@
               rounded
               color="var(--main-point-color)" 
               dark
-              @click="SET_SELECTED_QUIZ_OPTION"
+              @click="initQuiz"
               :wordList="wordList"
             > 
               Quiz
@@ -68,12 +80,15 @@ export default {
             {id:'8', eng: 'comfort', kor: '안락, 위안', check: true},
             {id:'9', eng: 'progress', kor: '진전, 진척, 진행', check: false},
             {id:'10', eng: 'inadequate', kor: '불충분한, 부적당한', check: false},
+            {id:'11', eng: 'test', kor: '테스트, 시도', check: false},
+   
         ],
         quizDialog: false,
         selectAll: false,
         isShowKor: true,
         isShowEng: true,
-        switchWord: ['switch-kor-before', 'switch-kor-after' ]
+        switchWord: ['switch-kor-before', 'switch-kor-after' ],
+        progress: 0,
       }
     },
 
@@ -86,17 +101,32 @@ export default {
     },
     methods: {
       ...mapMutations([
-        'SET_SELECTED_QUIZ_OPTION',
+        'INIT_QUIZ',
       ]),
       back(){
         this.$router.push({name:'WordbookList'})
+      },
+      initQuiz(){
+        this.INIT_QUIZ()
       }
     },
     components: {
       Word,
       WordbookFAB,
       WordQuizOption
-    }
+    },
+    created () {
+      let count=0
+      this.wordList.forEach(word => {
+         if(word.check) {
+              count++
+        }
+      });
+        
+      this.interval = setInterval(() => {
+        return this.progress = (count/this.wordList.length)*100
+      }, 1000)
+    },
 }
 </script>
 
@@ -132,5 +162,7 @@ color: var(--main-color);
   margin-bottom: auto;
   overflow: auto;
 }
-
+.wordbook-progress{
+  margin: 10px 0px;
+}
 </style>

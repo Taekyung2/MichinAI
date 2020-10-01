@@ -1,21 +1,12 @@
 <template>
     <div class="ox-container">
-    <div class="ox-btn"> 
+    <div class="ox-btn" v-for="(ox,index) in oxValue" :key="index"> 
         <v-btn
             class="ox-btn"
-            color="success"
+            :color="oxColor[index]"
             dark
         >
-            <v-icon>mdi-circle-outline</v-icon>
-        </v-btn>
-    </div>
-    <div class="ox-btn">
-        <v-btn
-            class="ox-btn"
-            color="error"
-            dark
-        >
-            <v-icon>mdi-close</v-icon>
+            <v-icon class = "ox-icon" @click="submitUserAnswer" :value="oxValue[index]">{{ oxIcon[index] }}</v-icon>
         </v-btn>
     </div>
     </div>  
@@ -23,7 +14,19 @@
 
 <script>
 export default {
-    name: 'WordQuizTypeOX'
+    name: 'WordQuizTypeOX',
+    data(){
+        return{
+            oxColor: ['error', 'success'],
+            oxValue: ['O','X'],
+            oxIcon: ['mdi-circle-outline','mdi-close'],
+        }
+    },
+    methods:{
+        submitUserAnswer(){
+            this.$emit('next-ox-quiz',event.target.value)
+        }
+    }
 }
 </script>
 
@@ -32,9 +35,20 @@ export default {
     display: flex;
 }
 .ox-btn{
-    flex-basis: 50%
+    flex-basis: 50%;
 }
 .v-btn{
-    width: 100%
+    width: 100%;
 }
+.ox-icon{
+    width: 100%;
+}
+.v-icon.v-icon::after {
+    border-radius: 0px;
+    background-color: transparent !important;
+}
+.disabled{
+  pointer-events: none;
+}
+
 </style>

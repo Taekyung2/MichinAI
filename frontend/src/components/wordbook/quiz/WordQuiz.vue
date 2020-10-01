@@ -1,4 +1,6 @@
 <template>
+    <div>
+
     <v-dialog v-model="isStartedQuiz" fullscreen hide-overlay @click.stop transition="dialog-bottom-transition">
         <v-card>
             <v-toolbar dark color="primary">
@@ -11,26 +13,31 @@
 
             <div class="quiz-container">
                 <div v-if="quizOption.selectedTime != '제한없음' ">
-                    <h3>시간</h3>
+                    <h3>{{ timer }}</h3>
                 </div>
 
                 <div>
                     {{quizWordIndex}}/{{quizWordList.length}}
                 </div>
+                <div>
+                    맞은개수 : {{quizWordIndex - wrongCount}}
+                </div>
 
                 <div>
-                    <h1>{{quizWordList[0].eng}}</h1>
-                    <v-divider></v-divider>
-                    <h4>{{quizWordList[0].kor}}</h4>
+                    <h1>{{quizWordList[quizWordIndex].eng}}</h1>
                 </div>
                 <div v-if="quizType=='OX'" class="quiz-type-container">
-                    <TypeOX/>
+                    <v-divider></v-divider>
+                    <h4 v-if="showKor">{{quizWordList[quizWordIndex].kor}}</h4>
+                    <TypeOX
+                    @next-ox-quiz="nextQuiz"
+                    />
                 </div>
-                <div v-else class="quiz-type-container">
+                <div v-else class="quiz-choice-container" >
                     <TypeChoiceKor 
                     :choiceKorList="choiceKorList"
                     :quizAnswer="quizWordList[quizWordIndex]"
-                    @next-quiz="nextQuiz"
+                    @next-choice-quiz="nextQuiz"
                     />
                 </div>
                 
@@ -51,12 +58,20 @@
             </div>
         </v-card>
     </v-dialog>
+    <div v-if="isResultQuiz">
+        <WordQuizResult
+            :resultCount="quizWordList.length - wrongCount"
+            :resultWordList="quizWordList"
+        />
+    </div>
+    </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import TypeChoiceKor from '@/components/wordbook/quiz/WordQuizTypeChoiceKor.vue'
 import TypeOX from '@/components/wordbook/quiz/WordQuizTypeOX.vue'
+import WordQuizResult from '@/components/wordbook/quiz/WordQuizResult.vue'
 
 export default {
     name: 'WordQuiz',
@@ -69,7 +84,8 @@ export default {
             choiceKorList: [],
             quizWordIndex: 0,
             wrongCount: 0,
-
+            showKor: false,
+            isResult: false,
         }
     },
     props:{
@@ -78,12 +94,14 @@ export default {
     },
     components:{
         TypeChoiceKor,
-        TypeOX
+        TypeOX,
+        WordQuizResult,
     },
 
     computed: {
       ...mapGetters([
         'isStartedQuiz',
+        'isResultQuiz'
       ]),
     },
 
@@ -91,6 +109,7 @@ export default {
         ...mapMutations([
             'SET_SELECTED_QUIZ_OPTION',
             'SET_STARTED_QUIZ',
+            'SET_RESULT_QUIZ',
         ]),
         
         async initSequence(){
@@ -106,7 +125,7 @@ export default {
                 this.timer = null
             else{
                 let time = this.quizOption.selectedTime
-                this.timer = time.substring(0, time.length-1)
+                this.timer = time.substring(0, time.length-1) * 60
             }
         },
         initWordList(){
@@ -130,6 +149,7 @@ export default {
         },
         
         setChoiceKorList(questionWord){
+            this.choiceKorList = []
             let randomList = []
             this.choiceKorList.push(questionWord.kor)
 
@@ -169,17 +189,34 @@ export default {
         },
 
         nextQuiz(check){
-
             console.log('다음 문제!' , check)
+            this.showKor = true
+            setTimeout(function(){
+                if(check=='X'){
+                    this.wrongCount++
+                    this.quizWordList[this.quizWordIndex++].check = false
+                }else {
+                    this.quizWordList[this.quizWordIndex++].check = true
+                }
+                this.showKor = false
+              
+
+                if(this.quizWordIndex == this.quizWordList.length){
+                    this.SET_RESULT_QUIZ()
+                    // this.SET_STARTED_QUIZ()
+                    this.quizWordIndex--;
+                    
+                }else if(this.quizType=="객관식"){
+                    this.setChoiceKorList(this.quizWordList[this.quizWordIndex])
+                }
+            }.bind(this),1000)
         }
     },
 
     created(){
          this.initOption()
     },
-    mounted(){
-        // this.initOption()
-    }
+
 }
 </script>
 
@@ -188,6 +225,7 @@ export default {
     display: flex;
     flex-direction: column;
     text-align: center;
+    
 }
 
 </style>

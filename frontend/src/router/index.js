@@ -69,18 +69,18 @@ const router = new VueRouter({
 })
 
 // 페이지 검증
-// router.beforeEach((to, from, next) => {
-//   // 로그인이 필요 없는 Page
-//   const publicPages = ['/']
+router.beforeEach((to, from, next) => {
+  // 로그인이 필요 없는 Page
+  const publicPages = ['/']
 
-//   if(to.query.userBotKey){
-//     localStorage.setItem('userBotKey', to.query.userBotKey)
-//   }
-//   const authRequired = !publicPages.includes(to.name) // Login 해야 함
-//   const isLoggedIn = !!window.Kakao.Auth.getAccessToken() // Login이 되어 있는지 
+  if(to.query.userBotKey){
+    localStorage.setItem('userBotKey', to.query.userBotKey)
+  }
+  const authRequired = !publicPages.includes(to.name) // Login 해야 함
+  const isLoggedIn = !!window.Kakao.Auth.getAccessToken() // Login이 되어 있는지 
  
-//   if(authRequired && isLoggedIn) next()
-//   else if(to.path!=='/') next('/')
-// })
+  if(authRequired && isLoggedIn) next()
+  else if(to.path!=='/') next('/')
+})
 
 export default router

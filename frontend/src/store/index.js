@@ -20,7 +20,9 @@ export default new Vuex.Store({
 
     isSelectedQuizOption: false,
     isStartedQuiz: false,
+    isResultQuiz: false,
     userBotKey: '',
+
   },
   
   // state를 (가공해서) 가져올 함수들
@@ -36,6 +38,9 @@ export default new Vuex.Store({
     },
     isStartedQuiz(state){
       return state.isStartedQuiz
+    },
+    isResultQuiz(state){
+      return state.isResultQuiz
     },
     userBotKey(state){
       return state.userBotKey
@@ -57,9 +62,21 @@ export default new Vuex.Store({
     SET_STARTED_QUIZ(state){
       state.isStartedQuiz = !state.isStartedQuiz
     },
+    SET_RESULT_QUIZ(state){
+      state.isResultQuiz = !state.isResultQuiz
+    },
     SET_USERBOT_KEY(state, botKey){
       state.userBotKey = botKey
     },
+    INIT_QUIZ(state){
+      state.isSelectedQuizOption = true
+      state.isStartedQuiz = false
+      state.isResultQuiz = false
+    },
+    END_QUIZ(state){
+      state.isStartedQuiz = false
+      state.isResultQuiz = false
+    }
   },
 
   // 범용적인 함수들 (dispatch를 통해 실행)
