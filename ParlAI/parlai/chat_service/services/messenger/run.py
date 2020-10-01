@@ -31,6 +31,7 @@ def run(opt):
     opt['service'] = SERVICE_NAME
     manager = MessengerManager(opt)
     try:
+        print('hi')
         manager.start_task()
     except BaseException:
         raise
