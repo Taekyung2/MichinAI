@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.michin.ai.controller.result.ApiResult;
-import com.michin.ai.controller.result.Result;
+import com.michin.ai.common.ApiResult;
+import com.michin.ai.common.Result;
 import com.michin.ai.user.dto.payload.SaveUserPayload;
 import com.michin.ai.user.model.User;
 import com.michin.ai.user.service.UserService;
