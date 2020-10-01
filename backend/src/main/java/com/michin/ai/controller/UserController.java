@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.michin.ai.controller.result.ApiResult;
+import com.michin.ai.controller.result.Result;
+import com.michin.ai.user.dto.payload.SaveUserPayload;
 import com.michin.ai.user.model.User;
 import com.michin.ai.user.service.UserService;
 
@@ -21,26 +23,25 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping("/login")
-	public ResponseEntity<ApiResult> login(@RequestBody User user)  {
+	public ResponseEntity<ApiResult> login(@RequestBody SaveUserPayload payload)  {
+		User user = userService.save(payload.toCommand());
 		
-		User origin = userService.findById(user.getId());
-		
-		if (origin != null) {
-			if (!origin.getName().equals(user.getName()))
-				userService.save(user);
-		} else {
-			userService.save(user);
-		}
-		
-		return ;
+		return Result.ok();
 	}
 	
 	@PostMapping("/link")
-	public ResponseEntity<ApiResult> LinkToBot() {
+	public ResponseEntity<ApiResult> LinkToBot(@RequestBody SaveUserPayload payload) {
 		
-		User user = userService.findById(id);
-		user.setBotKey(botKey);
+		long id = payload.getUserId();
+		String botKey = payload.getUserBotKey();
 		
-		userService.save(user);
+		if (botKey == null || botKey.length() == 0) {
+			return Result.failure("botKey가 존재하지 않습니다.");
+		} else if (id == 0) {
+			return Result.failure("userId가 존재하지 않습니다.");
+		} else {
+			User user = userService.link(payload.toCommand());
+			return Result.ok();
+		}
 	}
 }

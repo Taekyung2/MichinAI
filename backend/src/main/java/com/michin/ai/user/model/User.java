@@ -26,9 +26,10 @@ public class User {
 	@Setter
 	private String botKey;
 	
-	public User(String name, Long id) {
-		this.name = name;
+	public User(Long id, String name, String botKey) {
 		this.id = id;
+		this.name = name;
+		this.botKey = botKey;
 	}
 	
 }
