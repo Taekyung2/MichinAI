@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <h3>단어장 리스트 입니다.</h3>
     <div class='wordbook-list-container'>
       <v-row>
       <WordbookListItem 

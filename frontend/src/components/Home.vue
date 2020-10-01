@@ -35,6 +35,11 @@ export default {
 </script>
 
 <style>
+.navigation-container{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
 .footer-container{
   margin-top: auto;
 }
