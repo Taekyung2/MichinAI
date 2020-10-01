@@ -44,6 +44,7 @@ class InteractiveWorld(DialogPartnerWorld):
             print("\n... preparing new chat... \n")
 
     def parley(self):
+        from time import time
         """
         Agent 0 goes first.
 
@@ -63,6 +64,7 @@ class InteractiveWorld(DialogPartnerWorld):
             # .act() 에서 입력 받는데??
             # parlai/agents/local_human/act
             act = deepcopy(agents[0].act())
+            start = time()
         except StopIteration:
             self.reset()
             self.finalize_episode()
@@ -88,3 +90,4 @@ class InteractiveWorld(DialogPartnerWorld):
         if act['episode_done']:
             self.finalize_episode()
             self.turn_cnt = 0
+        print('답변 생성 시간 : {}'.format(time() - start))
