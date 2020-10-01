@@ -1,6 +1,6 @@
 package com.michin.ai.chat.model;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Id;
@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -24,6 +23,6 @@ public class Chat {
 
 	private String msg;
 	private String sender;
-	private LocalTime time;
+	private LocalDateTime time;
 	private List<Check> check;
 }

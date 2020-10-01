@@ -9,9 +9,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.michin.ai.chat.dto.ChatsDeletePayload;
 import com.michin.ai.chat.model.BotChat;
 import com.michin.ai.chat.model.Chat;
 import com.michin.ai.chat.model.ChatList;
@@ -38,7 +40,7 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public BotChat interactBot(String userBotKey, String msg) {
 		BotChat botChat = null;
-		
+
 		try {
 			URL url = new URL(CHAT_URL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -77,7 +79,7 @@ public class ChatServiceImpl implements ChatService {
 	@Async
 	@Override
 	public void saveChat(String userBotKey, String sender, String msg) {
-		Chat chat = Chat.builder().time(LocalTime.now()).msg(msg.trim()).sender(sender).build();
+		Chat chat = Chat.builder().time(LocalDateTime.now()).msg(msg.trim()).sender(sender).build();
 
 		if (sender.equals("user"))
 			chat.setCheck(lt.spellCheck(msg));
@@ -86,7 +88,17 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public ChatList loadChatList(String userId, LocalDate date) {
-		return null;
+	public List<ChatList> loadChatList(String userId) {
+		return chatRepo.findByUserIdOrderByDateDesc(userId);
+	}
+
+	@Override
+	public void deleteChatList(List<String> ids) {
+		chatRepo.deleteByIdIn(ids);
+	}
+
+	@Override
+	public void deleteChats(ChatsDeletePayload payload) {
+		chatRepo.deleteChatsByIds(payload);
 	}
 }

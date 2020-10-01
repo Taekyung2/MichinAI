@@ -1,7 +1,7 @@
 package com.michin.ai.chat.dto;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +17,11 @@ import com.michin.ai.common.Result;
 import lombok.Data;
 
 public class ChatResponse {
+
+	public static ResponseEntity<ApiResult> build(List<ChatList> chatList) {
+		return Result.ok(ApiResult.blank().add("chatList",
+				chatList.stream().map(c -> new ChatListDto(c)).collect(Collectors.toList())));
+	}
 
 	public static ResponseEntity<ApiResult> build(ChatList chatList) {
 		return Result.ok(ApiResult.blank().add("chatList", new ChatListDto(chatList)));
@@ -41,7 +46,7 @@ public class ChatResponse {
 	private static class ChatDto {
 		private String msg;
 		private String sender;
-		private LocalTime time;
+		private LocalDateTime time;
 		private List<CheckDto> check;
 
 		public ChatDto(Chat chat) {

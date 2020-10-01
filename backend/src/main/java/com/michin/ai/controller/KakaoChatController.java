@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +25,17 @@ import com.michin.ai.kakao.dto.response.common.QuickReplyAction;
 import com.michin.ai.kakao.dto.response.component.BasicCard;
 import com.michin.ai.kakao.dto.response.component.SimpleText;
 import com.michin.ai.kakao.dto.response.sample.SampleResponse;
+import com.michin.ai.kakao.exception.NotConnectException;
 import com.michin.ai.kakao.model.response.SkillResponse;
 import com.michin.ai.kakao.model.response.SkillTemplate;
 import com.michin.ai.word.model.Word;
 import com.michin.ai.word.model.Wordbook;
 import com.michin.ai.word.service.WordService;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
+@ApiIgnore
 @RequestMapping("/kakao")
 public class KakaoChatController {
 
@@ -131,7 +135,7 @@ public class KakaoChatController {
 	@PostMapping("/wb_list")
 	public String wordbookList(@RequestBody SkillPayload payload) {
 		// 1. 유저 키로 유저 받아오기
-		String userId = "";
+		String userId = "userId";
 
 		// 2. 유저 아이디로 단어장 리스트 찾기
 		List<Wordbook> wbList = wordService.getWordbook(userId);
@@ -144,28 +148,25 @@ public class KakaoChatController {
 		SimpleText text = new SimpleText("단어장을 선택해 주세요");
 		List<QuickReply> wbQuickReplies = new ArrayList<>();
 		for (Wordbook wb : wbList) {
-			wbQuickReplies.add(QuickReplyAction.BLOCK.create(wb.getName(), "5f719021e842c7724277efba"));
+			wbQuickReplies.add(QuickReplyAction.BLOCK.create("📔 " + wb.getName(), "5f719021e842c7724277efba"));
 		}
 
 		return new SkillResponse(new SkillTemplate().addOutputs(text).addQuickReplies(wbQuickReplies)).toJson();
 	}
 
 	@PostMapping("/wb")
-	public SkillResponse wordbook(@RequestBody SkillPayload payload) {
-		String userId = "";
-		String wbName = payload.getUserRequest().getUtterance();
-//		Wordbook wb = new Wordbook();
-//		IntStream.range(0, 20).forEach(i -> wb.getWords().add(new Word()));
+	public String wordbook(@RequestBody SkillPayload payload) {
+		String userId = "userId";
+		String wbName = payload.getUserRequest().getUtterance().substring(3);
+
 		Wordbook wb = wordService.getWordbook(userId, wbName);
 
-		StringBuilder wordStr = new StringBuilder();
+		StringBuilder wordStr = new StringBuilder("📖 " + wbName + "\n\n");
 		for (Word word : wb.getWords()) {
-			wordStr.append(word.getEng()).append("\n\n");
+			wordStr.append(word.getEng()).append('\n').append(' ').append('-').append(word.getKor()).append("\n\n");
 		}
 
-		new SkillResponse(new SkillTemplate().addOutputs(new SimpleText(wordStr.toString()))).toJson();
-
-		return null;
+		return new SkillResponse(new SkillTemplate().addOutputs(new SimpleText(wordStr.toString()))).toJson();
 	}
 
 	@PostMapping("/connect")
@@ -178,6 +179,12 @@ public class KakaoChatController {
 			return new SampleResponse().connectBlock(userBotKey).toJson();
 		}
 
+	}
+
+	@ExceptionHandler(NotConnectException.class)
+	public String notConnectWithWeb(String userBotKey) {
+		System.out.println("연결이 되지 않은 사용자의 요청!");
+		return new SampleResponse().connectErrorBlock(userBotKey).toJson();
 	}
 
 }
