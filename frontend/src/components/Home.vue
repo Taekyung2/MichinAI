@@ -14,15 +14,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+
 import Navigation from '@/components/Navigation.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
     name: 'Home',
-    methods:{
-        ...mapActions('Kakao', ['logout']),
-    },
+
     created() {
         this.$router.push({name: 'Conversation'})
     },
@@ -40,6 +38,10 @@ export default {
     top: 0;
     z-index: 1;
 }
+.home-router-container{
+   background-color: rgb(250, 250, 250);
+}
+
 .footer-container{
   margin-top: auto;
 }

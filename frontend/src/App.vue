@@ -50,7 +50,7 @@ export default {
   
   /* --footer-color : #F2CC06; */
   --footer-color : #252525;
-  --navigation-color : #7DB3D9;
+  --navigation-color : #252525;
   --font-base-color : #252525;
   --font-sub-color : #777777;
   --font-soft-color : #a6a6a6;
@@ -59,7 +59,20 @@ export default {
   --border-base-color : #a6a6a6;
 }
 
-.container{
-   /* background-color: rgb(250, 250, 250); */
+*{ 
+  /* font-family: 'NanumSquare', sans-serif !important;  */
+  font-family: 'BMJUA';
 }
+
+.eng-text{
+  font-family: 'NanumSquareRound';
+}
+/* 글꼴 머하징 흑ㅎㄱ */
+@font-face { font-family: 'Bazzi'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'BMJUA'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'BMDOHYEON'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'InfinitySans-RegularA1'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'NanumSquareRound'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'YESGothic-Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/YESGothic-Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
 </style>

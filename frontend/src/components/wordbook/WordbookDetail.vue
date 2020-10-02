@@ -11,7 +11,7 @@
       >
         {{ progress }}
       </v-progress-circular>
-      <h2>{{ wordbook.name }}</h2> 
+      <h2 class="eng-text">{{ wordbook.name }}</h2> 
       <span class="wordList-lenght">단어({{ wordList.length }})</span>
       <v-divider style="margin:10px 0px 5px 0px"></v-divider>
       <div>
@@ -49,8 +49,8 @@
           :isShowKor="isShowKor"
           v-for="word in wordList" :key="word.id"/>
       </div>
-      <p @click="back">뒤로가기</p>
-      <div class="wordbookFAB">
+      <!-- <p @click="back">뒤로가기</p> -->
+      <div v-if="false" class="wordbookFAB">
         <WordbookFAB/>
       </div>
       <div v-if="isSelectedQuizOption">
@@ -158,9 +158,11 @@ color: var(--main-color);
 .wordList-lenght{
   color: var(--font-soft-color);
 }
+
 .wordList-container{
-  margin-bottom: auto;
-  overflow: auto;
+  /* height: 370px;
+  overflow-y: auto; */
+  margin-bottom: 56px;
 }
 .wordbook-progress{
   margin: 10px 0px;
