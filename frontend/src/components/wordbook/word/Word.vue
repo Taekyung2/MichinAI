@@ -2,9 +2,9 @@
   <div class='word-container'>
     <div class="my-2">
     <div class="word">
-    <span class="word-eng" :class="isShowEng? 'word-show': 'word-noshow'" >
-      <v-icon v-if="!word.check"  style="color:var(--border-base-color)">mdi-star-outline</v-icon> 
-      <v-icon v-if="word.check" style="color:var(--main-sub-color)">mdi-star</v-icon>
+    <span class="word-eng eng-text" :class="isShowEng? 'word-show': 'word-noshow'" >
+      <v-icon v-if="!word.check"  style="color:var(--border-base-color)">mdi-bookmark-outline</v-icon> 
+      <v-icon v-if="word.check" style="color:var(--main-sub-color)">mdi-bookmark</v-icon>
       {{ word.eng }} </span> 
     
     <v-scroll-y-transition>
@@ -39,24 +39,25 @@ export default {
 .word-container{
     border: 1px solid var(--border-base-color);
     border-radius: 3px;
+    /* border-left: 7px solid var(--main-point-color); */
+    /* box-shadow: 0 0 0 3px green inset; */
 }
 
 .word{
   display: flex;
   justify-content: space-between;
   margin : auto 10px;
-  font-size: 20px;
   align-items: center;
 }
 .word-eng{
   width: 60%;
   text-align: left;
   word-break:break-all;
-  font-size: 18px;
+  font-size: 1.1rem;
 }
 .word-kor{
   margin-left: 10px;
-  font-size: 13px;
+  font-size: 0.85rem;
   color: var(--font-sub-color);
   text-align: right;
   word-break: keep-all;
@@ -69,4 +70,5 @@ export default {
   color: white;
   transition-duration: 0.3s;
 }
+
 </style>

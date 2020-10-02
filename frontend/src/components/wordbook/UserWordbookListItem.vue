@@ -7,8 +7,8 @@
     <v-list-item three-line>
       <v-list-item-content>
         <div class="wordbook-content">
-            <span class="wordbook-name">{{wordbook.name}}</span> 
-            <span class="wordbook-total">{{wordbook.total}}</span>
+            <span class="wordbook-name eng-text">{{wordbook.name}}</span> 
+            <span class="wordbook-total eng-text">{{wordbook.total}}</span>
         </div>
         
       </v-list-item-content>
