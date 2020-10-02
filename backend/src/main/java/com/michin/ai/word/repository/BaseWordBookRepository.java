@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.michin.ai.word.model.Basewordbook;
 
 @Repository
-public interface BaseWordBookRepository extends MongoRepository<Basewordbook, ObjectId>{
+public interface BaseWordBookRepository extends MongoRepository<Basewordbook, ObjectId>, BaseWordBookCustomRepository {
 
 }

@@ -156,7 +156,7 @@ public class KakaoChatController {
 
 	@PostMapping("/wb")
 	public String wordbook(@RequestBody SkillPayload payload) {
-		String userId = "userId";
+		Long userId = (long) 123456789;
 		String wbName = payload.getUserRequest().getUtterance().substring(3);
 
 		Wordbook wb = wordService.getWordbook(userId, wbName);

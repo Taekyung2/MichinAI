@@ -11,7 +11,7 @@ public interface WordBookCustomRepository {
 	
 	void addWord(Word word, String wordbook_id);
 	
-	Wordbook findByNameAndUserId(String user_id, String name);
+	Wordbook findByNameAndUserId(Long user_id, String name);
 	
 	void delWord(String wordbook_id, String word_id);
 	

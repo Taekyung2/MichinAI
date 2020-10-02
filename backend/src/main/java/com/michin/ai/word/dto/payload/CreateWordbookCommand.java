@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateWordbookCommand {
-	private String user_id;
+	private Long user_id;
 	private String name;
 }

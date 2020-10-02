@@ -13,6 +13,7 @@ import com.michin.ai.word.dto.payload.ChangeContentCommand;
 import com.michin.ai.word.dto.payload.CreateWordbookCommand;
 import com.michin.ai.word.dto.payload.EditNameCommand;
 import com.michin.ai.word.dto.payload.Word_content;
+import com.michin.ai.word.model.Basewordbook;
 import com.michin.ai.word.model.Word;
 import com.michin.ai.word.model.Wordbook;
 import com.michin.ai.word.repository.BaseWordBookRepository;
@@ -34,7 +35,7 @@ public class WordServiceImpl implements WordService{
 	}
 	
 	@Override
-	public Wordbook getWordbook(String user_id, String name) {
+	public Wordbook getWordbook(Long user_id, String name) {
 		return wordBookRepo.findByNameAndUserId(user_id, name);
 	}
 
@@ -94,6 +95,27 @@ public class WordServiceImpl implements WordService{
 		for(Word word : word_list)
 			wordBookRepo.changeContent(command.getWordbook_id(), word);
 		return wordBookRepo.findById(new ObjectId(command.getWordbook_id())).get();
+	}
+
+	@Override
+	public void addBasewordbook(int level) {
+		Basewordbook basewordbook = new Basewordbook();
+		basewordbook.setLevel(level);
+		baseWordBookRepo.insert(basewordbook);
+	}
+
+	@Override
+	public void addWordtoBasewordbook(AddWordCommand command) {
+		List<Word_content> content_list = command.getContents();
+		for(Word_content wc : content_list) {
+			Word word = Word.create(wc.getEng(), wc.getKor());
+			baseWordBookRepo.addWord(command.getWordbook_id(), word);
+		}
+	}
+	
+	@Override
+	public List<Basewordbook> getBasewordbook() {
+		return baseWordBookRepo.findAll();
 	}
 	
 }

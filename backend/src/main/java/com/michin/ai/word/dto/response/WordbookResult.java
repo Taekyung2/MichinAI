@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.michin.ai.common.ApiResult;
 import com.michin.ai.common.Result;
+import com.michin.ai.word.model.Basewordbook;
 import com.michin.ai.word.model.Word;
 import com.michin.ai.word.model.Wordbook;
 
@@ -53,6 +54,25 @@ public class WordbookResult {
 		return Result.ok(apiResult);
 	}
 	
+	public static ResponseEntity<ApiResult> build_base(List<Basewordbook> bwb_list) {
+		ArrayList<BasewordbookData> wordbooksData = new ArrayList<>();
+		for(Basewordbook wb : bwb_list) {
+			List<WordData> wordsData = new ArrayList<>();
+			for(Word word : wb.getWords()) {
+				wordsData.add(new WordData(word.getId().toString(),
+											word.getEng(),
+											word.getKor(),
+											word.isCheck()));
+			}			
+			wordbooksData.add(new BasewordbookData(wb.getId().toString(),
+											wb.getLevel(),
+											wordsData));
+		}
+		ApiResult apiResult = ApiResult.blank()
+				.add("wordbooks", wordbooksData);
+		return Result.ok(apiResult);
+	}
+	
 	@Data
 	@AllArgsConstructor
 	private static class WordData {
@@ -67,7 +87,15 @@ public class WordbookResult {
 	private static class WordbookData {
 		private String id;
 		private String name;
-		private String user_id;
+		private Long user_id;
+		private List<WordData> words;
+	}
+	
+	@Data
+	@AllArgsConstructor
+	private static class BasewordbookData {
+		private String id;
+		private int level;
 		private List<WordData> words;
 	}
 }
