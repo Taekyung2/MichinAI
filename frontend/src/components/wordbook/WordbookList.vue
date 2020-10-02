@@ -16,17 +16,16 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-      <div class="selected_menu-container">
-        <!-- 내 단어장 -->
-        <v-row v-if="selectedMenuItem==0">
-          <UserWordbookListItem 
-            :wordbook="wordbook"
-            v-for="wordbook in wordbookList" :key="wordbook.id"/>
-        </v-row>
-        <!-- 기본 단어장 -->
-        <div v-if="selectedMenuItem==1">
-          <BaseWordbookListItem/>
-        </div>
+
+      <!-- 내 단어장 -->
+      <v-row v-if="selectedMenuItem==0" key="userWordbook">
+        <UserWordbookListItem 
+          :wordbook="wordbook"
+          v-for="wordbook in wordbookList" :key="wordbook.id"/>
+      </v-row>
+      <!-- 기본 단어장 -->
+      <div v-if="selectedMenuItem==1" key="baseWordbook">
+        <BaseWordbookListItem/>
       </div>
       
     </div>
@@ -81,6 +80,7 @@ export default {
   border-radius: 24px !important;
   width: 230px;
   height: 48px;
+  margin-bottom: 10px;
 }
 .wordbook-menu-item{
   display: flex;

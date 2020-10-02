@@ -10,7 +10,7 @@
         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
         <!-- <v-toolbar-title>Title</v-toolbar-title> -->
-        <v-icon>mdi-arrow-left</v-icon>
+        <!-- <v-icon>mdi-arrow-left</v-icon> -->
         <v-toolbar-title class="title"> Title</v-toolbar-title>
         <v-spacer></v-spacer>
 
