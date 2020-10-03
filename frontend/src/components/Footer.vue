@@ -13,24 +13,24 @@
   >
                
     <v-btn router-link to='/conversation'>
-      <span>오늘의 회화</span>
+      <span class="footer-text">오늘의 회화</span>
 
       <v-icon>mdi-book-open-page-variant-outline</v-icon>
     </v-btn>
 
     <v-btn router-link to='/chatbot/list'>
-      <span>챗봇</span>
+      <span class="footer-text">챗봇</span>
       <v-icon>mdi-message-text</v-icon>
     </v-btn>
 
     <v-btn router-link to='/wordbook/list'>
-      <span>단어장</span>
+      <span class="footer-text">단어장</span>
 
       <v-icon>mdi-bookshelf</v-icon>
     </v-btn>
 
     <v-btn router-link to='/score'> 
-      <span>내점수</span>
+      <span class="footer-text">내점수</span>
 
       <v-icon>mdi-account-circle</v-icon>
     </v-btn>
@@ -42,17 +42,7 @@
 export default {
     name: 'Footer',
     data: () => ({ value: 0 }),
-    computed: {
-      color () {
-        switch (this.value) {
-          case 0: return 'blue-grey'
-          case 1: return 'teal'
-          case 2: return 'brown'
-          case 3: return 'indigo'
-          default: return 'blue-grey'
-        }
-      },
-    }
+   
 }
 </script>
 
@@ -73,4 +63,9 @@ export default {
 .v-item-group.v-bottom-navigation--shift .v-btn--active .v-btn__content > *:not(.v-icon){
   top: calc(100% - 5px)
 }
+
+.footer-text{
+  font-family: 'BMJUA' !important;
+}
+
 </style>
