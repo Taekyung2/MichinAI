@@ -13,18 +13,12 @@
         </div>
         
       </div>
-
-      <div class="footer-container">
-        <Footer/>
-      </div>
-      
     </div>
   </v-app>
 </template>
 <script>
 import Home from '@/components/Home.vue'
 import Introduction from '@/components/Introduction.vue'
-import Footer from '@/components/Footer.vue'
 
 import { mapGetters, mapMutations } from 'vuex'
 export default {
@@ -32,7 +26,6 @@ export default {
   components: {
     Home,
     Introduction,
-    Footer,
   },
   computed :{
     ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin']),
@@ -57,7 +50,7 @@ export default {
   
   /* --footer-color : #F2CC06; */
   --footer-color : #252525;
-  --navigation-color : #7DB3D9;
+  --navigation-color : #252525;
   --font-base-color : #252525;
   --font-sub-color : #777777;
   --font-soft-color : #a6a6a6;
@@ -66,15 +59,20 @@ export default {
   --border-base-color : #a6a6a6;
 }
 
-#app{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+*{ 
+  /* font-family: 'NanumSquare', sans-serif !important;  */
+  font-family: 'BMJUA';
 }
-#nav{
-  margin-bottom: auto;
+
+.eng-text{
+  font-family: 'NanumSquareRound';
 }
-.footer-container{
-  margin-top: auto;
-}
+/* 글꼴 머하징 흑ㅎㄱ */
+@font-face { font-family: 'Bazzi'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'BMJUA'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'BMDOHYEON'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'InfinitySans-RegularA1'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'NanumSquareRound'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'YESGothic-Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/YESGothic-Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
 </style>

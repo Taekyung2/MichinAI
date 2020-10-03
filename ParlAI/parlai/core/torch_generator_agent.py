@@ -584,6 +584,7 @@ class TorchGeneratorAgent(TorchAgent, ABC):
         """
         super().set_interactive_mode(mode, shared)
         if mode:
+            # 원래 False임 임시로 True로 만들어봤음.
             self.skip_generation = False
         else:
             self.skip_generation = self.opt.get('skip_generation', False)
@@ -863,13 +864,16 @@ class TorchGeneratorAgent(TorchAgent, ABC):
         """
         Evaluate a single batch of examples.
         """
+
         if batch.text_vec is None and batch.image is None:
             return
         if batch.text_vec is not None:
             bsz = batch.text_vec.size(0)
         else:
             bsz = len(batch.image)
+
         self.model.eval()
+
         cand_scores = None
         token_losses = None
 
@@ -880,12 +884,12 @@ class TorchGeneratorAgent(TorchAgent, ABC):
                 token_losses = self._construct_token_losses(
                     batch.label_vec, model_output
                 )
-
         preds = None
         if self.skip_generation:
             warn_once("--skip-generation true produces limited metrics")
         else:
             maxlen = self.label_truncate or 256
+            # 요기 오래 걸령
             beam_preds_scores, _ = self._generate(batch, self.beam_size, maxlen)
             preds, scores = zip(*beam_preds_scores)
             self._add_generation_metrics(batch, preds)
@@ -918,6 +922,7 @@ class TorchGeneratorAgent(TorchAgent, ABC):
             # compute additional bleu scores
             self._compute_fairseq_bleu(batch, preds)
             self._compute_nltk_bleu(batch, text)
+
         return Output(text, cand_choices, token_losses=token_losses)
 
     def _treesearch_factory(self, device):
@@ -1081,13 +1086,15 @@ class TorchGeneratorAgent(TorchAgent, ABC):
         model = self.model
         if isinstance(model, torch.nn.parallel.DistributedDataParallel):
             model = self.model.module
+
+        # here
         encoder_states = model.encoder(*self._encoder_input(batch))
+
         if batch.text_vec is not None:
             dev = batch.text_vec.device
         else:
             assert batch.label_vec is not None, "need label_vec for _generate"
             dev = batch.label_vec.device
-
         bsz = (
             len(batch.text_lengths)
             if batch.text_lengths is not None
@@ -1108,9 +1115,11 @@ class TorchGeneratorAgent(TorchAgent, ABC):
         decoder_input = self._get_initial_decoder_input(bsz, beam_size, dev)
 
         inds = torch.arange(bsz).to(dev).unsqueeze(1).repeat(1, beam_size).view(-1)
-        encoder_states = model.reorder_encoder_states(encoder_states, inds)
-        incr_state = None
 
+        encoder_states = model.reorder_encoder_states(encoder_states, inds)
+
+        incr_state = None
+        # 이거이 오래걸린단 말씀
         for _ts in range(max_ts):
             if all((b.is_done() for b in beams)):
                 # exit early if possible

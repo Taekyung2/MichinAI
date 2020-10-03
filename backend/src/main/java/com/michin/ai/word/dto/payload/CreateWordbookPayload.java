@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CreateWordbookPayload {
-	private String user_id;
+	private Long user_id;
 	private String name;
 	
 	public CreateWordbookCommand toCommand() {

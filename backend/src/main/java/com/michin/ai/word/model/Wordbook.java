@@ -16,13 +16,13 @@ public class Wordbook {
 	@Id
 	private ObjectId id;
 	
-	private String user_id;
+	private Long user_id;
 	
 	private String name;
 	
 	private List<Word> words = new ArrayList<Word>();
 	
-	public static Wordbook create(String user_id, String name) {
+	public static Wordbook create(Long user_id, String name) {
 		Wordbook wb = new Wordbook();
 		wb.setUser_id(user_id);
 		wb.setName(name);

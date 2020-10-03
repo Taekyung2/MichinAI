@@ -83,9 +83,6 @@ export default {
         percentage: (this.resultCount/this.resultWordList.length)*100,
       }
     },
-    beforeDestroy () {
-      clearInterval(this.interval)
-    },
     mounted () {
       this.interval = setInterval(() => {
         return this.value = (this.resultCount/this.resultWordList.length)*100

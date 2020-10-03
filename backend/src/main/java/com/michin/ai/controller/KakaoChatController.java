@@ -162,7 +162,7 @@ public class KakaoChatController {
 	@PostMapping("/wb")
 	public String wordbook(@RequestBody SkillPayload payload) {
 		User user = getUserByUserBotKey(payload);
-		String userId = String.valueOf(user.getId());
+		Long userId = user.getId();
 		String wbName = payload.getUserRequest().getUtterance().substring(3);
 
 		Wordbook wb = wordService.getWordbook(userId, wbName);

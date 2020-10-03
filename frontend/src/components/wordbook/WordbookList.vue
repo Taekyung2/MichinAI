@@ -1,12 +1,33 @@
 <template>
   <div class="container">
-    <h3>단어장 리스트 입니다.</h3>
-    <div class='wordbook-list-container'>
-      <v-row>
-      <WordbookListItem 
-        :wordbook="wordbook"
-        v-for="wordbook in wordbookList" :key="wordbook.id"/>
+    <div class="wordbook-list-container" align="center">
+      <v-list>
+        <v-list-item-group
+          v-model="selectedMenuItem"
+          mandatory
+          color="var(--main-point-color)"
+          class="wordbook-menu-group"
+        >
+          <v-list-item class="menu-l wordbook-menu-item rounded-l-xl">
+            <span>내 단어장</span>
+          </v-list-item>
+          <v-list-item class="menu-r wordbook-menu-item rounded-r-xl"> 
+            <span>기본 단어장</span>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
+      <!-- 내 단어장 -->
+      <v-row v-if="selectedMenuItem==0" key="userWordbook">
+        <UserWordbookListItem 
+          :wordbook="wordbook"
+          v-for="wordbook in wordbookList" :key="wordbook.id"/>
       </v-row>
+      <!-- 기본 단어장 -->
+      <div v-if="selectedMenuItem==1" key="baseWordbook">
+        <BaseWordbookListItem/>
+      </div>
+      
     </div>
     <div>
       <!-- <WordbookFAB/> -->
@@ -17,7 +38,9 @@
 </template>
 
 <script>
-import WordbookListItem from '@/components/wordbook/WordbookListItem.vue'
+import UserWordbookListItem from '@/components/wordbook/UserWordbookListItem.vue'
+import BaseWordbookListItem from '@/components/wordbook/BaseWordbookListItem.vue'
+
 // import WordbookCreate from '@/components/wordbook/WordbookCreate.vue'
 // import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
 
@@ -35,11 +58,13 @@ export default {
             {id:'7',name:'workshop -7', total:33},
             {id:'8',name:'workshop -8', total:50},
         ],
+        selectedMenuItem : 0,
         
       }
     },
     components: {
-      WordbookListItem,
+      UserWordbookListItem,
+      BaseWordbookListItem,
       // WordbookCreate,
       // WordbookFAB
     }
@@ -48,5 +73,34 @@ export default {
 </script>
 
 <style>
+
+.wordbook-menu-group{
+  display: flex;
+  border: 1px solid var(--border-base-color);
+  border-radius: 24px !important;
+  width: 230px;
+  height: 48px;
+  margin-bottom: 10px;
+}
+.wordbook-menu-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0;
+}
+
+.menu-l.v-list-item--link:before{
+  border-top-left-radius: 24px !important;
+  border-bottom-left-radius: 24px !important;
+}
+
+.menu-r.v-list-item--link:before{
+  border-top-right-radius: 24px !important;
+  border-bottom-right-radius: 24px !important;
+}
+
+.selected_menu-container{
+  display: flex;
+}
 
 </style>

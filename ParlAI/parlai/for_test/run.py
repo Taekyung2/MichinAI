@@ -5,42 +5,48 @@ from parlai.for_test.interactive_app.create_interactive import Interactive
 from twisted.web.server import Site
 from twisted.internet import threads
 from twisted.internet import reactor, endpoints
+from pprint import pprint
+from copy import deepcopy
+
 
 app = Klein()
 
 
 def test(body):
-    # return json.dumps(world[body['u_id']].parley(body['msg']), indent=4)
-    reply = world.parley(body['u_id'], body['msg'])
-    print(reply)
-    return json.dumps(reply, indent=4)
+    return json.dumps(world[body['u_id']].parley('base', body['msg']), indent=4)
+
+    # reply = world.parley(body['u_id'], body['msg'])
+    # print(reply)
+    # return json.dumps(reply, indent=4)
+
     # return json.dumps(world.parley(body['u_id'], body['msg']), indent=4)
 
 
 @app.route("/bot/interact", methods=['POST'])
 def interact(request):
     body = json.loads(request.content.read())
-    return threads.deferToThread(test, body)
+    return threads.deferToThread(test, deepcopy(body))
 
 
 @app.route("/bot/start", methods=['POST'])
 def bot_start(request):
     body = json.loads(request.content.read())
-    # world[body['u_id']] = world['base'].clone()
-    # world[body['u_id']].set_agents([base_agents[0].clone(), base_agents[1].clone()])
-    world.new_user(body['u_id'])
+    world[body['u_id']] = world['base'].clone()
+    world[body['u_id']].set_agents([base_agents[0].clone(), base_agents[1].clone()])
+    # world.new_user(body['u_id'])
+    pprint(world)
     return body['u_id']
 
 
-# world = {}
+world = {}
 
-# world['base'] = Interactive.main(
-world = Interactive.main(
+world['base'] = Interactive.main(
+# world = Interactive.main(
     model_file='zoo:blender/blender_90M/model',
     # single_turn=True,
-    task='blended_skill_talk'
 )
-# base_agents = world['base'].get_agents()
+
+base_agents = world['base'].get_agents()
 
 reactor.suggestThreadPoolSize(20)
 
