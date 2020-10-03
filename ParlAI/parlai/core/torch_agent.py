@@ -1909,7 +1909,7 @@ class TorchAgent(ABC, Agent):
         """
         # BatchWorld handles calling self_observe, but we're in a Hogwild or Interactive
         # world, so we need to handle this ourselves.
-        # 배치 액트가 모두 끝나야 나온다. 왤까?
+
         response = self.batch_act([self.observation])[0]
         self.self_observe(response)
         return response
@@ -1938,7 +1938,6 @@ class TorchAgent(ABC, Agent):
 
         # create a batch from the vectors
         batch = self.batchify(observations)
-
         self.global_metrics.add('exps', GlobalTimerMetric(batch.batchsize))
 
         if (
@@ -1964,22 +1963,16 @@ class TorchAgent(ABC, Agent):
             self.global_metrics.add('tpb', ttpb)
             self.global_metrics.add('tps', GlobalTimerMetric(ct + lt))
 
-        # 여그가 오래걸리는거여
         if self.is_training:
             # register the start of updates for later counting when they occur
-            print('헤윙1')
             self.global_metrics.add('ups', GlobalTimerMetric(0))
-            print('헤윙2')
             output = self.train_step(batch)
-            print('헤윙3')
         else:
-            print('헤윙4')
             with torch.no_grad():
-                print('헤윙5')
                 # save memory and compute by disabling autograd.
                 # use `with torch.enable_grad()` to gain back gradients.
+                # 여그가 오래 걸리는거여
                 output = self.eval_step(batch)
-                print('헤윙6')
 
         if output is not None:
             # local metrics are automatically matched up
