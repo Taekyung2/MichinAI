@@ -1,7 +1,7 @@
 package com.michin.ai.chat.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +46,7 @@ public class ChatResponse {
 	private static class ChatDto {
 		private String msg;
 		private String sender;
-		private LocalDateTime time;
+		private LocalTime time;
 		private List<CheckDto> check;
 
 		public ChatDto(Chat chat) {

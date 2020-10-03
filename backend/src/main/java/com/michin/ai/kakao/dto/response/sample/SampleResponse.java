@@ -11,10 +11,15 @@ import com.michin.ai.kakao.dto.response.component.Component;
 import com.michin.ai.kakao.model.response.SkillResponse;
 import com.michin.ai.kakao.model.response.SkillTemplate;
 
-@ComponentScan
+@org.springframework.stereotype.Component
 public class SampleResponse {
-	@Value("${BASE_URL}")
+
 	private String BASE_URL;
+
+	@Value("${BASE_URL}")
+	public void setBASE_URL(String BASE_URL) {
+		this.BASE_URL = BASE_URL;
+	}
 
 	public SkillResponse toResponse(Component output) {
 		SkillTemplate template = new SkillTemplate().addOutputs(output);

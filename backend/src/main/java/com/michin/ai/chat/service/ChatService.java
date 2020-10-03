@@ -12,6 +12,8 @@ public interface ChatService {
 
 	BotChat interactBot(String userBotKey, String msg);
 
+	BotChat startBot(String userBotKey);
+
 	@Async
 	void saveChat(String userBotKey, String sender, String msg);
 
@@ -20,4 +22,5 @@ public interface ChatService {
 	void deleteChatList(List<String> ids);
 
 	void deleteChats(ChatsDeletePayload payload);
+
 }

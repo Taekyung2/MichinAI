@@ -24,6 +24,6 @@ public class ChatList {
 	private String userId;
 	private LocalDate date;
 
-	private List<Chat> chats = new ArrayList<>();
+	private List<Chat> chats;
 
 }

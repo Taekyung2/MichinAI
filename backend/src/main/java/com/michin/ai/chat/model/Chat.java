@@ -1,6 +1,7 @@
 package com.michin.ai.chat.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Id;
@@ -23,6 +24,8 @@ public class Chat {
 
 	private String msg;
 	private String sender;
-	private LocalDateTime time;
-	private List<Check> check;
+	private LocalTime time;
+
+//	@Builder.Default
+	private List<Check> check = new ArrayList<>();
 }

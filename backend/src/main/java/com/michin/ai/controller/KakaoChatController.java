@@ -55,6 +55,8 @@ public class KakaoChatController {
 	private WordService wordService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SampleResponse sampleRes;
 
 	private Map<String, String> emojiMap;
 
@@ -69,10 +71,10 @@ public class KakaoChatController {
 	@PostMapping("/chat/start")
 	public String chatStart(@RequestBody SkillPayload payload) {
 		// 1. 사용자가 회원인지 확인
-//		User user = getUserByUserBotKey(payload);
+		User user = getUserByUserBotKey(payload);
 
-//		BotChat botChat = chatService.interactBot(user.getBotKey(), "[BEGIN]");
-		BotChat botChat = chatService.interactBot("DD", "[BEGIN]");
+		BotChat botChat = chatService.interactBot(user.getBotKey(), "[BEGIN]");
+//		BotChat botChat = chatService.interactBot("DD", "[BEGIN]");
 
 		return new SkillResponse(new SkillTemplate().addOutputs(
 				new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
@@ -84,14 +86,12 @@ public class KakaoChatController {
 	@PostMapping("/chat")
 	public String chat(@RequestBody SkillPayload payload) {
 		List<Context> contextList = payload.getContexts();
-		System.out.println(contextList);
 		if (contextList.size() == 0 || contextList.get(0).getParams().size() == 0)
-			return new SampleResponse().fallBackCarousel().toJson();
+			return sampleRes.fallBackCarousel().toJson();
 
 		String userBotKey = payload.getUserRequest().getUser().getId();
 		String utterance = payload.getUserRequest().getUtterance();
 
-		chatService.saveChat(userBotKey, "user", utterance);
 		BotChat botChat = chatService.interactBot(userBotKey, utterance);
 
 		return new SkillResponse(new SkillTemplate().addOutputs(
@@ -180,9 +180,9 @@ public class KakaoChatController {
 		String userBotKey = payload.getUserRequest().getUser().getId();
 		User user = userService.findByBotKey(userBotKey);
 		if (user != null) { // check User connection
-			return new SampleResponse().alreadyConnectBlock().toJson();
+			return sampleRes.alreadyConnectBlock().toJson();
 		} else {
-			return new SampleResponse().connectBlock(userBotKey).toJson();
+			return sampleRes.connectBlock(userBotKey).toJson();
 		}
 
 	}
@@ -198,8 +198,7 @@ public class KakaoChatController {
 
 	@ExceptionHandler(NotConnectException.class)
 	public String notConnectWithWeb(NotConnectException e) {
-		return new SampleResponse().connectErrorBlock(e.getUserBotKey()).addContext(new ContextValue("chat_state", 0))
-				.toJson();
+		return sampleRes.connectErrorBlock(e.getUserBotKey()).addContext(new ContextValue("chat_state", 0)).toJson();
 	}
 
 }
