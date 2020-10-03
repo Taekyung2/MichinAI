@@ -7,13 +7,14 @@ import com.michin.ai.word.dto.payload.ChangeCheckCommand;
 import com.michin.ai.word.dto.payload.ChangeContentCommand;
 import com.michin.ai.word.dto.payload.CreateWordbookCommand;
 import com.michin.ai.word.dto.payload.EditNameCommand;
+import com.michin.ai.word.model.Basewordbook;
 import com.michin.ai.word.model.Wordbook;
 
 public interface WordService {
 	
 	List<Wordbook> getWordbook(String user_id);
 	
-	Wordbook getWordbook(String user_id, String name);
+	Wordbook getWordbook(Long user_id, String name);
 	
 	Wordbook createWordbook(CreateWordbookCommand command);
 	
@@ -29,4 +30,9 @@ public interface WordService {
 	
 	Wordbook changeContent(ChangeContentCommand command);
 	
+	void addBasewordbook(int level);
+	
+	void addWordtoBasewordbook(AddWordCommand command);
+	
+	List<Basewordbook> getBasewordbook();
 }

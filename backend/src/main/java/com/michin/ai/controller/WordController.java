@@ -28,6 +28,7 @@ import com.michin.ai.word.dto.payload.CreateWordbookPayload;
 import com.michin.ai.word.dto.payload.EditNameCommand;
 import com.michin.ai.word.dto.payload.EditNamePayload;
 import com.michin.ai.word.dto.response.WordbookResult;
+import com.michin.ai.word.model.Basewordbook;
 import com.michin.ai.word.model.Wordbook;
 import com.michin.ai.word.service.WordService;
 
@@ -92,5 +93,24 @@ public class WordController {
 		ChangeContentCommand command = payload.toCommand();
 		Wordbook wb = wordService.changeContent(command);
 		return WordbookResult.build(wb);
+	}
+	
+	@PostMapping("/base")
+	public ResponseEntity<ApiResult> createBasewordbook(@RequestBody int level) {
+		wordService.addBasewordbook(level);
+		return Result.ok();
+	}
+	
+	@PutMapping("/base/word")
+	public ResponseEntity<ApiResult> addWordtoBasewordbook(@RequestBody AddWordPayload payload) {
+		AddWordCommand command = payload.toCommand();
+		wordService.addWordtoBasewordbook(command);
+		return Result.ok();
+	}
+	
+	@GetMapping("/base")
+	public ResponseEntity<ApiResult> getBasewordbook() {
+		List<Basewordbook> basewordbook_list = wordService.getBasewordbook();
+		return WordbookResult.build_base(basewordbook_list);
 	}
 }

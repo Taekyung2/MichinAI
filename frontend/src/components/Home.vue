@@ -1,61 +1,48 @@
 <template>
-    <div>
-        <div class="nav">
-        <v-card >
-            <v-app-bar
-            color="var(--navigation-color)"
-            dark
-            >
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-            <!-- <v-toolbar-title>Title</v-toolbar-title> -->
-
-            <v-spacer></v-spacer>
-
-            <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
-
-            <v-btn icon>
-                <v-icon @click="logout()">mdi-power-standby</v-icon>
-            </v-btn>
-
-            <template v-slot:extension>
-                <v-tabs align-with-title>
-                <v-tab router-link to='/conversation'>오늘의 회화</v-tab>   
-                <v-tab router-link to='/chatbot/list'>챗봇</v-tab>
-                <v-tab router-link to='/wordbook/list'>단어장</v-tab>
-                <v-tab router-link to='/score'>내점수</v-tab>
-                </v-tabs>
-            </template>
-            </v-app-bar>
-        </v-card>
+    <div class="home-container">
+        <div class="navigation-container">
+            <Navigation/>
         </div>
-        <div id="home-container">
-            <router-view/>
+        <div id="home-router-container">
+            <router-view />
+        </div>
+        <div class="footer-container">
+            <Footer/>
         </div>
   
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+
+import Navigation from '@/components/Navigation.vue'
+import Footer from '@/components/Footer.vue'
+
 export default {
     name: 'Home',
-     methods:{
-        ...mapActions('Kakao', ['logout']),
-    },
+
     created() {
         this.$router.push({name: 'Conversation'})
     },
+    components:{
+        Navigation,
+        Footer,
+    }
 
 }
 </script>
 
 <style>
-.nav{
+.navigation-container{
     position: sticky;
     top: 0;
     z-index: 1;
+}
+.home-router-container{
+   background-color: rgb(250, 250, 250);
+}
+
+.footer-container{
+  margin-top: auto;
 }
 </style>

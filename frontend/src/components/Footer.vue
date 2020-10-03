@@ -1,47 +1,76 @@
 <template> 
  <v-footer
       padless
+      fixed
+      grow
     >
-      <v-card
-        flat
-        tile
-        width="100%"
-        color="var(--footer-color) "
-        class="lighten-1 text-center"
-      >
-        <!-- <v-card-text>
-          <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4"
-            icon
-          >
-            <v-icon size="24px">{{ icon }}</v-icon>
-          </v-btn>
-        </v-card-text>
+  
+    <v-bottom-navigation
+    v-model="value"
+    shift
+    color="var(--main-color)"
+    class="footer-navigation"
+  >
+               
+    <v-btn router-link to='/conversation'>
+      <span>오늘의 회화</span>
 
-        <v-divider></v-divider> -->
+      <v-icon>mdi-book-open-page-variant-outline</v-icon>
+    </v-btn>
 
-        <v-card-text class="white--text">
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-        </v-card-text>
-      </v-card>
+    <v-btn router-link to='/chatbot/list'>
+      <span>챗봇</span>
+      <v-icon>mdi-message-text</v-icon>
+    </v-btn>
+
+    <v-btn router-link to='/wordbook/list'>
+      <span>단어장</span>
+
+      <v-icon>mdi-bookshelf</v-icon>
+    </v-btn>
+
+    <v-btn router-link to='/score'> 
+      <span>내점수</span>
+
+      <v-icon>mdi-account-circle</v-icon>
+    </v-btn>
+  </v-bottom-navigation>
     </v-footer>
 </template>
 
 <script>
 export default {
     name: 'Footer',
-     data: () => ({
-      icons: [
-        'mdi-home',
-        'mdi-email',
-        'mdi-calendar',
-      ],
-     })
+    data: () => ({ value: 0 }),
+    computed: {
+      color () {
+        switch (this.value) {
+          case 0: return 'blue-grey'
+          case 1: return 'teal'
+          case 2: return 'brown'
+          case 3: return 'indigo'
+          default: return 'blue-grey'
+        }
+      },
+    }
 }
 </script>
 
-<style>
+<style scoped>
 
+.v-item-group.v-bottom-navigation{
+  justify-content: space-around;
+  padding: 0 10px;
+}
+.v-item-group.v-bottom-navigation .v-btn{
+  min-width: 80px;
+  width:100%
+}
+.v-btn:not(.v-btn--round).v-size--default{
+  height: auto;
+}
+
+.v-item-group.v-bottom-navigation--shift .v-btn--active .v-btn__content > *:not(.v-icon){
+  top: calc(100% - 5px)
+}
 </style>

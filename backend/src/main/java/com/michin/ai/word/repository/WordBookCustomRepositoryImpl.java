@@ -23,7 +23,7 @@ public class WordBookCustomRepositoryImpl implements WordBookCustomRepository{
 	}
 
 	@Override
-	public Wordbook findByNameAndUserId(String user_id, String name) {
+	public Wordbook findByNameAndUserId(Long user_id, String name) {
 		Query query = new Query();
         query.addCriteria(Criteria.where("user_id").is(user_id).andOperator(Criteria.where("name").is(name)));
         return mongoTemplate.findOne(query,Wordbook.class);
