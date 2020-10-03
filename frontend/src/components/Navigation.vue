@@ -1,11 +1,10 @@
 <template>
    <v-card >
         <v-app-bar
-        color="var(--navigation-color)"
+        color="var(--main-sub-color)"
         dark
-        dense
         >
-        <!-- <img src="@/assets/michinLogo.png" width="60px" alt="logo.png"> <h3 style="color:var(--main-point-color)">미친아이</h3> -->
+        <img src="@/assets/michinLogo2.png" width="60px" alt="logo.png">
         <!-- <img src="@/assets/michinLogo.png" width="120px" alt="logo.png">  -->
         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
@@ -49,6 +48,6 @@ export default {
 }
 .title{
     font-family: 'NanumSquareRound';
-    margin-left: 20px;
+    margin-left: 10px;
 }
 </style>

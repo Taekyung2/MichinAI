@@ -50,7 +50,7 @@ export default {
   
   /* --footer-color : #F2CC06; */
   --footer-color : #252525;
-  --navigation-color : #252525;
+  --navigation-color : #7DB3D9;
   --font-base-color : #252525;
   --font-sub-color : #777777;
   --font-soft-color : #a6a6a6;
@@ -60,9 +60,10 @@ export default {
 }
 
 *{ 
-  /* font-family: 'NanumSquare', sans-serif !important;  */
-  font-family: 'BMJUA';
+  font-family: 'NanumSquare', sans-serif !important; 
+  /* font-family: 'BMJUA'; */
 }
+
 
 .eng-text{
   font-family: 'NanumSquareRound';
