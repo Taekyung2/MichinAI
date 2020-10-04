@@ -71,11 +71,13 @@ public class KakaoChatController {
 	@PostMapping("/chat/start")
 	public String chatStart(@RequestBody SkillPayload payload) {
 		// 1. 사용자가 회원인지 확인
-		User user = getUserByUserBotKey(payload);
+//		User user = getUserByUserBotKey(payload);
 
-		BotChat botChat = chatService.interactBot(user.getBotKey(), "[BEGIN]");
-//		BotChat botChat = chatService.interactBot("DD", "[BEGIN]");
-
+//		BotChat botChat = chatService.interactBot(user.getBotKey(), "[BEGIN]");
+		System.out.println(LocalTime.now());
+		BotChat botChat = chatService.interactBot(payload.getUserRequest().getUser().getId(), "BEGIN");
+		System.out.println(LocalTime.now());
+		System.out.println(botChat);
 		return new SkillResponse(new SkillTemplate().addOutputs(
 				new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
 						.toJson();

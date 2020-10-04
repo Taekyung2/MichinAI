@@ -1,85 +1,100 @@
 package com.michin.ai.chat.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.PrintWriter;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 import com.michin.ai.chat.model.BotChat;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Component
 public class ChatSocketService {
+	@Value("${BASE_URL}")
+	private String BASE_URL;
+	@Value("${CHAT_PORT}")
+	private int CHAT_PORT;
 
-	private Socket socket;
-	private BufferedReader br;
-	private PrintWriter pw;
+	Map<String, UserSocket> map = new HashMap<>();
 
-	public ChatSocketService() {
-		try {
-			socket = new Socket();
-			SocketAddress address = new InetSocketAddress("localhost", 8999);
+//	private Socket socket;
+//	private InputStream is;
+//	private PrintWriter pw;
+//
+//	public ChatSocketService() {
+//		connectSocket();
+//	}
 
-			socket.connect(address);
-		} catch (IOException e) {
+	public BotChat interactBot(String userBotKey, String msg) {
+		UserSocket userSock = map.get(userBotKey);
+		if (userSock == null) {
+			userSock = new UserSocket(BASE_URL, CHAT_PORT);
+			map.put(userBotKey, new UserSocket(BASE_URL, CHAT_PORT));
 		}
 
-	}
+		System.out.println(LocalTime.now());
+		BotChat botChat = null;
 
-	public BotChat chatBot(String userBotKey, String msg) {
-		sendMsg(userBotKey, msg);
-		return recieveMsg(userBotKey);
-	}
-
-	private void sendMsg(String userBotKey, String msg) {
+		System.out.println(userSock);
 		try {
-			pw = new PrintWriter(socket.getOutputStream());
 			JSONObject obj = new JSONObject();
+			obj.put("command", "interact");
 			obj.put("u_id", userBotKey);
 			obj.put("msg", msg);
 
-			pw.println(obj.toJSONString());
-			pw.flush();
+			userSock.pw.println(obj.toJSONString());
+			userSock.pw.flush();
+			System.out.println(LocalTime.now());
+//			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//			StringBuilder sb = new StringBuilder();
+//			String line = "";
+////			while ((line = br.readLine()) != null)
+////				sb.append(line);
+//			System.out.println(br.readLine());
+////			sb.append(br.readLine());
+//			System.out.println(sb.toString());
 
+			byte[] bytes = new byte[1024];
+			int readByteCount = userSock.is.read(bytes);
+			System.out.println(LocalTime.now());
+			botChat = new Gson().fromJson(new String(bytes, 0, readByteCount, "UTF-8"), BotChat.class);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			if (pw != null) {
-				pw.close();
-			}
 		}
-
-	}
-
-	private BotChat recieveMsg(String userBotKey) {
-		BotChat botChat = null;
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			StringBuilder sb = new StringBuilder();
-			String line = "";
-			while ((line = br.readLine()) != null)
-				sb.append(line);
-
-			botChat = new Gson().fromJson(sb.toString(), BotChat.class);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null) {
-					br.close();
-				}
-			} catch (IOException e) {
-				System.out.println(e);
-			}
-		}
-
+		System.out.println(LocalTime.now());
 		return botChat;
 	}
 
+}
+
+@ToString
+class UserSocket {
+	public Socket socket;
+	public InputStream is;
+	public PrintWriter pw;
+
+	public UserSocket(String baseUrl, int chatPort) {
+		try {
+			System.out.println("소켓 생성 :" + LocalTime.now());
+			socket = new Socket(baseUrl, chatPort);
+//			SocketAddress address = new InetSocketAddress("localhost", 8999);
+//			socket.connect(address);
+			is = socket.getInputStream();
+			pw = new PrintWriter(socket.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("소켓 오픈! :" + LocalTime.now());
+	}
 }

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,8 +25,8 @@ public class Chat {
 
 	private String msg;
 	private String sender;
-	private LocalTime time;
+	@Builder.Default
+	private LocalTime time = LocalTime.now();
 
-//	@Builder.Default
-	private List<Check> check = new ArrayList<>();
+	private List<Check> check;
 }

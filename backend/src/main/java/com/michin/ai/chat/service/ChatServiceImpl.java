@@ -12,6 +12,7 @@ import java.net.ProtocolException;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.michin.ai.chat.dto.ChatLoadByDatePayload;
 import com.michin.ai.chat.dto.ChatsDeletePayload;
 import com.michin.ai.chat.model.BotChat;
 import com.michin.ai.chat.model.Chat;
@@ -29,7 +31,10 @@ import com.michin.ai.chat.model.ChatList;
 import com.michin.ai.chat.repository.ChatRepository;
 import com.michin.ai.common.util.LanguageToolUtil;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
 
 	@Value("${CHAT_URL}")
@@ -37,8 +42,7 @@ public class ChatServiceImpl implements ChatService {
 
 	@Autowired
 	private ChatRepository chatRepo;
-	@Autowired
-	private ChatSocketService chatSocket;
+	private final ChatSocketService chatSocket;
 	private LanguageToolUtil lt = new LanguageToolUtil();
 
 	@Override
@@ -123,17 +127,19 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public BotChat interactBot(String userBotKey, String msg) {
+		System.out.println(LocalTime.now());
 		saveChat(userBotKey, "user", msg);
-		BotChat botChat = chatSocket.chatBot(userBotKey, msg);
+		BotChat botChat = chatSocket.interactBot(userBotKey, msg);
 
 		saveChat(userBotKey, "bot", botChat.getText());
+		System.out.println(LocalTime.now());
 		return botChat;
 	}
 
 	@Async
 	@Override
 	public void saveChat(String userBotKey, String sender, String msg) {
-		Chat chat = Chat.builder().time(LocalTime.now()).msg(msg.trim()).sender(sender).build();
+		Chat chat = Chat.builder().msg(msg.trim()).sender(sender).build();
 
 		if (sender.equals("user"))
 			chat.setCheck(lt.spellCheck(msg));
@@ -143,8 +149,13 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<ChatList> loadChatList(String userId) {
-		return chatRepo.findByUserIdOrderByDateDesc(userId);
+	public List<ChatList> loadChatList(String userBotKey) {
+		return chatRepo.findByUserBotKeyOrderByDateDesc(userBotKey);
+	}
+
+	@Override
+	public List<ChatList> loadChatListByDate(ChatLoadByDatePayload payload) {
+		return chatRepo.findByUserBotKeyAndDate(payload.getUserBotKey(), payload.getDate());
 	}
 
 	@Override

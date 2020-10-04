@@ -9,9 +9,11 @@ import org.languagetool.rules.RuleMatch;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Document
+@NoArgsConstructor
 public class Check {
 
 	private int fromPos;

@@ -3,8 +3,11 @@ package com.michin.ai.chat.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.http.ResponseEntity;
 
@@ -29,15 +32,16 @@ public class ChatResponse {
 
 	@Data
 	public static class ChatListDto {
-		private String userId;
+		private String userBotKey;
 		private LocalDate date;
 
 		private List<ChatDto> chats = new ArrayList<>();
 
 		public ChatListDto(ChatList chatList) {
-			this.userId = chatList.getUserId();
+			this.userBotKey = chatList.getUserBotKey();
 			this.date = chatList.getDate();
-			this.chats = chatList.getChats().stream().map(c -> new ChatDto(c)).collect(Collectors.toList());
+			this.chats = Optional.ofNullable(chatList.getChats()).map(Collection::stream).orElseGet(Stream::empty)
+					.map(c -> new ChatDto(c)).collect(Collectors.toList());
 		}
 
 	}
@@ -53,7 +57,10 @@ public class ChatResponse {
 			this.msg = chat.getMsg();
 			this.sender = chat.getSender();
 			this.time = chat.getTime();
-			this.check = chat.getCheck().stream().map(c -> new CheckDto(c)).collect(Collectors.toList());
+//			this.check = chat.getCheck().stream().map(c -> new CheckDto(c)).collect(Collectors.toList());
+			this.check = Optional.ofNullable(chat.getCheck()).map(Collection::stream).orElseGet(Stream::empty)
+					.map(c -> new CheckDto(c)).collect(Collectors.toList());
+
 		}
 	}
 

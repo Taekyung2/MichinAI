@@ -21,7 +21,7 @@ public class ChatList {
 	@Builder.Default
 	private ObjectId id = new ObjectId();
 
-	private String userId;
+	private String userBotKey;
 	private LocalDate date;
 
 	private List<Chat> chats;
