@@ -19,7 +19,12 @@
             v-on="on"
           ></v-text-field>
         </template>
-        <v-date-picker v-model="date" no-title scrollable>
+        <v-date-picker 
+          v-model="date"
+          no-title
+          scrollable
+          :min="minDate"
+          :max="maxDate">
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
           <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -34,9 +39,18 @@
   export default {
     data: () => ({
       date: new Date().toISOString().substr(0, 10),
+      maxDate: new Date().toISOString().substr(0, 10),
+      // minDate: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
       menu2: false,
     }),
+    computed: {
+     minDate() {
+       var minDate = new Date();
+       minDate.setFullYear(minDate.getFullYear()-1);
+       return minDate.toISOString().slice(0,10)
+      }
+    },
   }
 </script>
