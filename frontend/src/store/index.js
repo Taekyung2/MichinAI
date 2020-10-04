@@ -22,6 +22,7 @@ export default new Vuex.Store({
     isStartedQuiz: false,
     isResultQuiz: false,
     userBotKey: '',
+    navigationTitle: 'Title',
 
   },
   
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     },
     userBotKey(state){
       return state.userBotKey
+    },
+    navigationTitle(state){
+      return state.navigationTitle
     }
   },
 
@@ -76,6 +80,9 @@ export default new Vuex.Store({
     END_QUIZ(state){
       state.isStartedQuiz = false
       state.isResultQuiz = false
+    },
+    SET_NAVIGATION_TITLE(state, title){
+      state.navigationTitle = title
     }
   },
 

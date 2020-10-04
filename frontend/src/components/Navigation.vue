@@ -1,19 +1,19 @@
 <template>
    <v-card >
         <v-app-bar
-        color="var(--navigation-color)"
-        dark
-        dense
+        color="var(--main-sub-color)"
+        
         >
-        <!-- <img src="@/assets/michinLogo.png" width="60px" alt="logo.png"> <h3 style="color:var(--main-point-color)">미친아이</h3> -->
+        <!-- <img src="@/assets/michinLogo2.png" width="60px" alt="logo.png"> -->
         <!-- <img src="@/assets/michinLogo.png" width="120px" alt="logo.png">  -->
         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
         <!-- <v-toolbar-title>Title</v-toolbar-title> -->
         <!-- <v-icon>mdi-arrow-left</v-icon> -->
-        <v-toolbar-title class="title"> Title</v-toolbar-title>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
         <v-spacer></v-spacer>
-
+        <v-toolbar-title class="title">{{navigationTitle}}</v-toolbar-title>
+        <v-spacer></v-spacer>
         <!-- <v-btn icon>
             <v-icon>mdi-magnify</v-icon>
         </v-btn> -->
@@ -34,12 +34,16 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'Navigation',
     methods:{
         ...mapActions('Kakao', ['logout']),
+       
     },
+    computed:{
+         ...mapGetters(['navigationTitle',]),
+    }
 }
 </script>
 
@@ -49,6 +53,5 @@ export default {
 }
 .title{
     font-family: 'NanumSquareRound';
-    margin-left: 20px;
 }
 </style>

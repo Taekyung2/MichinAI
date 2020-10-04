@@ -2,8 +2,8 @@
 <div>
     <a id="custom-login-btn" @click="login()">
         <img
-            src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg"
-            width="222"
+            src="@/assets/kakao_logo.png"
+            width="80"
         />
     </a>
 </div>

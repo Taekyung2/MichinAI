@@ -2,10 +2,17 @@
   <v-app>
     <div id="app">
       <div class="main-container">
-        <!-- 비회원일 때 Main 화면 -->
-        <div v-if="!isLoggedIn || isMobileLogin">
+        <!-- 카카오 연동 화면 -->
+        <div v-if="!isLoggedIn && isMobileLogin">
+          <Connection />
+        </div>
+
+        <!-- 비회원일 때 Main 화면 (로그인 화면) -->
+        <div v-else-if="!isLoggedIn">
           <Introduction />
         </div>
+
+
         
         <!-- 회원일 때 Main 화면 -->
         <div v-else>
@@ -19,6 +26,7 @@
 <script>
 import Home from '@/components/Home.vue'
 import Introduction from '@/components/Introduction.vue'
+import Connection from '@/components/Connection.vue'
 
 import { mapGetters, mapMutations } from 'vuex'
 export default {
@@ -26,6 +34,7 @@ export default {
   components: {
     Home,
     Introduction,
+    Connection,
   },
   computed :{
     ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin']),
@@ -50,7 +59,7 @@ export default {
   
   /* --footer-color : #F2CC06; */
   --footer-color : #252525;
-  --navigation-color : #252525;
+  --navigation-color : #7DB3D9;
   --font-base-color : #252525;
   --font-sub-color : #777777;
   --font-soft-color : #a6a6a6;
@@ -60,9 +69,10 @@ export default {
 }
 
 *{ 
-  /* font-family: 'NanumSquare', sans-serif !important;  */
-  font-family: 'BMJUA';
+  font-family: 'NanumSquare', sans-serif !important; 
+  /* font-family: 'BMJUA'; */
 }
+
 
 .eng-text{
   font-family: 'NanumSquareRound';
