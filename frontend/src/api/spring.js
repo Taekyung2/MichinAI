@@ -1,7 +1,7 @@
 export default{
-    URL: 'http://localhost:8080',
+    URL: 'http://localhost:8399/api',
     ROUTES:{
-        login: '/account/login/kakao',
-        conversation: '/api/conv/:selectedDate'
+        login: '/user/login',
+        conversation: '/conv/:selectedDate'
     }
 }

@@ -9,6 +9,27 @@
         <div class="footer-container">
             <Footer/>
         </div>
+
+        <v-snackbar
+            :value="isSuccessMobileConnection"
+            outlined
+            :color="isMobileConnected.state?'success':'error'"
+            >
+            <v-icon v-if="isMobileConnected.state" color="success">mdi-checkbox-marked-circle</v-icon>
+            <v-icon v-else color="error">mdi-account-alert-outline</v-icon> 
+            <span class="connection-message">{{ isMobileConnected.message }}</span>
+
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                :color="isMobileConnected.state?'success':'error'"
+                text
+                v-bind="attrs"
+                >
+                Close
+                </v-btn>
+            </template>
+        </v-snackbar>
+
   
     </div>
 </template>
@@ -17,6 +38,7 @@
 
 import Navigation from '@/components/Navigation.vue'
 import Footer from '@/components/Footer.vue'
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'Home',
@@ -24,9 +46,15 @@ export default {
     created() {
         this.$router.push({name: 'Conversation'})
     },
-    components:{
+    components: {
         Navigation,
         Footer,
+    },
+    computed: {
+        ...mapGetters('Kakao',[
+            'isSuccessMobileConnection',
+            'isMobileConnected',
+        ]),
     }
 
 }
@@ -44,5 +72,8 @@ export default {
 
 .footer-container{
   margin-top: auto;
+}
+.connection-message{
+    margin-left: 10px;
 }
 </style>
