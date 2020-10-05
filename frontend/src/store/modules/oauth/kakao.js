@@ -12,11 +12,11 @@ const Kakao = {
     namespaced: true,
     state: {
         account: User,
-        isMobileLogin: false,
+        isMobileConnection: false,
     },
     getters: {
         isLoggedIn: state => !!state.account.accessToken,
-        isMobileLogin: state => state.isMobileLogin,
+        isMobileConnection: state => state.isMobileConnection,
     
     },
 
@@ -24,8 +24,8 @@ const Kakao = {
         SET_KAKAO_AUTH(state, authUser){
             state.account = authUser
         },
-        SET_MOBILE_LOGIN(state, userBotKey){
-            state.isMobileLogin = !!userBotKey
+        SET_MOBILE_CONNECTION(state, userBotKey){
+            state.isMobileConnection = !!userBotKey
         },
         SUCCESS_LOGOUT(state){
             state.account = User
@@ -53,6 +53,7 @@ const Kakao = {
                     }
                     commit('SET_KAKAO_AUTH', authUser)
                     localStorage.setItem('userBotKey','')
+                    commit('SET_MOBILE_CONNECTION','')
                     
                     axios.post(SERVER.URL + SERVER.ROUTES.login , authUser)
                     .then(res=>{console.log(res)}) 
