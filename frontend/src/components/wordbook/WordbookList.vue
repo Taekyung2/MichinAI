@@ -11,67 +11,75 @@
           <v-list-item class="menu-l wordbook-menu-item rounded-l-xl">
             <span>내 단어장</span>
           </v-list-item>
-          <v-list-item class="menu-r wordbook-menu-item rounded-r-xl"> 
+          <v-list-item class="menu-r wordbook-menu-item rounded-r-xl">
             <span>기본 단어장</span>
           </v-list-item>
         </v-list-item-group>
       </v-list>
 
       <!-- 내 단어장 -->
-      <v-row v-if="selectedMenuItem==0" key="userWordbook">
-        <UserWordbookListItem 
-          :wordbook="wordbook"
-          v-for="wordbook in wordbooklist" :key="wordbook.id"/>
+      <v-row v-if="selectedMenuItem == 0" key="userWordbook">
+        <carousel-3d :width="170" :height="300" :space="150" :display="5">
+          <slide v-for="(wordbook, i) in getmyWordbook" :index="i" :key="i">
+            <UserWordbookListItem :wordbook="wordbook">
+              {{ wordbook.name }}
+            </UserWordbookListItem>
+          </slide>
+        </carousel-3d>
       </v-row>
       <!-- 기본 단어장 -->
-      <div v-if="selectedMenuItem==1" key="baseWordbook">
-        <BaseWordbookListItem/>
+      <div v-if="selectedMenuItem == 1" key="baseWordbook">
+        <carousel-3d :width="170" :height="300" :space="150" :display="5">
+          <slide v-for="(wordbook, i) in getbaseWordbook" :index="i" :key="i">
+            <BaseWordbookListItem :wordbook="wordbook">
+              {{ wordbook.level }}
+            </BaseWordbookListItem>
+          </slide>
+        </carousel-3d>
       </div>
-      
     </div>
     <div>
       <!-- <WordbookFAB/> -->
-      <!-- <WordbookCreate /> -->
+      <v-spacer></v-spacer>
+      <WordbookCreate v-show="selectedMenuItem == 0" style="margin : 0 auto;" />
     </div>
-
   </div>
 </template>
 
 <script>
-import UserWordbookListItem from '@/components/wordbook/UserWordbookListItem.vue'
-import BaseWordbookListItem from '@/components/wordbook/BaseWordbookListItem.vue'
-import { mapGetters } from 'vuex'
+import UserWordbookListItem from "@/components/wordbook/UserWordbookListItem.vue";
+import BaseWordbookListItem from "@/components/wordbook/BaseWordbookListItem.vue";
+import { mapGetters } from "vuex";
+import { Carousel3d, Slide } from "vue-carousel-3d";
 
-// import WordbookCreate from '@/components/wordbook/WordbookCreate.vue'
+import WordbookCreate from "@/components/wordbook/WordbookCreate.vue";
 // import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
 
 export default {
-    name: 'WordbookList',
-    data() {
-      return {
-        selectedMenuItem : 0,
-        wordbooklist : []
-      }
-    },
-    components: {
-      UserWordbookListItem,
-      BaseWordbookListItem,
-      // WordbookCreate,
-      // WordbookFAB
-    },
-    mounted() {
-      console.log(this.wordbooklist)
-      this.wordbooklist = this.getmyWordbook
-    },
-    computed : {
-      ...mapGetters([ 'getmyWordbook'])
-    }
-}
+  name: "WordbookList",
+  data() {
+    return {
+      selectedMenuItem: 0,
+    };
+  },
+  methods: {},
+  components: {
+    UserWordbookListItem,
+    BaseWordbookListItem,
+    Carousel3d,
+    Slide,
+    WordbookCreate,
+    // WordbookFAB
+  },
+
+  computed: {
+    ...mapGetters(["getmyWordbook", "getbaseWordbook"]),
+  },
+};
 </script>
 
-<style>
-
-.wordbook-menu-group{
+<style scoped>
+.wordbook-menu-group {
   display: flex;
   border: 1px solid var(--border-base-color);
   border-radius: 24px !important;
@@ -79,25 +87,28 @@ export default {
   height: 48px;
   margin-bottom: 10px;
 }
-.wordbook-menu-item{
+.wordbook-menu-item {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 0;
 }
 
-.menu-l.v-list-item--link:before{
+.menu-l.v-list-item--link:before {
   border-top-left-radius: 24px !important;
   border-bottom-left-radius: 24px !important;
 }
 
-.menu-r.v-list-item--link:before{
+.menu-r.v-list-item--link:before {
   border-top-right-radius: 24px !important;
   border-bottom-right-radius: 24px !important;
 }
 
-.selected_menu-container{
+.selected_menu-container {
   display: flex;
 }
-
+.carousel-3d-slider {
+  width: 100px;
+  height: 100px;
+}
 </style>

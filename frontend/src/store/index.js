@@ -109,7 +109,6 @@ export default new Vuex.Store({
     getWordbook({commit}, userId) {
       axios.get(SERVER.URL + SERVER.ROUTES.getWordbook + userId)
         .then(res => {
-          console.log(res.data.wordbooks)
           commit('SET_WORDBOOK', res)
         })
         .catch(err => {

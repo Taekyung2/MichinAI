@@ -47,7 +47,7 @@
           :word="word"
           :isShowEng="isShowEng"
           :isShowKor="isShowKor"
-          v-for="word in wordbook.words" :key="word.id"/>
+          v-for="word in wordList" :key="word.id"/>
       </div>
       <!-- <p @click="back">뒤로가기</p> -->
       <div v-if="false" class="wordbookFAB">
@@ -69,20 +69,7 @@ export default {
     name: 'WordbookDetail',
     data() {
       return {
-        wordList : [
-            {id:'1', eng: 'communicate ', kor: '연락을 주고받다, 의사소통을 하다, (정보 등을) 전달하다.', check: false},
-            {id:'2', eng: 'experience', kor: '경험', check: true},
-            {id:'3', eng: 'education', kor: '교육', check: true},
-            {id:'4', eng: 'symbol', kor: '상징', check: true},
-            {id:'5', eng: 'effect', kor: '결과, 영향, 효과', check: false},
-            {id:'6', eng: 'liberty', kor: '자유', check: true},
-            {id:'7', eng: 'affair', kor: '사건, 일', check: false},
-            {id:'8', eng: 'comfort', kor: '안락, 위안', check: true},
-            {id:'9', eng: 'progress', kor: '진전, 진척, 진행', check: false},
-            {id:'10', eng: 'inadequate', kor: '불충분한, 부적당한', check: false},
-            {id:'11', eng: 'test', kor: '테스트, 시도', check: false},
-   
-        ],
+        wordList : [],
         quizDialog: false,
         selectAll: false,
         isShowKor: true,
@@ -117,6 +104,7 @@ export default {
     },
     created () {
       let count=0
+      this.wordList = this.wordbook.words
       this.wordList.forEach(word => {
          if(word.check) {
               count++

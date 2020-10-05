@@ -4,8 +4,9 @@ export default{
         login: '/account/login/kakao',
         conversation: '/api/conv/:selectedDate',
 
-        //Note
+        //Word
         getWordbook: '/wordbook/', // 뒤에 유저 id
-        getBaseWordbook : '/wordbook/base'
+        getBaseWordbook : '/wordbook/base',
+        addWordbook: '/wordbook'
     }
 }
