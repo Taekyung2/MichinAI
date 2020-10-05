@@ -2,23 +2,19 @@
   <v-app>
     <div id="app">
       <div class="main-container">
-
-
-
         <!-- 카카오 연동 화면 -->
         <div v-if="isMobileConnection">
           <Connection />
         </div>
-                <!-- 회원일 때 Main 화면 -->
+        <!-- 회원일 때 Main 화면 -->
         <div v-else-if="isLoggedIn">
-          <Home/>
+          <Home />
         </div>
 
         <!-- 비회원일 때 Main 화면 (로그인 화면) -->
         <div v-else>
           <Login />
         </div>
-
       </div>
     </div>
   </v-app>
@@ -35,70 +31,100 @@ export default {
     Home,
     Connection,
     Login,
-    
   },
   computed :{
-<<<<<<< HEAD
-    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileConnection']),
-  },
-  methods: {
-    ...mapMutations('Kakao', ['SET_MOBILE_CONNECTION'])
-  },
-  created(){
-    this.SET_MOBILE_CONNECTION(localStorage.getItem('userBotKey'))
-=======
     ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin', 'account']),
     ...mapGetters(['userBotKey'])
   },
   methods: {
-    ...mapMutations('Kakao', ['SET_MOBILE_LOGIN']),
+    ...mapMutations('Kakao', ['SET_MOBILE_CONNECTION', 'SET_MOBILE_LOGIN']),
     ...mapActions(['getWordbook', 'getBaseWordbook'])
   },
-  updated(){
-    this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
+  created() {
+    this.SET_MOBILE_CONNECTION(localStorage.getItem('userBotKey'))
   },
-  created(){
+  updated() {
     this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
   },
   mounted() {
       this.getWordbook(this.account.userId)
       this.getBaseWordbook()
->>>>>>> Feature-Front-Word
   }
 }
 </script>
 <style>
-:root{
-  --main-color : #7DB3D9;
-  --main-sub-color : #F2CC06;
-  --main-point-color :  #F48705;
-  
+:root {
+  --main-color: #7db3d9;
+  --main-sub-color: #f2cc06;
+  --main-point-color: #f48705;
+
   /* --footer-color : #F2CC06; */
-  --footer-color : #252525;
-  --navigation-color : #7DB3D9;
-  --font-base-color : #252525;
-  --font-sub-color : #777777;
-  --font-soft-color : #a6a6a6;
-  --font-point-color : #F48705;
-  --hover-background-color : #f2f2f2;
-  --border-base-color : #a6a6a6;
+  --footer-color: #252525;
+  --navigation-color: #7db3d9;
+  --font-base-color: #252525;
+  --font-sub-color: #777777;
+  --font-soft-color: #a6a6a6;
+  --font-point-color: #f48705;
+  --hover-background-color: #f2f2f2;
+  --border-base-color: #a6a6a6;
 }
 
-*{ 
-  font-family: 'NanumSquare', sans-serif !important; 
+* {
+  font-family: "NanumSquare", sans-serif !important;
   /* font-family: 'BMJUA'; */
 }
 
-
-.eng-text{
-  font-family: 'NanumSquareRound';
+.eng-text {
+  font-family: "NanumSquareRound";
 }
 /* 글꼴 머하징 흑ㅎㄱ */
-@font-face { font-family: 'Bazzi'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff') format('woff'); font-weight: normal; font-style: normal; }
-@font-face { font-family: 'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); font-weight: normal; font-style: normal; }
-@font-face { font-family: 'BMJUA'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-style: normal; }
-@font-face { font-family: 'BMDOHYEON'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff'); font-weight: normal; font-style: normal; }
-@font-face { font-family: 'InfinitySans-RegularA1'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff'); font-weight: normal; font-style: normal; }
-@font-face { font-family: 'NanumSquareRound'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff'); font-weight: normal; font-style: normal; }
-@font-face { font-family: 'YESGothic-Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/YESGothic-Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face {
+  font-family: "Bazzi";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "yg-jalnan";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "BMJUA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "BMDOHYEON";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InfinitySans-RegularA1";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NanumSquareRound";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "YESGothic-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/YESGothic-Regular.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 </style>

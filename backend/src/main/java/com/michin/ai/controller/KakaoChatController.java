@@ -145,7 +145,7 @@ public class KakaoChatController {
 		User user = getUserByUserBotKey(payload);
 
 		// 2. 유저 아이디로 단어장 리스트 찾기
-		List<Wordbook> wbList = wordService.getWordbook(String.valueOf(user.getId()));
+		List<Wordbook> wbList = wordService.getWordbook(Long.valueOf(user.getId()));
 
 		if (wbList.isEmpty() || wbList.size() == 0) {
 			return new SkillResponse(new SkillTemplate().addOutputs(new BasicCard("생성한 단어장이 없습니다.", "단어장을 추가해보세요!",
