@@ -10,11 +10,6 @@ const routes = [
       component: () => import('@/components/Home.vue')
     },
     {
-      path: '/connect:userBotKey',
-      name: 'Login',
-      component: () => import('@/components/Introduction.vue')
-    },
-    {
       path: '/conversation',
       name: 'Conversation',
       component: () => import('../views/Conversation.vue')

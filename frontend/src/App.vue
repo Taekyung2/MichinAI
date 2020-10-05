@@ -2,53 +2,50 @@
   <v-app>
     <div id="app">
       <div class="main-container">
+
+
+
         <!-- 카카오 연동 화면 -->
-        <div v-if="!isLoggedIn && isMobileLogin">
+        <div v-if="isMobileConnection">
           <Connection />
+        </div>
+                <!-- 회원일 때 Main 화면 -->
+        <div v-else-if="isLoggedIn">
+          <Home/>
         </div>
 
         <!-- 비회원일 때 Main 화면 (로그인 화면) -->
-        <div v-else-if="!isLoggedIn">
-          <Introduction />
-        </div>
-
-
-        
-        <!-- 회원일 때 Main 화면 -->
         <div v-else>
-          <Home/>
+          <Login />
         </div>
-        
+
       </div>
     </div>
   </v-app>
 </template>
 <script>
 import Home from '@/components/Home.vue'
-import Introduction from '@/components/Introduction.vue'
-import Connection from '@/components/Connection.vue'
+import Connection from '@/components/account/Connection.vue'
+import Login from '@/components/account/Login.vue'
 
 import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'App',
   components: {
     Home,
-    Introduction,
     Connection,
+    Login,
+    
   },
   computed :{
-    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin']),
+    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileConnection']),
   },
   methods: {
-    ...mapMutations('Kakao', ['SET_MOBILE_LOGIN'])
-  },
-  updated(){
-    this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
+    ...mapMutations('Kakao', ['SET_MOBILE_CONNECTION'])
   },
   created(){
-    this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
+    this.SET_MOBILE_CONNECTION(localStorage.getItem('userBotKey'))
   }
-
 }
 </script>
 <style>
