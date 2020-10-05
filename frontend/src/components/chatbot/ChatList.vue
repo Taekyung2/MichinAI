@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <h3>챗봇 채팅 리스트입니다</h3>
+  <div class="container">
+    <h3>채팅 목록</h3>
+    <v-divider class="mt-1 mb-3"/>
     <v-row class="chat-list">
         <ChatListItem 
         :chat="chat"
