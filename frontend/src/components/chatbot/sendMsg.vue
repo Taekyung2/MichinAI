@@ -1,21 +1,69 @@
 <template>
 <div class="outgoing_msg">
 <div class="sent_msg">
-    <p>{{chat.msg}}</p>
+    <p>
+        <template v-for="(msg, i) in this.splitMsg">
+            <span :key="i" v-if="msg[1] == ''">{{msg[0]}}</span>
+            <correction :msg="msg" :key="i" v-else></correction>
+        </template>
+    </p>
     <span class="time_date"> 11:01 AM    |    June 9</span> </div>
 </div>
 </template>
-
+ 
 <script>
+import correction from "./correction.vue";
+
 export default {
     name: 'sendMsg',
 
+    components: {
+        correction,
+    },
+
     props: {
+        // chat: Object,
         chat: {
             type: Object,
             required: true,
         }
     },
+
+    data(){
+        return {
+            splitMsg: [],
+        }
+    },
+
+    mounted() {
+        // console.log(this.chat)
+        var idx = 0;
+        var that = this;
+        var msg = this.chat.msg;
+
+        if (this.chat.check.length != 0) {
+            this.chat.check.forEach(function(eachCheck){
+                var general = that.chat.msg.substring(idx, eachCheck.fromPos);
+                that.splitMsg.push([general, ""]);
+                var particular = that.chat.msg.substring(eachCheck.fromPos, eachCheck.toPos)
+                var recs = "";
+                if (eachCheck.category !== "") {
+                    recs += "["+eachCheck.category + "]<br>"
+                }
+                
+                eachCheck.recommends.forEach(function(eachRec){
+                    recs += eachRec + "<br>";
+                });
+                that.splitMsg.push([particular, recs]);
+
+                idx = eachCheck.toPos;
+            });
+            
+            this.splitMsg.push([msg.substring(idx), ""])
+        } else {
+            this.splitMsg.push([msg, ""]);
+        }
+    }
 }
 </script>
 // 05728f
