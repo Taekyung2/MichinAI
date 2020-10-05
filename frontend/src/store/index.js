@@ -22,7 +22,7 @@ export default new Vuex.Store({
     isStartedQuiz: false,
     isResultQuiz: false,
     userBotKey: '',
-
+    conversationList: [],
   },
   
   // state를 (가공해서) 가져올 함수들
@@ -44,6 +44,9 @@ export default new Vuex.Store({
     },
     userBotKey(state){
       return state.userBotKey
+    },
+    getConversationList(state) {
+      return state.conversationList
     }
   },
 
@@ -76,7 +79,10 @@ export default new Vuex.Store({
     END_QUIZ(state){
       state.isStartedQuiz = false
       state.isResultQuiz = false
-    }
+    },
+    SET_CONVERSATIONLIST(state, conv) {
+      state.conversationList = conv
+    },
   },
 
   // 범용적인 함수들 (dispatch를 통해 실행)

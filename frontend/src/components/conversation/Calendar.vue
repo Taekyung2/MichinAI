@@ -24,7 +24,8 @@
           no-title
           scrollable
           :min="minDate"
-          :max="maxDate">
+          :max="maxDate"
+          @change="getConversation">
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
           <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+import axios from 'axios'
   export default {
     data: () => ({
       date: new Date().toISOString().substr(0, 10),
@@ -52,5 +54,31 @@
        return minDate.toISOString().slice(0,10)
       }
     },
+    methods: {
+      getConversation() {
+        let tmp = this.$store;
+//      return axios.get('/api/conv/' + Calendar.date)
+        axios.get('/api/conv/' + this.date)
+          .then((response) => {
+            console.log(response.data.convList);
+            console.log(tmp);
+            this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
+            console.log(tmp.getters.getConversationList);
+          });
+      }
+    },
+    mounted () {
+      
+        let tmp = this.$store;
+//      return axios.get('/api/conv/' + Calendar.date)
+        axios.get('/api/conv/' + this.date)
+          .then((response) => {
+            console.log(response.data.convList);
+            console.log(tmp);
+            this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
+            console.log(tmp.getters.getConversationList);
+          });
+      
+    }
   }
 </script>

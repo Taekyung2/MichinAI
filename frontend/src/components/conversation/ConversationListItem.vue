@@ -3,8 +3,13 @@
   <v-card
     class="conversation-item mx-auto"
   >
-    <v-card-title style="font-size:16px; padding-bottom: 0px">
-      {{conversation.id}}번째 영어 문장입니다.
+    <v-card-title style="font-size:16px; padding-bottom: 0px"
+    v-for="conv in conversationList" :key="conv"
+    >
+    {{conv.eng}}
+    
+      <!-- {{getConversation()}}번째 영어 문장입니다. -->
+      
     </v-card-title>
 
     <v-card-actions>
@@ -34,6 +39,9 @@
 </template>
 
 <script>
+//import Calendar from '@/components/conversation/Calendar.vue'
+import axios from 'axios'
+
 export default {
     name: 'ConversationListItem',
     props: {
@@ -49,6 +57,16 @@ export default {
           'deep-purple accent-4',
       ],
     }),
+    methods: {
+      getConversation() {
+//      return axios.get('/api/conv/' + Calendar.date)
+        axios.get('/api/conv/' + Calendar.date)
+        .then((response) => {
+        console.log(response.data.convList[1].eng);
+        this.conversationList = response.data.convList;
+        }) 
+      }
+    },
 }
 </script>
 
