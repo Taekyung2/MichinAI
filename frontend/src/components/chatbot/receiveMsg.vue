@@ -4,15 +4,15 @@
     <img class="incoming_msg_img" src="./michin.png" alt="sunil">
     <div class="received_msg">
         <div class="received_withd_msg">
-        <p>{{chat.msg}}</p>
-        <span class="time_date" v-if="chat.time.slice(0,2) < 13"> {{chat.time.slice(0,5)}} AM</span>
-        <span class="time_date" v-else> {{chat.time.slice(0,2)-12}}{{chat.time.slice(2,5)}} PM</span>
+        <p class="text-capitalize">{{chat.msg}}</p>
+        <span class="time_date"> {{this.time}} </span>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+
 export default {
     name: 'receiveMsg',
     props: {
@@ -24,9 +24,14 @@ export default {
 
     data(){
         return {
-            // chat: ,
+            time: '',
         }
     },
+
+    created() {
+        var moment = require('moment');
+        this.time = moment(this.chat.time.slice(0,8), ['HH:mm a']).format('LT');
+    }
 }
 </script>
 

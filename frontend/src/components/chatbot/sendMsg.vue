@@ -1,13 +1,14 @@
 <template>
 <div class="outgoing_msg">
-<div class="sent_msg">
-    <p>
-        <template v-for="(msg, i) in this.splitMsg">
-            <span :key="i" v-if="msg[1] == ''">{{msg[0]}}</span>
-            <correction :msg="msg" :key="i" v-else></correction>
-        </template>
-    </p>
-    <span class="time_date"> 11:01 AM    |    June 9</span> </div>
+    <div class="sent_msg">
+        <p>
+            <template v-for="(msg, i) in this.splitMsg">
+                <span :key="i" v-if="msg[1] == ''">{{msg[0]}}</span>
+                <correction :msg="msg" :key="i" v-else></correction>
+            </template>
+        </p>
+        <span class="time_date">{{this.time}}</span>
+    </div>
 </div>
 </template>
  
@@ -32,7 +33,13 @@ export default {
     data(){
         return {
             splitMsg: [],
+            time: '',
         }
+    },
+
+    created() {
+        var moment = require('moment');
+        this.time = moment(this.chat.time.slice(0,8), ['HH:mm a']).format('LT');
     },
 
     mounted() {
