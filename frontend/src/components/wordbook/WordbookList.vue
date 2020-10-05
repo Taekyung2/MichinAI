@@ -21,7 +21,7 @@
       <v-row v-if="selectedMenuItem==0" key="userWordbook">
         <UserWordbookListItem 
           :wordbook="wordbook"
-          v-for="wordbook in wordbookList" :key="wordbook.id"/>
+          v-for="wordbook in wordbooklist" :key="wordbook.id"/>
       </v-row>
       <!-- 기본 단어장 -->
       <div v-if="selectedMenuItem==1" key="baseWordbook">
@@ -40,6 +40,7 @@
 <script>
 import UserWordbookListItem from '@/components/wordbook/UserWordbookListItem.vue'
 import BaseWordbookListItem from '@/components/wordbook/BaseWordbookListItem.vue'
+import { mapGetters } from 'vuex'
 
 // import WordbookCreate from '@/components/wordbook/WordbookCreate.vue'
 // import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
@@ -48,18 +49,8 @@ export default {
     name: 'WordbookList',
     data() {
       return {
-        wordbookList : [
-            {id:'1',name:'workshop -1', total:8},
-            {id:'2',name:'workshop -2', total:12},
-            {id:'3',name:'workshop -3', total:100},
-            {id:'4',name:'workshop -4', total:3},
-            {id:'5',name:'workshop -5', total:10},
-            {id:'6',name:'workshop -6', total:20},
-            {id:'7',name:'workshop -7', total:33},
-            {id:'8',name:'workshop -8', total:50},
-        ],
         selectedMenuItem : 0,
-        
+        wordbooklist : []
       }
     },
     components: {
@@ -67,8 +58,14 @@ export default {
       BaseWordbookListItem,
       // WordbookCreate,
       // WordbookFAB
+    },
+    mounted() {
+      console.log(this.wordbooklist)
+      this.wordbooklist = this.getmyWordbook
+    },
+    computed : {
+      ...mapGetters([ 'getmyWordbook'])
     }
-
 }
 </script>
 

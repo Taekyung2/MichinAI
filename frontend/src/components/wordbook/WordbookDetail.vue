@@ -47,7 +47,7 @@
           :word="word"
           :isShowEng="isShowEng"
           :isShowKor="isShowKor"
-          v-for="word in wordList" :key="word.id"/>
+          v-for="word in wordbook.words" :key="word.id"/>
       </div>
       <!-- <p @click="back">뒤로가기</p> -->
       <div v-if="false" class="wordbookFAB">

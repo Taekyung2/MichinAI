@@ -17,7 +17,7 @@ const Kakao = {
     getters: {
         isLoggedIn: state => !!state.account.accessToken,
         isMobileLogin: state => state.isMobileLogin,
-    
+        account: state => state.account
     },
 
     mutations: {

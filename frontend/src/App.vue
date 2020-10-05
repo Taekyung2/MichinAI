@@ -20,7 +20,7 @@
 import Home from '@/components/Home.vue'
 import Introduction from '@/components/Introduction.vue'
 
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -28,16 +28,22 @@ export default {
     Introduction,
   },
   computed :{
-    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin']),
+    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin', 'account']),
+    ...mapGetters(['userBotKey'])
   },
   methods: {
-    ...mapMutations('Kakao', ['SET_MOBILE_LOGIN'])
+    ...mapMutations('Kakao', ['SET_MOBILE_LOGIN']),
+    ...mapActions(['getWordbook', 'getBaseWordbook'])
   },
   updated(){
     this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
   },
   created(){
     this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
+  },
+  mounted() {
+      this.getWordbook(this.account.userId)
+      this.getBaseWordbook()
   }
 
 }
