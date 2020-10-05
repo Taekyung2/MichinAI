@@ -24,7 +24,8 @@ export default {
 
 <style>
 .highlight {
-    background-color: var(--main-sub-color);
-    color: var(--font-base-color);
+  background-color: #ffcc5c;
+  /* background-color: var(--main-sub-color); */
+  color: var(--font-sub-color);
 }
 </style>

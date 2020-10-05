@@ -4,31 +4,47 @@
     <v-divider class="mt-1 mb-3"/>
     <v-row class="chat-list">
         <ChatListItem 
-        :chat="chat"
-        v-for="chat in chatList" :key="chat.id"/>
+        :chat="eachChat"
+        v-for="eachChat in chatList" :key="eachChat.date"/>
     </v-row>
   </div>
 </template>
 
 <script>
-import ChatListItem from '@/components/chatbot/ChatListItem.vue'
+import ChatListItem from '@/components/chatbot/ChatListItem.vue';
+
+import axios from 'axios';
+
 export default {
     name: 'ChatList',
     
-    data(){
-        return{
-            chatList: [
-                {id:'1', date: '09-20'},
-                {id:'2', date: '09-21'},
-                {id:'3', date: '09-22'},
-                {id:'4', date: '09-23'},
-                {id:'5', date: '09-24'},
-                {id:'6', date: '09-25'},
-            ]
-        }
-    },
     components:{
         ChatListItem
+    },
+    
+    data(){
+        return{
+          chatList: [],
+        }
+    },
+   
+    mounted() {
+      this.getChatList();
+    },
+
+    methods: {
+      getChatList() {
+        // var wow = this.$store.getters["Kakao/getAccount"];
+        var botKey = this.$store.state.Kakao.account.userBotKey;
+        axios.get("http://29af62145ef1.ngrok.io/api/chat/", {
+          params: {
+            userBotKey: botKey
+          }
+        }).then(({data}) => {
+          // console.log(data);
+          this.chatList = data.chatList})
+      }
+
     }
 }
 </script>
