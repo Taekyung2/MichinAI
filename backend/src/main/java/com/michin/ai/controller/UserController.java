@@ -27,6 +27,8 @@ public class UserController {
 		
 		if (payload.getUserId() == 0) {
 			return Result.failure("userId가 존재하지 않습니다.");
+		} else if (payload.getUserBotKey() != null || payload.getUserBotKey().length() > 0) {
+			return Result.failure("이미 연동된 계정입니다.");
 		}
 		User user = userService.save(payload.toCommand());
 		
