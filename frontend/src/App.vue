@@ -43,13 +43,9 @@ export default {
   methods: {
     ...mapMutations('Kakao', ['SET_MOBILE_CONNECTION'])
   },
-  updated(){
-    // this.SET_MOBILE_CONNECTION(localStorage.getItem('userBotKey'))
-  },
   created(){
     this.SET_MOBILE_CONNECTION(localStorage.getItem('userBotKey'))
   }
-
 }
 </script>
 <style>

@@ -13,11 +13,17 @@ const Kakao = {
     state: {
         account: User,
         isMobileConnection: false,
+        isMobileConnected: {
+            message: '',
+            state: true,
+        },
     },
     getters: {
         isLoggedIn: state => !!state.account.accessToken,
         isMobileConnection: state => state.isMobileConnection,
-    
+        
+        isSuccessMobileConnection: state => !!state.isMobileConnected.message,
+        isMobileConnected: state => state.isMobileConnected,
     },
 
     mutations: {
@@ -30,7 +36,13 @@ const Kakao = {
         SUCCESS_LOGOUT(state){
             state.account = User
         },
-
+        SET_RESULT_CONNECTION(state, result){
+            state.isMobileConnected = result
+            console.log(state.isMobileConnected)
+        },
+        SET_MESSAGE_LOGIN(state, message){
+            state.messageLogged = message
+        }
     },
     actions: {
         init() {
@@ -56,10 +68,26 @@ const Kakao = {
                     commit('SET_MOBILE_CONNECTION','')
                     
                     axios.post(SERVER.URL + SERVER.ROUTES.login , authUser)
-                    .then(res=>{console.log(res)}) 
-                    .catch(err => console.log(err))
+                    .then(res=>{
+                        console.log(res)
+                        const result={
+                            message : '미친아이와 연동 되었습니다.',
+                            state : true
+                        }
+                        commit('SET_RESULT_CONNECTION',result)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        const result={
+                            message : '이미 미친아이와 연동된 아이디입니다.',
+                            state : false
+                        }
+                        commit('SET_RESULT_CONNECTION',result)
+                    })
                 },
-                fail: error => console.log(error)
+                fail: error => {
+                    console.log(error)
+                }
                 
             })
         },
