@@ -44,6 +44,13 @@ public class ChatController {
 		return ChatResponse.build(chatList);
 	}
 
+	@GetMapping("/score")
+	@ApiOperation(value = "유저의 채팅 점수 불러오기")
+	public ResponseEntity getUserChatScore(String userBotKey) {
+		List<ChatList> chatList = chatService.loadChatScore(userBotKey);
+		return ChatResponse.build(chatList);
+	}
+
 	@DeleteMapping("/")
 	@ApiOperation(value = "채팅들 지우기")
 	public ResponseEntity deleteChats(ChatsDeletePayload payload) {

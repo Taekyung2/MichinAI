@@ -1,6 +1,5 @@
 package com.michin.ai.chat.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Async;
@@ -26,5 +25,9 @@ public interface ChatService {
 	void deleteChats(ChatsDeletePayload payload);
 
 	List<ChatList> loadChatListByDate(ChatLoadByDatePayload payload);
+
+	List<ChatList> loadChatScore(String userBotKey);
+
+	void updateChatScore(List<ChatList> chatList);
 
 }

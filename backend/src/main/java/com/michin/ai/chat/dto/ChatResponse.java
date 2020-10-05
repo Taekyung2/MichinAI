@@ -34,12 +34,14 @@ public class ChatResponse {
 	public static class ChatListDto {
 		private String userBotKey;
 		private LocalDate date;
+		private double score;
 
 		private List<ChatDto> chats = new ArrayList<>();
 
 		public ChatListDto(ChatList chatList) {
 			this.userBotKey = chatList.getUserBotKey();
 			this.date = chatList.getDate();
+			this.score = chatList.getScore();
 			this.chats = Optional.ofNullable(chatList.getChats()).map(Collection::stream).orElseGet(Stream::empty)
 					.map(c -> new ChatDto(c)).collect(Collectors.toList());
 		}

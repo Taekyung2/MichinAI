@@ -1,28 +1,15 @@
 package com.michin.ai.chat.service;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
 import com.michin.ai.chat.dto.ChatLoadByDatePayload;
 import com.michin.ai.chat.dto.ChatsDeletePayload;
 import com.michin.ai.chat.model.BotChat;
@@ -37,101 +24,44 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
 
-	@Value("${CHAT_URL}")
-	private String CHAT_URL;
-
 	@Autowired
 	private ChatRepository chatRepo;
 	private final ChatSocketService chatSocket;
 	private LanguageToolUtil lt = new LanguageToolUtil();
 
+	private final int MAX_SCORE = 98;
+	private final int MIN_SCORE = 0;
+
 	@Override
 	public BotChat startBot(String userBotKey) {
-		BotChat botChat = null;
+		JSONObject obj = new JSONObject();
+		obj.put("command", "interact");
+		obj.put("u_id", userBotKey);
+		obj.put("msg", "Hello!");
+		BotChat botChat = chatSocket.interactBot(userBotKey, obj);
 
-		try {
-			URL url = new URL(CHAT_URL + "/start");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Content-Type", "application/json");
-			conn.setDoOutput(true);
-
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			JSONObject obj = new JSONObject();
-			obj.put("u_id", userBotKey);
-			bw.write(obj.toJSONString());
-			bw.flush();
-			bw.close();
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			StringBuilder sb = new StringBuilder();
-			String line = "";
-			while ((line = br.readLine()) != null)
-				sb.append(line);
-
-			botChat = new Gson().fromJson(sb.toString(), BotChat.class);
+		if (botChat != null)
 			saveChat(userBotKey, "bot", botChat.getText());
-
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (ProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		System.out.println(LocalTime.now());
 		return botChat;
 	}
-
-//	@Override
-//	public BotChat interactBot(String userBotKey, String msg) {
-//		BotChat botChat = null;
-//
-//		try {
-//			System.out.println("URL");
-//			URL url = new URL(CHAT_URL + "/interact");
-//			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//			conn.setRequestMethod("POST");
-//			conn.setRequestProperty("Content-Type", "application/json");
-//			conn.setDoOutput(true);
-//			System.out.println("BUFFERED WRITER");
-//			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-//			JSONObject obj = new JSONObject();
-//			obj.put("u_id", userBotKey);
-//			obj.put("msg", msg);
-//			bw.write(obj.toJSONString());
-//			bw.flush();
-//			bw.close();
-//			System.out.println("BUFFERED READER");
-//			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//			StringBuilder sb = new StringBuilder();
-//			String line = "";
-//			while ((line = br.readLine()) != null)
-//				sb.append(line);
-//			System.out.println("OUTPUT");
-//			System.out.println(sb.toString());
-//			botChat = new Gson().fromJson(sb.toString(), BotChat.class);
-//
-//			saveChat(userBotKey, "bot", botChat.getText());
-//			System.out.println("SAVE CHAT");
-//		} catch (MalformedURLException e) {
-//			e.printStackTrace();
-//		} catch (ProtocolException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return botChat;
-//	}
 
 	@Override
 	public BotChat interactBot(String userBotKey, String msg) {
 		System.out.println(LocalTime.now());
+		System.out.println(msg.length());
+		if (msg.length() >= 200)
+			msg = msg.substring(0, 200);
 		saveChat(userBotKey, "user", msg);
-		BotChat botChat = chatSocket.interactBot(userBotKey, msg);
 
-		saveChat(userBotKey, "bot", botChat.getText());
+		JSONObject obj = new JSONObject();
+		obj.put("command", "interact");
+		obj.put("u_id", userBotKey);
+		obj.put("msg", msg);
+		BotChat botChat = chatSocket.interactBot(userBotKey, obj);
+
+		if (botChat != null)
+			saveChat(userBotKey, "bot", botChat.getText());
 		System.out.println(LocalTime.now());
 		return botChat;
 	}
@@ -166,6 +96,44 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public void deleteChats(ChatsDeletePayload payload) {
 		chatRepo.deleteChatsByIds(payload);
+	}
+
+	@Override
+	public List<ChatList> loadChatScore(String userBotKey) {
+		List<ChatList> chatList = chatRepo.findByUserBotKeyOrderByDateDesc(userBotKey);
+		List<ChatList> updateChatList = new ArrayList<ChatList>();
+
+		for (ChatList chats : chatList) {
+			if (chats.getScore() == 0 || chats.getDate().isEqual(LocalDate.now())) {
+				int chatCnt = 0, checkCnt = 0, wordCnt = 0;
+				for (Chat chat : chats.getChats()) {
+					if (chat.getSender().equals("user")) {
+						chatCnt++;
+						checkCnt += chat.getCheck().size();
+						wordCnt += chat.getMsg().split(" ").length;
+					}
+				}
+
+				if (chatCnt < 10) {
+					chats.setScore(-1);
+				} else {
+					double score = Math.round(
+							Math.max(Math.min((wordCnt / chatCnt) * 16.7, MAX_SCORE) - checkCnt * 1.1, MIN_SCORE) * 100)
+							/ (double) 100;
+					chats.setScore(score);
+				}
+			}
+			updateChatList.add(chats);
+		}
+
+		updateChatScore(updateChatList);
+		return chatList;
+	}
+
+	@Async
+	@Override
+	public void updateChatScore(List<ChatList> chatList) {
+		chatRepo.updateChatScore(chatList);
 	}
 
 }

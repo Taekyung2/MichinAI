@@ -4,6 +4,7 @@ from pprint import pprint
 from _thread import *
 from multiprocessing import Process
 from parlai.for_test.interactive_app.create_interactive import Interactive
+from twisted.internet import reactor, protocol
 
 
 def clone_world(base_world):
@@ -24,17 +25,21 @@ def threaded(client_socket, addr, world):
             if not data:
                 print('Disconnted by ' + addr[0], ':', addr[1])
                 break
-            data = json.loads(data.decode())
-            print('Received from ' + addr[0], ':', addr[1], data)
+            data = data.decode().split('\r\n')
+            for d in data:
+                if d == '': continue
+                print(d)
+                d = json.loads(d)
+                print('Received from ' + addr[0], ':', addr[1], d)
 
-            if data['command'] == 'start':
-                # clone_world(data['u_id'])
-                response = {
-                    'text': 'talk to me anything!'
-                }
-            elif data['command'] == 'interact':
-                response = world.parley('base', data['msg'])
-            client_socket.send(json.dumps(response).encode())
+                if d['command'] == 'start':
+                    # clone_world(data['u_id'])
+                    response = {
+                        'text': 'talk to me anything!'
+                    }
+                elif d['command'] == 'interact':
+                    response = world.parley('base', d['msg'])
+                client_socket.send(json.dumps(response).encode())
 
         except ConnectionResetError as e:
             print('Disconnected by ' + addr[0], ':', addr[1])

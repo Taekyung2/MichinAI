@@ -8,7 +8,9 @@ import com.michin.ai.chat.model.ChatList;
 
 public interface ChatRepositoryCustom {
 
-	void addChat(String userId, Chat chat);
+	void addChat(String userBotKey, Chat chat);
 
 	void deleteChatsByIds(ChatsDeletePayload payload);
+
+	void updateChatScore(List<ChatList> chatList);
 }

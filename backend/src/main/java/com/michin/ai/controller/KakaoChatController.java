@@ -75,10 +75,10 @@ public class KakaoChatController {
 
 //		BotChat botChat = chatService.interactBot(user.getBotKey(), "[BEGIN]");
 		System.out.println(LocalTime.now());
-		BotChat botChat = chatService.interactBot(payload.getUserRequest().getUser().getId(), "BEGIN");
+		BotChat botChat = chatService.startBot(payload.getUserRequest().getUser().getId());
 		System.out.println(LocalTime.now());
 		System.out.println(botChat);
-		return new SkillResponse(new SkillTemplate().addOutputs(
+		return new SkillResponse(new SkillTemplate().addOutputs(new SimpleText("대화는 200자 이내의 문자만 인식합니다.\n연속으로 3초 이내에 발송시 제대로 인식하지 못할 수 있습니다😥")).addOutputs(
 				new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
 						.toJson();
 

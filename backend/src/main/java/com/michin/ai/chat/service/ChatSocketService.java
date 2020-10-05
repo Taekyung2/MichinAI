@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +17,8 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.michin.ai.chat.model.BotChat;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
+import net.arnx.jsonic.JSON;
 
 @Component
 public class ChatSocketService {
@@ -36,7 +37,7 @@ public class ChatSocketService {
 //		connectSocket();
 //	}
 
-	public BotChat interactBot(String userBotKey, String msg) {
+	public BotChat interactBot(String userBotKey, JSONObject obj) {
 		UserSocket userSock = map.get(userBotKey);
 		if (userSock == null) {
 			userSock = new UserSocket(BASE_URL, CHAT_PORT);
@@ -48,31 +49,25 @@ public class ChatSocketService {
 
 		System.out.println(userSock);
 		try {
-			JSONObject obj = new JSONObject();
-			obj.put("command", "interact");
-			obj.put("u_id", userBotKey);
-			obj.put("msg", msg);
 
 			userSock.pw.println(obj.toJSONString());
 			userSock.pw.flush();
 			System.out.println(LocalTime.now());
-//			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//			StringBuilder sb = new StringBuilder();
-//			String line = "";
-////			while ((line = br.readLine()) != null)
-////				sb.append(line);
-//			System.out.println(br.readLine());
-////			sb.append(br.readLine());
-//			System.out.println(sb.toString());
 
 			byte[] bytes = new byte[1024];
 			int readByteCount = userSock.is.read(bytes);
 			System.out.println(LocalTime.now());
 			botChat = new Gson().fromJson(new String(bytes, 0, readByteCount, "UTF-8"), BotChat.class);
+			System.out.println(LocalTime.now());
+		} catch (SocketTimeoutException e) {
+			return null;
+		} catch (SocketException e) {
+			map.remove(userBotKey);
+			interactBot(userBotKey, obj);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(LocalTime.now());
+		
 		return botChat;
 	}
 
@@ -90,6 +85,7 @@ class UserSocket {
 			socket = new Socket(baseUrl, chatPort);
 //			SocketAddress address = new InetSocketAddress("localhost", 8999);
 //			socket.connect(address);
+			socket.setSoTimeout(3500);
 			is = socket.getInputStream();
 			pw = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
