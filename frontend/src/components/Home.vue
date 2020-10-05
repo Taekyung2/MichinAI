@@ -11,8 +11,11 @@
         </div>
 
         <v-snackbar
+            v-once
             :value="isSuccessMobileConnection"
             outlined
+            class="connection-snackbar"
+            timeout="2500"
             :color="isMobileConnected.state?'success':'error'"
             >
             <v-icon v-if="isMobileConnected.state" color="success">mdi-checkbox-marked-circle</v-icon>
@@ -55,7 +58,7 @@ export default {
             'isSuccessMobileConnection',
             'isMobileConnected',
         ]),
-    }
+    },
 
 }
 </script>
@@ -76,4 +79,5 @@ export default {
 .connection-message{
     margin-left: 10px;
 }
+
 </style>
