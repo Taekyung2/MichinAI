@@ -7,8 +7,7 @@
     <v-list-item three-line>
       <v-list-item-content>
         <div class="wordbook-content">
-            <span class="wordbook-name eng-text">{{wordbook.name}}</span> 
-            <span class="wordbook-total eng-text">{{wordbook.total}}</span>
+            <span class="wordbook-name eng-text" style="margin: 0 auto">{{wordbook.name}}</span> 
         </div>
         
       </v-list-item-content>
@@ -20,7 +19,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'WordbookListItem',
     props: {
@@ -28,7 +27,10 @@ export default {
     },
     methods: {
       ...mapActions(['selectedWordbook']),
-    }
+    },
+    computed : {
+      ...mapGetters('Kakao', ['account'])
+    },
 }
 </script>
 

@@ -24,6 +24,10 @@ const Kakao = {
         
         isSuccessMobileConnection: state => !!state.isMobileConnected.message,
         isMobileConnected: state => state.isMobileConnected,
+
+        isMobileLogin: state => state.isMobileLogin,
+        account: state => state.account
+
     },
 
     mutations: {

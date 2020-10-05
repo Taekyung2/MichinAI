@@ -28,7 +28,7 @@ import Home from '@/components/Home.vue'
 import Connection from '@/components/account/Connection.vue'
 import Login from '@/components/account/Login.vue'
 
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -38,6 +38,7 @@ export default {
     
   },
   computed :{
+<<<<<<< HEAD
     ...mapGetters('Kakao', ['isLoggedIn', 'isMobileConnection']),
   },
   methods: {
@@ -45,6 +46,24 @@ export default {
   },
   created(){
     this.SET_MOBILE_CONNECTION(localStorage.getItem('userBotKey'))
+=======
+    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin', 'account']),
+    ...mapGetters(['userBotKey'])
+  },
+  methods: {
+    ...mapMutations('Kakao', ['SET_MOBILE_LOGIN']),
+    ...mapActions(['getWordbook', 'getBaseWordbook'])
+  },
+  updated(){
+    this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
+  },
+  created(){
+    this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
+  },
+  mounted() {
+      this.getWordbook(this.account.userId)
+      this.getBaseWordbook()
+>>>>>>> Feature-Front-Word
   }
 }
 </script>
