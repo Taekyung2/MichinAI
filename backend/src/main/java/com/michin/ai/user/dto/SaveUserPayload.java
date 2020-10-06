@@ -1,12 +1,12 @@
-package com.michin.ai.user.dto.payload;
+package com.michin.ai.user.dto;
 
 import lombok.Data;
 
 @Data
 public class SaveUserPayload {
 	private long userId;
-	String userName;
-	String userBotKey;
+	private String userName;
+	private String userBotKey;
 	
 	public SaveUserCommand toCommand() {
 		return new SaveUserCommand(userId, userName, userBotKey);

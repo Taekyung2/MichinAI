@@ -3,7 +3,7 @@ package com.michin.ai.user.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.michin.ai.user.dto.payload.SaveUserCommand;
+import com.michin.ai.user.dto.SaveUserCommand;
 import com.michin.ai.user.model.User;
 import com.michin.ai.user.repository.UserRepository;
 

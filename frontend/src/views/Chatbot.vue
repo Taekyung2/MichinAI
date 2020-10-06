@@ -1,7 +1,5 @@
 <template>
     <div class="container">
-        <h2>챗봇 화면</h2>
-        <hr>
         <router-view/>
     </div>
 </template>
