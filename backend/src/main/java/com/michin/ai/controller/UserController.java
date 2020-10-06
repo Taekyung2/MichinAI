@@ -29,10 +29,9 @@ public class UserController {
 		if (payload.getUserId() == 0) {
 			return Result.failure("userId가 존재하지 않습니다.");
 		}
-		
 		User origin = userService.findById(payload.getUserId());
 		String originBotKey = "";
-		if (origin != null)
+		if (origin != null) 
 			originBotKey = origin.getBotKey();
 		
 		User user = userService.save(payload.toCommand());
@@ -42,7 +41,7 @@ public class UserController {
 				return SaveUserResponse.build(false);
 			return SaveUserResponse.build(user, false);
 		} else {	// 연동 요청
-			if (originBotKey == null)	// DB에 봇 키 없으면
+			if (originBotKey == null || originBotKey == "")	// DB에 봇 키 없으면
 				return SaveUserResponse.build(user, true);
 			return SaveUserResponse.build("이미 연동된 계정입니다.", true);
 		}
