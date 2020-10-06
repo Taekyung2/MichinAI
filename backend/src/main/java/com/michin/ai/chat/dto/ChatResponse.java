@@ -33,6 +33,7 @@ public class ChatResponse {
 
 	@Data
 	public static class ChatListDto {
+		private String id;
 		private String userBotKey;
 		private LocalDate date;
 		private Score score;
@@ -40,6 +41,7 @@ public class ChatResponse {
 		private List<ChatDto> chats = new ArrayList<>();
 
 		public ChatListDto(ChatList chatList) {
+			this.id = chatList.getId().toString();
 			this.userBotKey = chatList.getUserBotKey();
 			this.date = chatList.getDate();
 			this.score = chatList.getScore();
@@ -51,12 +53,14 @@ public class ChatResponse {
 
 	@Data
 	private static class ChatDto {
+		private String id;
 		private String msg;
 		private String sender;
 		private LocalTime time;
 		private List<CheckDto> check;
 
 		public ChatDto(Chat chat) {
+			this.id = chat.getId().toString();
 			this.msg = chat.getMsg();
 			this.sender = chat.getSender();
 			this.time = chat.getTime();

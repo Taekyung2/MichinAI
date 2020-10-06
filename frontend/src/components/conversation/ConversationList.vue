@@ -1,13 +1,17 @@
 <template>
   <div>
-    <h3>오늘의 회화 리스트 입니다.</h3>
-    
-    <Calendar 
-    />
+    <!-- <h3>오늘의 회화 리스트 입니다.</h3> -->
+
+    <Calendar />
+    <template v-for="(conv,i) in getConversationList">
+      <receive-msg :chat="conv" :key="i" v-if="conv.speaker == speaker"/>
+      <send-msg :chat="conv" :key="i" v-if="conv.speaker != speaker"/>
+    </template>
+
     <!-- <ConversationListItem 
     :conversation="conversation" 
     /> -->
-    <v-card
+    <!-- <v-card
     class="conversation-item mx-auto"
     >
     <v-card-title style="font-size:16px; padding-bottom: 0px" v-model="conversationList"
@@ -15,7 +19,6 @@
     >
     {{conv.speaker}}  : {{conv.eng}}
     
-      <!-- {{getConversation()}}번째 영어 문장입니다. -->
       
     </v-card-title>
 
@@ -41,39 +44,40 @@
         </v-card-text>
       </div>
     </v-expand-transition>
-  </v-card>
+  </v-card> -->
   </div>
-        
 </template>
 
 <script>
 // import ConversationListItem  from '@/components/conversation/ConversationListItem.vue'
-import Calendar from '@/components/conversation/Calendar.vue'
-import { mapGetters } from 'vuex'
+import Calendar from "@/components/conversation/Calendar.vue";
+import receiveMsg from "./receiveMsg";
+import sendMsg from "./sendMsg.vue";
+
+import { mapGetters } from "vuex";
 //import axios from 'axios'
 export default {
-    data(){
-        return{
-            show: false,
-            conversationList: [],
-        }
-    },
-    computed: {
-        ...mapGetters([
-            'getConversationList'
-        ])
-    },
-     
-    components: {
-//        ConversationListItem,
-        Calendar
-    },
-    methods: {
-         
-    },
-}
+  data() {
+    return {
+      show: false,
+      conversationList: [], 
+    };
+  },
+  computed: {
+    ...mapGetters(["getConversationList"]),
+    speaker(){
+      return this.getConversationList[0].speaker
+    }
+  },
+  components: {
+    //        ConversationListItem,
+    Calendar,receiveMsg,sendMsg
+  },
+  mounted(){
+  },
+  methods: {},
+};
 </script>
 
 <style>
-
 </style>

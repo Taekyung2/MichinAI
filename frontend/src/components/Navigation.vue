@@ -2,15 +2,16 @@
    <v-card >
         <v-app-bar
         color="var(--main-sub-color)"
-        
         >
+        <!-- <v-app-bar color="white"> -->
+
         <!-- <img src="@/assets/michinLogo2.png" width="60px" alt="logo.png"> -->
         <!-- <img src="@/assets/michinLogo.png" width="120px" alt="logo.png">  -->
         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
         <!-- <v-toolbar-title>Title</v-toolbar-title> -->
         <!-- <v-icon>mdi-arrow-left</v-icon> -->
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
         <v-spacer></v-spacer>
         <v-toolbar-title class="title">{{navigationTitle}}</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -18,7 +19,7 @@
             <v-icon>mdi-magnify</v-icon>
         </v-btn> -->
         <v-btn icon >
-            <v-icon @click="logout()">mdi-export</v-icon>
+            <v-icon @click="logout()">mdi-power</v-icon>
         </v-btn>
 
         <!-- <template v-slot:extension>

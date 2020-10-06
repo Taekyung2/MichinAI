@@ -3,7 +3,7 @@
         <div class="navigation-container">
             <Navigation/>
         </div>
-        <div id="home-router-container">
+        <div class="home-router-container">
             <router-view />
         </div>
         <div class="footer-container">
@@ -71,6 +71,7 @@ export default {
 }
 .home-router-container{
    background-color: rgb(250, 250, 250);
+   margin-bottom: 50px;
 }
 
 .footer-container{

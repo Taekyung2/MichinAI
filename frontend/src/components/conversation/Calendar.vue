@@ -41,6 +41,8 @@
 <script>
 import axios from 'axios'
 import moment from "moment"
+
+import SERVER from '@/api/spring';
 //import VueMomentJs from "vue-momentjs"
   export default {
     data: () => ({
@@ -50,6 +52,7 @@ import moment from "moment"
       menu: false,
       modal: false,
       menu2: false,
+      loading : true,
       availableDates: [],
     }),
     computed: {
@@ -63,16 +66,16 @@ import moment from "moment"
     methods: {
       // axios 통신해서 회화 가져옴
       getConversation() {
-        axios.get('/api/conv/' + this.date)
+        axios.get(SERVER.URL + '/conv/' + this.date)
           .then((response) => {
             // 대화 인물 이름 설정 man1, woman1 둘이 대화함
-            response.data.convList.forEach(element => {
-              if(element.speaker === 'man1') {
-                element.speaker = 'man';
-              } else {
-                element.speaker = 'woman';
-              }
-            });
+            // response.data.convList.forEach(element => {
+            //   if(element.speaker === 'man1') {
+            //     element.speaker = 'man';
+            //   } else {
+            //     element.speaker = 'woman';
+            //   }
+            // });
             this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
           });
       },
@@ -98,18 +101,19 @@ import moment from "moment"
     
     },
     mounted () {
-        axios.get('/api/conv/' + this.date)
-          .then((response) => {
-            // 대화하는 인물 이름 설정 man1, woman1 두개로 대화함
-            response.data.convList.forEach(element => {
-              if(element.speaker === 'man1') {
-                element.speaker = 'man';
-              } else {
-                element.speaker = 'woman';
-              }
-            });
-            this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
-          });
+        // axios.get(SERVER.URL + '/conv/' + this.date)
+        //   .then((response) => {
+        //     // 대화하는 인물 이름 설정 man1, woman1 두개로 대화함
+        //     response.data.convList.forEach(element => {
+        //       if(element.speaker === 'man1') {
+        //         element.speaker = 'man';
+        //       } else {
+        //         element.speaker = 'woman';
+        //       }
+        //     });
+        //     this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
+        //   });
+        this.getConversation();
     }
   }
 </script>

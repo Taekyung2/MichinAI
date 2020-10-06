@@ -79,7 +79,11 @@ public class ScrapingConvService {
 		} catch (NoSuchElementException e) {
 			return null;
 		} finally {
-			driver.close();
+			if (driver != null) {
+				driver.close();
+				driver.quit();
+				driver = null;
+			}
 		}
 		return list;
 	}

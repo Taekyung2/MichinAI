@@ -1,9 +1,9 @@
 <script>
-import { Pie } from "vue-chartjs";
+import { Doughnut } from "vue-chartjs";
 
 export default {
   name: "PieChart",
-  extends: Pie,
+  extends: Doughnut,
   props: ["chartData"],
   data: () => ({
     datacollection: {},

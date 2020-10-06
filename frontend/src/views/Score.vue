@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <h2>채팅 점수</h2>
     <div class="score-container">
       <LineChart
         :chart-data="chatChartData"
@@ -19,6 +18,7 @@
 <script>
 import LineChart from "@/components/score/LineChart.vue";
 import PieChart from "@/components/score/PieChart.vue";
+import SERVER from '@/api/spring';
 
 import axios from "axios";
 export default {
@@ -41,7 +41,7 @@ export default {
     init() {
       const userBotKey = this.$store.state.Kakao.account.userBotKey;
       axios
-        .get("http://localhost:8399/api/chat/score?userBotKey=" + userBotKey)
+        .get(SERVER.URL + "/chat/score?userBotKey=" + userBotKey)
         .then((res) => {
           var labels = [],
             score = [],
