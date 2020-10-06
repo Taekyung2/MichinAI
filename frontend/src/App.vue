@@ -68,7 +68,7 @@ export default {
 }
 @media (min-width:601px) and (max-width: 960px) {
 	html{
-    font-size: 18px;
+    font-size: 17px;
   }
 }
 @media (min-width:961px) and (max-width: 1264px) {
@@ -100,7 +100,7 @@ export default {
 * {
   font-family: "NanumSquare", sans-serif !important;
   /* font-family: 'BMJUA'; */
-  color: var(--font-base-color);
+  /* color: var(--font-base-color); */
 }
 
 .eng-text{

@@ -10,6 +10,11 @@ const routes = [
       component: () => import('@/components/Home.vue')
     },
     {
+      path: '/connection:userBotKey',
+      name: 'Home',
+      component: () => import('@/components/Home.vue')
+    },
+    {
       path: '/conversation',
       name: 'Conversation',
       component: () => import('../views/Conversation.vue')
@@ -71,10 +76,15 @@ router.beforeEach((to, from, next) => {
   if(to.query.userBotKey){
     localStorage.setItem('userBotKey', to.query.userBotKey)
   }
+  else if(localStorage.getItem('userBotKey')){
+    localStorage.setItem('userBotKey', '')
+  }
+  
   const authRequired = !publicPages.includes(to.name) // Login 해야 함
   const isLoggedIn = !!window.Kakao.Auth.getAccessToken() // Login이 되어 있는지 
  
   if(authRequired && isLoggedIn) next()
+  else if(to.query.userBotKey) next()
   else if(to.path!=='/') next('/')
 })
 
