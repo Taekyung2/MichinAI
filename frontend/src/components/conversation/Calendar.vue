@@ -64,7 +64,15 @@ import moment from "moment"
       // axios 통신해서 회화 가져옴
       getConversation() {
         axios.get('/api/conv/' + this.date)
-          .then((response) => {  
+          .then((response) => {
+            // 대화 인물 이름 설정 man1, woman1 둘이 대화함
+            response.data.convList.forEach(element => {
+              if(element.speaker === 'man1') {
+                element.speaker = 'man';
+              } else {
+                element.speaker = 'woman';
+              }
+            });
             this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
           });
       },
@@ -95,9 +103,9 @@ import moment from "moment"
             // 대화하는 인물 이름 설정 man1, woman1 두개로 대화함
             response.data.convList.forEach(element => {
               if(element.speaker === 'man1') {
-                element.speaker = '&#128102;';
+                element.speaker = 'man';
               } else {
-                element.speaker = '&#128103;';
+                element.speaker = 'woman';
               }
             });
             this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
