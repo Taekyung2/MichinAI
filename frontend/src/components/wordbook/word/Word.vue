@@ -26,10 +26,10 @@
       <v-icon v-if="!word.check" style="color:var(--border-base-color)">mdi-bookmark-outline</v-icon> 
       <v-icon v-if="word.check" style="color:var(--main-sub-color)">mdi-bookmark</v-icon>
       </div>
-      <p class="display-1 text--primary" style="float:0; width:80%; margin : 0; padding: 0px">
+      <p class="display-1 text--primary" v-if="isShowEng" style="float:0; width:80%; margin : 0; padding: 0px">
         {{word.eng}}
       </p>
-      <div>{{word.kor}}</div>
+      <div :class="isShowKor ? 'word-show' : 'word-noshow'">{{word.kor}}</div>
     </v-card-text>
   </v-card>
 </template>
