@@ -1,7 +1,11 @@
 <template>
     <div>
         <div class="connect-container">
-            <h1>미친AI <span style="font-size:1.5rem">  X </span> Kakao</h1>
+            <div>
+                <h1>미친AI <span style="font-size:1.5rem"> X </span> Kakao</h1>
+                <h2>미친AI와 Kakao를 연동해 보세요!</h2>
+                <h2>오늘의 회화, 영어 문법 교정 및 통계화 등 다양한 서비스를 이용하실 수 있습니다.</h2>
+            </div>
             <KakaoLogin/>
         </div>
         <div class="intro-container">
