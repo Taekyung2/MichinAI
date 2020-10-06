@@ -1,5 +1,6 @@
 package com.michin.ai.word.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Id;
@@ -18,6 +19,6 @@ public class Basewordbook {
 	
 	private int level;
 	
-	private List<Word> words;
+	private List<Word> words = new ArrayList<Word>();
 	
 }
