@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 // import router from '@/router'
 import axios from 'axios'
 
-// api ìš”ì²­ URL
+// api ?š”ì²? URL
 // import SERVER from '@/api/drf'
 import createPersistedState from 'vuex-persistedstate'
 import Kakao from '@/store/modules/oauth/kakao.js'
@@ -14,7 +14,7 @@ import SERVER from '@/api/spring';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  // dataì˜ ì§‘í•©
+  // data?˜ ì§‘í•©
   state: {
     selectedWordbook: null,
     selectedChat: null,
@@ -24,13 +24,13 @@ export default new Vuex.Store({
     isResultQuiz: false,
     userBotKey: '',
     navigationTitle: 'Title',
-
+    conversationList: [],
     myWordbook : null,
     baseWordbook : null
 
   },
   
-  // stateë¥¼ (ê°€ê³µí•´ì„œ) ê°€ì ¸ì˜¬ í•¨ìˆ˜ë“¤
+  // stateë¥? (ê°?ê³µí•´?„œ) ê°?? ¸?˜¬ ?•¨?ˆ˜?“¤
   getters: {
     wordbook(state){
       return state.selectedWordbook
@@ -50,6 +50,10 @@ export default new Vuex.Store({
     userBotKey(state){
       return state.userBotKey
     },
+    
+    getConversationList(state) {
+      return state.conversationList
+    },
 
     navigationTitle(state){
       return state.navigationTitle
@@ -63,8 +67,8 @@ export default new Vuex.Store({
     }
   },
 
-  // stateë¥¼ ë³€ê²½í•˜ëŠ” í•¨ìˆ˜ (commitì„ í†µí•´ ì‹¤í–‰)
-  // ìƒìˆ˜ ì´ë¦„ìœ¼ë¡œ ì‘ì„± - ì¤‘ìš”í•¨ì„ ë‚˜íƒ€ëƒ„
+  // stateë¥? ë³?ê²½í•˜?Š” ?•¨?ˆ˜ (commit?„ ?†µ?•´ ?‹¤?–‰)
+  // ?ƒ?ˆ˜ ?´ë¦„ìœ¼ë¡? ?‘?„± - ì¤‘ìš”?•¨?„ ?‚˜???ƒ„
   mutations: {
     SET_SELECTED_WORDBOOK(state, wordbook){
       state.selectedWordbook = wordbook
@@ -102,10 +106,13 @@ export default new Vuex.Store({
     },
     SET_BASEWORDBOOK(state, val) {
       state.baseWordbook = val.data.wordbooks
-    }
+    },
+    SET_CONVERSATIONLIST(state, conv) {
+      state.conversationList = conv
+    },
   },
 
-  // ë²”ìš©ì ì¸ í•¨ìˆ˜ë“¤ (dispatchë¥¼ í†µí•´ ì‹¤í–‰)
+  // ë²”ìš©? ?¸ ?•¨?ˆ˜?“¤ (dispatchë¥? ?†µ?•´ ?‹¤?–‰)
   actions: {
     selectedWordbook({commit}, wordbook){
       commit('SET_SELECTED_WORDBOOK', wordbook)
