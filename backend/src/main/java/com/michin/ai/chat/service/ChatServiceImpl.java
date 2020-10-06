@@ -3,7 +3,9 @@ package com.michin.ai.chat.service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import com.michin.ai.chat.dto.ChatsDeletePayload;
 import com.michin.ai.chat.model.BotChat;
 import com.michin.ai.chat.model.Chat;
 import com.michin.ai.chat.model.ChatList;
+import com.michin.ai.chat.model.Check;
+import com.michin.ai.chat.model.Score;
 import com.michin.ai.chat.repository.ChatRepository;
 import com.michin.ai.common.util.LanguageToolUtil;
 
@@ -100,28 +104,47 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public List<ChatList> loadChatScore(String userBotKey) {
-		List<ChatList> chatList = chatRepo.findByUserBotKeyOrderByDateDesc(userBotKey);
+		List<ChatList> chatList = chatRepo.findByUserBotKeyOrderByDateAsc(userBotKey);
 		List<ChatList> updateChatList = new ArrayList<ChatList>();
 
 		for (ChatList chats : chatList) {
-			if (chats.getScore() == 0 || chats.getDate().isEqual(LocalDate.now())) {
-				int chatCnt = 0, checkCnt = 0, wordCnt = 0;
+			Map<String, Integer> categoryCnt = new HashMap<String, Integer>();
+			if (chats.getScore() == null || chats.getScore().getScore() == 0
+					|| chats.getDate().isEqual(LocalDate.now())) {
+				Score score = new Score();
+				int chatCnt = 0, checkCnt = 0, wordCnt = 0, engCnt = 0, totalLen = 0;
 				for (Chat chat : chats.getChats()) {
 					if (chat.getSender().equals("user")) {
 						chatCnt++;
 						checkCnt += chat.getCheck().size();
 						wordCnt += chat.getMsg().split(" ").length;
+						totalLen += chat.getMsg().length();
+
+						for (char ch : chat.getMsg().toCharArray()) {
+							if (Character.isUpperCase(ch) || Character.isLowerCase(ch))
+								engCnt++;
+						}
 					}
+					if (chat.getCheck() != null)
+						for (Check ck : chat.getCheck()) {
+							categoryCnt.put(ck.getCategory(), categoryCnt.getOrDefault(ck.getCategory(), 0) + 1);
+						}
 				}
 
-				if (chatCnt < 10) {
-					chats.setScore(-1);
-				} else {
-					double score = Math.round(
-							Math.max(Math.min((wordCnt / chatCnt) * 16.7, MAX_SCORE) - checkCnt * 1.1, MIN_SCORE) * 100)
-							/ (double) 100;
-					chats.setScore(score);
+				double s = -1;
+				if (chatCnt >= 1) {
+					s = Math.max(Math.min((wordCnt / chatCnt) * 16.7, MAX_SCORE) - checkCnt * 1.1, MIN_SCORE);
+					double engRatio = (double) engCnt / totalLen;
+					if (engRatio < 0.75) {
+						categoryCnt.put("notEnglish", (int) Math.round(checkCnt * engRatio));
+						s *= engRatio;
+					}
+					s = Math.round(s * 100) / (double) 100;
 				}
+				System.out.println(categoryCnt);
+				score.setScore(s);
+				score.setCategoryCnt(categoryCnt);
+				chats.setScore(score);
 			}
 			updateChatList.add(chats);
 		}

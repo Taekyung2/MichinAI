@@ -49,7 +49,7 @@ public class WordController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResult> getWordbookAll(@PathVariable("id") String user_id) {
+	public ResponseEntity<ApiResult> getWordbookAll(@PathVariable("id") long user_id) {
 		List<Wordbook> wb_list = wordService.getWordbook(user_id);
 		return WordbookResult.build(wb_list);
 	}

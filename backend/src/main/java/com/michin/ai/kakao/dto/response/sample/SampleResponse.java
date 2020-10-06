@@ -49,6 +49,6 @@ public class SampleResponse {
 
 	public SkillResponse alreadyConnectBlock() {
 		return this.toResponse(
-				new BasicCard("이미 연동이 완료된 사용자입니다.", "그걸 까먹었다구?!", new Thumbnail("https://i.ibb.co/5KDT33y/image.png")));
+				new BasicCard("이미 연동이 완료된 사용자입니다.", "까먹었다구?!", new Thumbnail("https://i.ibb.co/5KDT33y/image.png")));
 	}
 }
