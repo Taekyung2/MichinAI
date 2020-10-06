@@ -107,7 +107,7 @@ export default {
     font-size: 1.1rem;
     margin-bottom: 0px;
     margin-top: 10px;
-    color: var(--main-color)
+    color: var(--main-point-color)
 }
 .login-text span{
     font-size: 1.5em;

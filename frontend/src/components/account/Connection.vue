@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="connect-container">
-            <h1>Kakao 연동 화면입니다.</h1>
+            <h1>미친AI <span style="font-size:1.5rem">  X </span> Kakao</h1>
             <KakaoLogin/>
         </div>
         <div class="intro-container">
@@ -32,6 +32,9 @@ export default {
     flex-direction: column;
     padding: 50px 30px;
     justify-content: space-between;
+}
+.connect-container > h1{
+    font-size: 2.5rem;
 }
 
 @media (min-width:0px) and (max-width: 600px) {
