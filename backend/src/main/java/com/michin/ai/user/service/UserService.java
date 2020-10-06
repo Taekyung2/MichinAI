@@ -1,6 +1,6 @@
 package com.michin.ai.user.service;
 
-import com.michin.ai.user.dto.payload.SaveUserCommand;
+import com.michin.ai.user.dto.SaveUserCommand;
 import com.michin.ai.user.model.User;
 
 public interface UserService {

@@ -2,13 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import router from '@/router'
-// import axios from 'axios'
+import axios from 'axios'
 
 // api 요청 URL
 // import SERVER from '@/api/drf'
 import createPersistedState from 'vuex-persistedstate'
 import Kakao from '@/store/modules/oauth/kakao.js'
 import router from '../router'
+import SERVER from '@/api/spring';
 
 Vue.use(Vuex)
 
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     isResultQuiz: false,
     userBotKey: '',
     navigationTitle: 'Title',
+
+    myWordbook : null,
+    baseWordbook : null
 
   },
   
@@ -46,8 +50,16 @@ export default new Vuex.Store({
     userBotKey(state){
       return state.userBotKey
     },
+
     navigationTitle(state){
       return state.navigationTitle
+    },
+    getmyWordbook(state) {
+      return state.myWordbook
+    },
+    getbaseWordbook(state) {
+      return state.baseWordbook
+
     }
   },
 
@@ -81,8 +93,15 @@ export default new Vuex.Store({
       state.isStartedQuiz = false
       state.isResultQuiz = false
     },
+
     SET_NAVIGATION_TITLE(state, title){
       state.navigationTitle = title
+    },
+    SET_WORDBOOK(state, val) {
+      state.myWordbook = val.data.wordbooks
+    },
+    SET_BASEWORDBOOK(state, val) {
+      state.baseWordbook = val.data.wordbooks
     }
   },
 
@@ -95,6 +114,25 @@ export default new Vuex.Store({
     selectedChat({commit}, chat){
       commit('SET_SELECTED_CHAT', chat)
       router.push({name: 'ChatDetail'})
+    },
+    //Wordbook Axios
+    getWordbook({commit}, userId) {
+      axios.get(SERVER.URL + SERVER.ROUTES.getWordbook + userId)
+        .then(res => {
+          commit('SET_WORDBOOK', res)
+        })
+        .catch(err => {
+          console.log('error'+ err.response)
+        });
+    },
+    getBaseWordbook({commit}) {
+      axios.get(SERVER.URL + SERVER.ROUTES.getBaseWordbook)
+        .then(res => {
+          commit('SET_BASEWORDBOOK', res)
+        })
+        .catch(err => {
+          console.log('error' + err.response)
+        })
     }
   },
 

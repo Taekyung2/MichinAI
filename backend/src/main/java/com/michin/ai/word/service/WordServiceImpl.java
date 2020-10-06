@@ -30,7 +30,7 @@ public class WordServiceImpl implements WordService{
 	
 
 	@Override
-	public List<Wordbook> getWordbook(String user_id) {
+	public List<Wordbook> getWordbook(Long user_id) {
 		return wordBookRepo.findAll(Sort.by(Sort.Direction.ASC, "id"));
 	}
 	

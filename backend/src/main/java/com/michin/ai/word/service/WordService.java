@@ -12,7 +12,7 @@ import com.michin.ai.word.model.Wordbook;
 
 public interface WordService {
 	
-	List<Wordbook> getWordbook(String user_id);
+	List<Wordbook> getWordbook(Long user_id);
 	
 	Wordbook getWordbook(Long user_id, String name);
 	

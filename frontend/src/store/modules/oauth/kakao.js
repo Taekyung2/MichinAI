@@ -24,6 +24,10 @@ const Kakao = {
         
         isSuccessMobileConnection: state => !!state.isMobileConnected.message,
         isMobileConnected: state => state.isMobileConnected,
+
+        isMobileLogin: state => state.isMobileLogin,
+        account: state => state.account
+
     },
 
     mutations: {
@@ -39,6 +43,9 @@ const Kakao = {
         SET_RESULT_CONNECTION(state, result){
             state.isMobileConnected = result
             console.log(state.isMobileConnected)
+        },
+        INIT_RESULT_CONNECTION(state){
+            state.isMobileConnected.message = ''
         },
         SET_MESSAGE_LOGIN(state, message){
             state.messageLogged = message
@@ -64,25 +71,38 @@ const Kakao = {
                         userBotKey: localStorage.getItem('userBotKey')
                     }
                     commit('SET_KAKAO_AUTH', authUser)
-                    localStorage.setItem('userBotKey','')
-                    commit('SET_MOBILE_CONNECTION','')
+                    
                     
                     axios.post(SERVER.URL + SERVER.ROUTES.login , authUser)
                     .then(res=>{
+
                         console.log(res)
-                        const result={
-                            message : '미친아이와 연동 되었습니다.',
-                            state : true
+                        if(localStorage.getItem('userBotKey')){
+                            const result={
+                                message : '미친아이와 연동 되었습니다.',
+                                state : true
+                            }
+                            commit('SET_RESULT_CONNECTION',result)
+                            setTimeout(function(){
+                                commit('INIT_RESULT_CONNECTION')
+                            },2000)
                         }
-                        commit('SET_RESULT_CONNECTION',result)
+
+                        localStorage.setItem('userBotKey','')
+                        commit('SET_MOBILE_CONNECTION','')
                     })
                     .catch(err => {
                         console.log(err)
-                        const result={
-                            message : '이미 미친아이와 연동된 아이디입니다.',
-                            state : false
+                        if(localStorage.getItem('userBotKey')){
+                            const result={
+                                message : '이미 미친아이와 연동된 아이디입니다.',
+                                state : false
+                            }
+                            commit('SET_RESULT_CONNECTION',result)
+                            setTimeout(function(){
+                                commit('INIT_RESULT_CONNECTION')
+                            },2000)
                         }
-                        commit('SET_RESULT_CONNECTION',result)
                     })
                 },
                 fail: error => {
