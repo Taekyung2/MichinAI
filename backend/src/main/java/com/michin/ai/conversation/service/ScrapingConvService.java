@@ -41,10 +41,16 @@ public class ScrapingConvService {
 
 		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
+		options.addArguments("start-maximized"); // open Browser in maximized mode
+		options.addArguments("disable-infobars"); // disabling infobars
+		options.addArguments("--disable-extensions"); // disabling extensions
+		options.addArguments("--disable-gpu"); // applicable to windows os only
+		options.addArguments("--no-sandbox"); // Bypass OS security model
 		options.setHeadless(true);
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-dev-shm-usage");
-		options.addArguments("--remote-debugging-port=9222");
+//		options.addArguments("--no-sandbox");
+//		options.addArguments("--disable-dev-shm-usage");
+//		options.addArguments("--remote-debugging-port=9222");
 
 		driver = new ChromeDriver(options);
 		String url = "https://learn.dict.naver.com/conversation#/endic/" + dateStr;
