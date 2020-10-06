@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService{
 		if (user != null) {
 			if (!command.getName().equals(user.getName()))
 				user.setName(command.getName());
-			if (user.getBotKey() == null || user.getBotKey().length() == 0)
+			if (user.getBotKey() == null)
 				user.setBotKey(command.getBotKey());
 		} else {
 			user = new User(command.getId(), command.getName(), command.getBotKey());

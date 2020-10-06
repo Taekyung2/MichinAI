@@ -11,9 +11,23 @@ import lombok.Data;
 
 public class SaveUserResponse {
 	
-	public static ResponseEntity<ApiResult> build(User user) {
+	public static ResponseEntity<ApiResult> build (boolean conn) {
 		ApiResult apiResult = ApiResult.blank()
+				.add("connect", conn);
+		return Result.ok(apiResult);
+	}
+	
+	public static ResponseEntity<ApiResult> build(User user, boolean conn) {
+		ApiResult apiResult = ApiResult.blank()
+				.add("connect", conn)
 				.add("userBotKey", user.getBotKey());
+		return Result.ok(apiResult);
+	}
+	
+	public static ResponseEntity<ApiResult> build(String msg, boolean conn) {
+		ApiResult apiResult = ApiResult.blank()
+				.add("connect", conn)
+				.add("msg", msg);
 		return Result.ok(apiResult);
 	}
 	
