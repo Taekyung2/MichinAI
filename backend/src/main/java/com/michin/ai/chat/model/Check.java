@@ -22,7 +22,7 @@ public class Check {
 	private String category;
 
 	public Check(RuleMatch match) {
-		this.category = match.getShortMessage();
+		this.category = match.getRule().getCategory().toString();
 		this.recommends = match.getSuggestedReplacements();
 		this.toPos = match.getToPos();
 		this.fromPos = match.getFromPos();

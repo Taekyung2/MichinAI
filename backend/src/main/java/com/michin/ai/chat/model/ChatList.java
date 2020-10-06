@@ -27,12 +27,8 @@ public class ChatList {
 
 	private String userBotKey;
 	private LocalDate date;
-	@Builder.Default
-	@Field
-	private double score = 0;
+	private Score score;
 
 	private List<Chat> chats;
-	
-	
 
 }

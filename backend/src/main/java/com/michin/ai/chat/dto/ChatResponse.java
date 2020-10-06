@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import com.michin.ai.chat.model.Chat;
 import com.michin.ai.chat.model.ChatList;
 import com.michin.ai.chat.model.Check;
+import com.michin.ai.chat.model.Score;
 import com.michin.ai.common.ApiResult;
 import com.michin.ai.common.Result;
 
@@ -34,7 +35,7 @@ public class ChatResponse {
 	public static class ChatListDto {
 		private String userBotKey;
 		private LocalDate date;
-		private double score;
+		private Score score;
 
 		private List<ChatDto> chats = new ArrayList<>();
 

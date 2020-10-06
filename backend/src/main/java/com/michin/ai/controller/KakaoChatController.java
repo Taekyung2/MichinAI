@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +41,7 @@ import com.michin.ai.word.service.WordService;
 
 import springfox.documentation.annotations.ApiIgnore;
 
+@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 @ApiIgnore
 @RequestMapping("/kakao")
@@ -171,7 +173,7 @@ public class KakaoChatController {
 
 		StringBuilder wordStr = new StringBuilder("📖 " + wbName + "\n\n");
 		for (Word word : wb.getWords()) {
-			wordStr.append(word.getEng()).append('\n').append(' ').append('-').append(word.getKor()).append("\n\n");
+			wordStr.append(word.getEng()).append('\n').append(' ').append(word.getKor()).append("\n\n");
 		}
 
 		return new SkillResponse(new SkillTemplate().addOutputs(new SimpleText(wordStr.toString()))).toJson();

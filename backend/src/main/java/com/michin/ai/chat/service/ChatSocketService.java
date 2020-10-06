@@ -22,8 +22,8 @@ import net.arnx.jsonic.JSON;
 
 @Component
 public class ChatSocketService {
-	@Value("${BASE_URL}")
-	private String BASE_URL;
+	@Value("${CHAT_URL}")
+	private String CHAT_URL;
 	@Value("${CHAT_PORT}")
 	private int CHAT_PORT;
 
@@ -40,8 +40,8 @@ public class ChatSocketService {
 	public BotChat interactBot(String userBotKey, JSONObject obj) {
 		UserSocket userSock = map.get(userBotKey);
 		if (userSock == null) {
-			userSock = new UserSocket(BASE_URL, CHAT_PORT);
-			map.put(userBotKey, new UserSocket(BASE_URL, CHAT_PORT));
+			userSock = new UserSocket(CHAT_URL, CHAT_PORT);
+			map.put(userBotKey, new UserSocket(CHAT_URL, CHAT_PORT));
 		}
 
 		System.out.println(LocalTime.now());
@@ -61,13 +61,13 @@ public class ChatSocketService {
 			System.out.println(LocalTime.now());
 		} catch (SocketTimeoutException e) {
 			return null;
-		} catch (SocketException e) {
+		} catch (NullPointerException | SocketException e) {
 			map.remove(userBotKey);
 			interactBot(userBotKey, obj);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return botChat;
 	}
 

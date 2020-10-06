@@ -14,9 +14,12 @@ public interface ChatRepository extends MongoRepository<ChatList, ObjectId>, Cha
 
 	List<ChatList> findByUserBotKeyOrderByDateDesc(String userBotKey);
 
+	List<ChatList> findByUserBotKeyOrderByDateAsc(String userBotKey);
+
 	List<ChatList> findByUserBotKeyAndDate(String userBotKey, LocalDate date);
 
 	void deleteByIdIn(List<String> list);
+
 
 
 }
