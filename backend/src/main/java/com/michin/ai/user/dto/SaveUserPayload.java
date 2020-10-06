@@ -1,4 +1,4 @@
-package com.michin.ai.user.dto.payload;
+package com.michin.ai.user.dto;
 
 import lombok.Data;
 
