@@ -19,18 +19,26 @@
 
       <!-- 내 단어장 -->
       <v-row v-if="selectedMenuItem == 0" key="userWordbook">
-        <carousel-3d :width="170" :height="300" :space="150" :display="5">
-          <slide v-for="(wordbook, i) in getmyWordbook" :index="i" :key="i">
-            <UserWordbookListItem :wordbook="wordbook">
-              {{ wordbook.name }}
-            </UserWordbookListItem>
+        <carousel-3d :count="wordbooklist.length" :width="170" :height="300" :space="150" :display="5">
+          <slide
+            :style="{ 'background-color': colorlist[i % 5] }"
+            v-for="(wordbook, i) in wordbooklist"
+            :index="i"
+            :key="i"
+          >
+            <UserWordbookListItem :wordbook="wordbook" />
           </slide>
         </carousel-3d>
       </v-row>
       <!-- 기본 단어장 -->
       <div v-if="selectedMenuItem == 1" key="baseWordbook">
         <carousel-3d :width="170" :height="300" :space="150" :display="5">
-          <slide v-for="(wordbook, i) in getbaseWordbook" :index="i" :key="i">
+          <slide
+            :style="{ 'background-color': colorlist[(i + 1) % 5] }"
+            v-for="(wordbook, i) in getbaseWordbook"
+            :index="i"
+            :key="i"
+          >
             <BaseWordbookListItem :wordbook="wordbook">
               {{ wordbook.level }}
             </BaseWordbookListItem>
@@ -41,7 +49,11 @@
     <div>
       <!-- <WordbookFAB/> -->
       <v-spacer></v-spacer>
-      <WordbookCreate v-show="selectedMenuItem == 0" style="margin : 0 auto;" />
+      <WordbookCreate
+        v-show="selectedMenuItem == 0"
+        style="margin: 0 auto"
+        @close="reset"
+      />
     </div>
   </div>
 </template>
@@ -60,9 +72,10 @@ export default {
   data() {
     return {
       selectedMenuItem: 0,
+      colorlist: ["#008080", "#c6e2ff", "#ffd0d1", "#eeab73", "#4169e1"],
+      wordbooklist: null,
     };
   },
-  methods: {},
   components: {
     UserWordbookListItem,
     BaseWordbookListItem,
@@ -71,9 +84,23 @@ export default {
     WordbookCreate,
     // WordbookFAB
   },
+  methods: {
+    reset() {
+      this.wordbooklist = this.getmyWordbook;
+    },
+  },
+  created() {
+    this.reset();
+  },
 
   computed: {
     ...mapGetters(["getmyWordbook", "getbaseWordbook"]),
+  },
+
+  watch: {
+    getmyWordbook() {
+      this.reset();
+    },
   },
 };
 </script>

@@ -4,14 +4,9 @@
     outlined
     @click="selectedWordbook(wordbook)"
   >
-    <v-list-item three-line>
-      <v-list-item-content>
-        <div class="wordbook-content">
+        <div class="wordbook-content" >
             <span class="wordbook-name eng-text" style="margin: 0 auto">{{wordbook.name}}</span> 
         </div>
-        
-      </v-list-item-content>
-    </v-list-item>
  <v-divider></v-divider>
   </v-card>
 
@@ -39,9 +34,11 @@ export default {
 .wordbook-list{
   flex: 1;
   background: white;
-  margin : 10px 5px;
+  margin : 0 auto;
   flex-basis: 40%;
-
+  position: relative;
+  top: 10%;
+  width: 80%;
 }
 
 .wordbook-list :hover{
@@ -52,6 +49,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
 }
 
 .wordbook-name{
