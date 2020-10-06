@@ -98,6 +98,7 @@ export default {
   --navigation-color: #7db3d9;
   --font-base-color: #252525;
   --font-sub-color: #777777;
+  --font-sub-2-color: #5a5b5e;
   --font-soft-color: #a6a6a6;
   --font-point-color: #f48705;
   --hover-background-color: #f2f2f2;
@@ -111,7 +112,7 @@ export default {
 }
 .v-application .title {
   font-family: "yg-jalnan" !important;
-  color: var(--main-color);
+  color: var(--font-sub-2-color);
 }
 
 .eng-text {

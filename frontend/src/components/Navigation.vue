@@ -1,6 +1,6 @@
 <template>
   <div class="navigation-container">
-    <v-app-bar color="white" flat>
+    <v-app-bar color="var(--main-sub-color)" flat>
       <!-- <v-app-bar color="white"> -->
 
       <!-- <img src="@/assets/michinLogo2.png" width="60px" alt="logo.png"> -->
@@ -13,7 +13,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-title>
         <div class="navigation-title">
-          <img src="@/assets/michinLogo02.png" width="40px" alt="" />
+          <img src="@/assets/michinLogo05.svg" width="30px" alt="" />
           <span class="title"> {{ navigationTitle }}</span>
         </div>
       </v-toolbar-title>
@@ -22,7 +22,7 @@
             <v-icon>mdi-magnify</v-icon>
         </v-btn> -->
       <v-btn icon>
-        <v-icon @click="logout()" color="var(--font-soft-color)"
+        <v-icon @click="logout()" color="var(--font-sub-color)"
           >mdi-power</v-icon
         >
       </v-btn>
@@ -54,7 +54,7 @@ export default {
 
 <style>
 .navigation-container {
-  box-shadow: 1px 1px 7px -5px rgb(100, 100, 100);
+  box-shadow: 1px 1px 6px -4px rgb(100, 100, 100);
 }
 
 .navigation-title {
@@ -62,6 +62,7 @@ export default {
   align-items: center;
 }
 .navigation-title img {
-  margin-right: 5px;
+  margin-right: 10px;
+  padding-bottom: 4px;
 }
 </style>
