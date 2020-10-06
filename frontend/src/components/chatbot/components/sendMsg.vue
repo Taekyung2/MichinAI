@@ -23,11 +23,7 @@ export default {
     },
 
     props: {
-        // chat: Object,
-        chat: {
-            type: Object,
-            required: true,
-        }
+        chat: Object,
     },
 
     data(){
