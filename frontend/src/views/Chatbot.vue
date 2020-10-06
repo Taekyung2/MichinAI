@@ -1,16 +1,21 @@
 <template>
-    <div class="container">
-        <router-view/>
-    </div>
+  <div class="container">
+    <router-view />
+  </div>
 </template>
 
 <script>
-
+import { mapMutations } from "vuex";
 export default {
-    name: 'Chatbot',
-}
+  name: "Chatbot",
+  methods: {
+    ...mapMutations(["SET_NAVIGATION_TITLE"]),
+  },
+  created() {
+    this.SET_NAVIGATION_TITLE("챗봇");
+  },
+};
 </script>
 
 <style>
-
 </style>

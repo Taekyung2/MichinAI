@@ -69,7 +69,7 @@ export default {
     z-index: 1;
 }
 .home-router-container{
-   background-color: rgb(250, 250, 250);
+   /* background-color: rgb(250, 250, 250); */
    margin-bottom: 50px;
 }
 

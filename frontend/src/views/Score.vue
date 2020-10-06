@@ -8,7 +8,7 @@
       />
     </div>
     <h3>감점 요소</h3>
-    <h4>{{selectDate}}</h4>
+    <h4>{{ selectDate }}</h4>
     <div class="score-container">
       <PieChart :chart-data="pieChartData" class="chart" />
     </div>
@@ -18,7 +18,8 @@
 <script>
 import LineChart from "@/components/score/LineChart.vue";
 import PieChart from "@/components/score/PieChart.vue";
-import SERVER from '@/api/spring';
+import SERVER from "@/api/spring";
+import { mapMutations } from "vuex";
 
 import axios from "axios";
 export default {
@@ -32,12 +33,16 @@ export default {
     chatCateCnt: [],
     pieChartData: {},
     selectIdx: -1,
-    selectDate:""
+    selectDate: "",
   }),
   mounted() {
     this.init();
   },
+  created() {
+    this.SET_NAVIGATION_TITLE("내점수");
+  },
   methods: {
+    ...mapMutations(["SET_NAVIGATION_TITLE"]),
     init() {
       const userBotKey = this.$store.state.Kakao.account.userBotKey;
       axios
@@ -60,16 +65,17 @@ export default {
     },
     changeSelect(item) {
       this.selectIdx = item.idx;
-      let labels = [], data = []
-      Object.entries(this.chatCateCnt[this.selectIdx]).forEach((arr)=>{
-        labels.push(arr[0])
-        data.push(arr[1])
+      let labels = [],
+        data = [];
+      Object.entries(this.chatCateCnt[this.selectIdx]).forEach((arr) => {
+        labels.push(arr[0]);
+        data.push(arr[1]);
       });
       this.pieChartData = {
-        labels : labels,
-        data : data
-      }
-      this.selectDate = this.chatChartData.labels[this.selectIdx]
+        labels: labels,
+        data: data,
+      };
+      this.selectDate = this.chatChartData.labels[this.selectIdx];
     },
   },
 };

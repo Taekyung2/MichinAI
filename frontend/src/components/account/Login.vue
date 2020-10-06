@@ -2,10 +2,15 @@
   <div class="intro-container">
     <div class="login-container" align="center">
       <div class="login-text" align="left">
-        <p>스마트한 Chat-Bot,</p>
-        <p><span class="point-name">미친AI</span>와 함께</p>
-        <p>미쳐버리는</p>
-        <p><span class="point-eng">미친영어</span> 공부법</p>
+        <p style="font-size: 1.3rem">스마트한 Chat-Bot,</p>
+        <p><span class="point-name">미친AI</span>와 함께하는</p>
+        <!-- <p>Fantastic한</p> -->
+        <p><span class="point-eng">미친영어</span> 공부</p>
+
+        <p class="point-tag" style="font-size: 1rem">#언제_어디서나</p>
+        <p class="point-tag-2" style="font-size: 1rem">
+          #미국친구AI #미친AI #미친아이
+        </p>
       </div>
       <div class="login-logo-container">
         <img
@@ -80,6 +85,24 @@ export default {
     padding: 50px 30px 50px 30px;
   }
   .login-logo {
+    max-height: 210px;
+    max-width: 210px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1024px) {
+  .login-container {
+    padding: 50px 30px;
+  }
+  .login-logo {
+    max-height: 200px;
+    max-width: 200px;
+  }
+}
+@media (min-height: 750px) and (max-height: 900px) {
+  .login-container {
+    padding: 65px 30px 50px 30px;
+  }
+  .login-logo {
     max-height: 230px;
     max-width: 230px;
   }
@@ -98,8 +121,8 @@ export default {
     padding: 50px 100px;
   }
   .login-logo {
-    max-height: 200px;
-    max-width: 200px;
+    max-height: 230px;
+    max-width: 230px;
   }
 }
 @media (min-width: 1905px) {
@@ -147,5 +170,13 @@ export default {
 
 .pointer-icon {
   margin-bottom: 10px;
+}
+
+.point-tag {
+  margin-top: 15px;
+  font-family: "NanumSquare", sans-serif !important;
+}
+.point-tag-2 {
+  font-family: "NanumSquare", sans-serif !important;
 }
 </style>
