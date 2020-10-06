@@ -42,6 +42,8 @@ public class ScrapingConvService {
 		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 		ChromeOptions options = new ChromeOptions();
 		options.setHeadless(true);
+		options.addArguments("--no-sandbox");
+		options.addArguments("--disable-dev-shm-usage");
 		options.addArguments("--remote-debugging-port=9222");
 
 		driver = new ChromeDriver(options);
