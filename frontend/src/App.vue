@@ -3,8 +3,6 @@
     <div id="app">
       <div class="main-container">
 
-
-
         <!-- 카카오 연동 화면 -->
         <div v-if="isMobileConnection">
           <Connection />
@@ -49,6 +47,37 @@ export default {
 }
 </script>
 <style>
+
+@media (min-width:0px) and (max-width: 400px) {
+	html{
+    font-size: 14px;
+  }
+}
+@media (min-height:0px) and (max-height: 700px) {
+	html{
+    font-size: 12px;
+  }
+}
+@media (min-width:401px) and (max-width: 600px) {
+	html{
+    font-size: 15px;
+  }
+}
+@media (min-width:601px) and (max-width: 960px) {
+	html{
+    font-size: 18px;
+  }
+}
+@media (min-width:961px) and (max-width: 1264px) {
+	html{
+    font-size: 20px;
+  }
+}
+@media (min-width:1265px) and (max-width: 1904px) {
+	html{
+    font-size: 18px;
+  }
+}
 :root{
   --main-color : #7DB3D9;
   --main-sub-color : #F2CC06;
@@ -68,12 +97,13 @@ export default {
 *{ 
   font-family: 'NanumSquare', sans-serif !important; 
   /* font-family: 'BMJUA'; */
+  color: var(--font-base-color);
 }
-
 
 .eng-text{
   font-family: 'NanumSquareRound';
 }
+
 /* 글꼴 머하징 흑ㅎㄱ */
 @font-face { font-family: 'Bazzi'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff') format('woff'); font-weight: normal; font-style: normal; }
 @font-face { font-family: 'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); font-weight: normal; font-style: normal; }
