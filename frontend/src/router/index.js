@@ -75,6 +75,8 @@ router.beforeEach((to, from, next) => {
 
   if(to.query.userBotKey){
     localStorage.setItem('userBotKey', to.query.userBotKey)
+  }else if(localStorage.getItem('userBotKey')){
+    localStorage.setItem('userBotKey', '')
   }
   
   const authRequired = !publicPages.includes(to.name) // Login 해야 함

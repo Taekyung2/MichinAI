@@ -36,7 +36,7 @@ public class UserController {
 		
 		User user = userService.save(payload.toCommand());
 		
-		if (payload.getUserBotKey() == null) {	// 로그인 요청: 봇키 있으면 봇키 리턴, 없으면 걍 
+		if (payload.getUserBotKey() == null || payload.getUserBotKey() == "") {	// 로그인 요청: 봇키 있으면 봇키 리턴, 없으면 걍 
 			if (user.getBotKey() == null)
 				return SaveUserResponse.build(false);
 			return SaveUserResponse.build(user, false);

@@ -33,4 +33,20 @@ export default {
     padding: 50px 30px;
     justify-content: space-between;
 }
+
+@media (min-width:0px) and (max-width: 600px) {
+    .connect-container{
+        padding: 50px 30px 50px 30px;
+    }
+}
+@media (min-width:601px)  and (max-width: 1024px) {
+    .connect-container{
+        padding: 50px 30px;
+    }
+}
+@media (min-width:1025px)  and (max-width: 1904px) {
+    .connect-container{
+        padding: 50px 100px;
+    }
+}
 </style>
