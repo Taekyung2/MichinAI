@@ -43,7 +43,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
-@ApiIgnore
+//@ApiIgnore
 @RequestMapping("/kakao")
 public class KakaoChatController {
 

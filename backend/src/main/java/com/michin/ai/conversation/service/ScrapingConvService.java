@@ -42,6 +42,8 @@ public class ScrapingConvService {
 		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 		ChromeOptions options = new ChromeOptions();
 		options.setHeadless(true);
+		options.addArguments("--remote-debugging-port=9222");
+
 		driver = new ChromeDriver(options);
 		String url = "https://learn.dict.naver.com/conversation#/endic/" + dateStr;
 		driver.get(url);
