@@ -33,7 +33,7 @@ export default {
     Login,
   },
   computed :{
-    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileLogin', 'account']),
+    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileConnection', 'account']),
     ...mapGetters(['userBotKey'])
   },
   methods: {
@@ -42,9 +42,6 @@ export default {
   },
   created() {
     this.SET_MOBILE_CONNECTION(localStorage.getItem('userBotKey'))
-  },
-  updated() {
-    this.SET_MOBILE_LOGIN(localStorage.getItem('userBotKey'))
   },
   mounted() {
       this.getWordbook(this.account.userId)

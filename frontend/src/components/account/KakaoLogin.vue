@@ -12,6 +12,18 @@
         <span class="login-text-kakao"> Login with Kakao</span>
         </v-btn>
     </div>
+       <div v-else>
+        <v-btn
+        tile
+        color="#3E2622"
+        class="login-btn"
+        justify="space-around"
+        width="100%"
+        @click="login()"
+        >
+        <span class="login-text-kakao"> Connect with Kakao</span>
+        </v-btn>
+    </div>
 </div>
   
 </template>
