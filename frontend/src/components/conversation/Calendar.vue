@@ -25,7 +25,9 @@
           scrollable
           :min="minDate"
           :max="maxDate"
-          @change="getConversation">
+          :allowed-dates="allowedDates"
+          @change="getConversation"
+          @update:picker-date="pickerUpdate($event)">
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
           <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -38,6 +40,8 @@
 
 <script>
 import axios from 'axios'
+import moment from "moment"
+//import VueMomentJs from "vue-momentjs"
   export default {
     data: () => ({
       date: new Date().toISOString().substr(0, 10),
@@ -46,8 +50,10 @@ import axios from 'axios'
       menu: false,
       modal: false,
       menu2: false,
+      availableDates: [],
     }),
     computed: {
+      // 날짜 지정 1년전까지로 제한해주는 함수
      minDate() {
        var minDate = new Date();
        minDate.setFullYear(minDate.getFullYear()-1);
@@ -55,30 +61,47 @@ import axios from 'axios'
       }
     },
     methods: {
+      // axios 통신해서 회화 가져옴
       getConversation() {
-        let tmp = this.$store;
-//      return axios.get('/api/conv/' + Calendar.date)
         axios.get('/api/conv/' + this.date)
-          .then((response) => {
-            console.log(response.data.convList);
-            console.log(tmp);
+          .then((response) => {  
             this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
-            console.log(tmp.getters.getConversationList);
           });
+      },
+      // 일요일 막기 위한 함수들
+      allowedDates(a) {
+        return this.availableDates.includes(a);
+    },
+    
+    pickerUpdate: function(val) {
+      let totalDay = moment(val, "YYYY-MM").daysInMonth()
+      
+      let availableDates = []        
+      let day = 1
+
+      for (let i = day; i <= totalDay ; i++) {
+          let date = moment().month(val.split('-')[1]-1).date(i).format("YYYY-MM-DD")
+          if (moment(date).day() !== 0)
+            availableDates.push(date)
       }
+      this.availableDates = availableDates;
+      this.allowedDates();
+    }
+    
     },
     mounted () {
-      
-        let tmp = this.$store;
-//      return axios.get('/api/conv/' + Calendar.date)
         axios.get('/api/conv/' + this.date)
           .then((response) => {
-            console.log(response.data.convList);
-            console.log(tmp);
+            // 대화하는 인물 이름 설정 man1, woman1 두개로 대화함
+            response.data.convList.forEach(element => {
+              if(element.speaker === 'man1') {
+                element.speaker = '&#128102;';
+              } else {
+                element.speaker = '&#128103;';
+              }
+            });
             this.$store.commit('SET_CONVERSATIONLIST', response.data.convList);
-            console.log(tmp.getters.getConversationList);
           });
-      
     }
   }
 </script>
