@@ -73,7 +73,7 @@ export default {
     return {
       selectedMenuItem: 0,
       colorlist: ["#008080", "#c6e2ff", "#ffd0d1", "#eeab73", "#4169e1"],
-      wordbooklist: null,
+      wordbooklist: [],
     };
   },
   components: {
