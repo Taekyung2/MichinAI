@@ -2,9 +2,9 @@
     <div class="intro-container">
         <div class="login-container" align="center">
             <div class="login-text" align="left">
-                <p>스마트한 Chat-Bot,</p>
-                <p><span class="point-name">미친AI</span>와 함께</p>
-                <p>미쳐버리는</p>
+                <p style="font-size:1.3rem">스마트한 Chat-Bot,</p>
+                <p><span class="point-name">미친AI</span>와 함께하는</p>
+                <!-- <p>Fantastic한</p> -->
                 <p><span class="point-eng">미친영어</span> 공부법</p>
             </div>
             <div class="login-logo-container">
@@ -74,6 +74,15 @@ export default {
         max-width: 230px;
     }
 }
+@media (min-height:750px) and (max-height: 900px) {
+    .login-container{
+        padding: 90px 30px 50px 30px;
+    }
+    .login-logo{
+        max-height: 230px;
+        max-width: 230px;
+    }
+}
 @media (min-width:601px)  and (max-width: 1024px) {
     .login-container{
         padding: 50px 30px;
@@ -88,8 +97,8 @@ export default {
         padding: 50px 100px;
     }
     .login-logo{
-        max-height: 200px;
-        max-width: 200px;
+        max-height: 230px;
+        max-width: 230px;
     }
 }
 .login-text *{

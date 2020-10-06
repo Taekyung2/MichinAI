@@ -25,6 +25,7 @@ export default new Vuex.Store({
     userBotKey: '',
     navigationTitle: 'Title',
     conversationList: [],
+    loadingConversation:false,
     myWordbook : null,
     baseWordbook : null
 

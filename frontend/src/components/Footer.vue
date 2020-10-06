@@ -32,7 +32,7 @@
     <v-btn router-link to='/score'> 
       <span class="footer-text">내점수</span>
 
-      <v-icon>mdi-account-circle</v-icon>
+      <v-icon>mdi-marker</v-icon>
     </v-btn>
   </v-bottom-navigation>
     </v-footer>

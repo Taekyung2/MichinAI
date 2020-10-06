@@ -53,17 +53,17 @@ export default {
 
 @media (min-width:0px) and (max-width: 400px) {
 	html{
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 @media (min-height:0px) and (max-height: 700px) {
 	html{
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 @media (min-width:401px) and (max-width: 600px) {
 	html{
-    font-size: 15px;
+    font-size: 16px;
   }
 }
 @media (min-width:601px) and (max-width: 960px) {
@@ -78,7 +78,7 @@ export default {
 }
 @media (min-width:1265px) and (max-width: 1904px) {
 	html{
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 :root{
