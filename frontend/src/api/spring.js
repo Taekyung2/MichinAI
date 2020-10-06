@@ -1,5 +1,5 @@
 export default{
-    URL: 'http://localhost:8399/api',
+    URL: 'https://michinai.cf/api',
     ROUTES:{
         login: '/user/login',
 
