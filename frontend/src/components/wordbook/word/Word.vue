@@ -21,12 +21,12 @@
     class="mx-auto"
     max-width="400"
   >
-    <v-card-text>
+    <v-card-text style="padding: 8px">
       <div style="float:left; width:10%">
       <v-icon v-if="!word.check" style="color:var(--border-base-color)">mdi-bookmark-outline</v-icon> 
       <v-icon v-if="word.check" style="color:var(--main-sub-color)">mdi-bookmark</v-icon>
       </div>
-      <p class="display-1 text--primary" style="float:0; width:80%">
+      <p class="display-1 text--primary" style="float:0; width:80%; margin : 0; padding: 0px">
         {{word.eng}}
       </p>
       <div>{{word.kor}}</div>
