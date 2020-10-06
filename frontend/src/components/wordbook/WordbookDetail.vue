@@ -3,7 +3,7 @@
      
       <v-progress-circular
         :rotate="-90"
-        :size="60"
+        :size="50"
         :width="10"
         :value="progress"
         color="var(--main-color)"
@@ -56,6 +56,7 @@
       <div v-if="isSelectedQuizOption">
         <WordQuizOption :wordList="wordList"/>
       </div>
+      <WordCreate :wordbook_id="wordbook.id" />
   </div>
 </template>
 
@@ -64,6 +65,7 @@ import { mapGetters, mapMutations } from 'vuex'
 import Word from '@/components/wordbook/word/Word.vue'
 import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
 import WordQuizOption from '@/components/wordbook/quiz/WordQuizOption.vue'
+import WordCreate from '@/components/wordbook/word/WordCreate.vue'
 
 export default {
     name: 'WordbookDetail',
@@ -95,12 +97,13 @@ export default {
       },
       initQuiz(){
         this.INIT_QUIZ()
-      }
+      },
     },
     components: {       
       Word,
       WordbookFAB,
-      WordQuizOption
+      WordQuizOption,
+      WordCreate
     },
     created () {
       let count=0
@@ -115,6 +118,12 @@ export default {
         return this.progress = Math.round((count/this.wordList.length)*100)
       }, 1000)
     },
+    watch: {
+      wordbook(val) {
+        console.log(val)
+        this.wordList = val.words
+      }
+    }
 }
 </script>
 

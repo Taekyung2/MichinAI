@@ -8,7 +8,7 @@ export default{
         //Word
         getWordbook: '/wordbook/', // 뒤에 유저 id
         getBaseWordbook : '/wordbook/base',
-        addWordbook: '/wordbook'
-
+        addWordbook: '/wordbook',
+        addWord: '/wordbook/word'
     }
 }

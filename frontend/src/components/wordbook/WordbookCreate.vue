@@ -63,8 +63,10 @@ export default {
     addWordBook() {
       axios
         .post(SERVER.URL + SERVER.ROUTES.addWordbook, this.addWordBookInfo)
-        .then(() => {
+        .then((res) => {
+          this.$store.commit('SET_WORDBOOK', res)
           this.reset();
+          this.$emit("close")
           this.dialog = false
         })
         .catch((err) => console.log(err.response));

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card outlined @click="selectedWordbook(wordbook)">
-      <h3 align center>level {{ wordbook.level }}</h3>
+      <h3 align = center>level {{ wordbook.level }}</h3>
     </v-card>
   </div>
 </template>
