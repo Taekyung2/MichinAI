@@ -61,7 +61,7 @@ const Kakao = {
             window.Kakao.API.request({
                 url:'/v2/user/me',
                 success: res => {
-                    console.log(res.id)
+                    // console.log(res.id)
                     const kakao = res.kakao_account
                     const authUser = {
                         userName: kakao.profile.nickname,
@@ -70,40 +70,46 @@ const Kakao = {
                         accessToken: authObj.access_token,
                         userBotKey: localStorage.getItem('userBotKey')
                     }
-                    commit('SET_KAKAO_AUTH', authUser)
+                    
                     
                     
                     axios.post(SERVER.URL + SERVER.ROUTES.login , authUser)
                     .then(res=>{
-
+                        console.log(authUser)
                         console.log(res)
-                        if(localStorage.getItem('userBotKey')){
-                            const result={
-                                message : '미친아이와 연동 되었습니다.',
-                                state : true
-                            }
-                            commit('SET_RESULT_CONNECTION',result)
-                            setTimeout(function(){
-                                commit('INIT_RESULT_CONNECTION')
-                            },2000)
-                        }
+                        // 연동하기
+                        if(res.data.connect){
 
-                        localStorage.setItem('userBotKey','')
-                        commit('SET_MOBILE_CONNECTION','')
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        if(localStorage.getItem('userBotKey')){
-                            const result={
-                                message : '이미 미친아이와 연동된 아이디입니다.',
+                            let result = {
+                                message : '',
                                 state : false
                             }
+                            if(res.data.userBotKey){
+                                result={
+                                    message : '미친AI와 연동 되었습니다.',
+                                    state : true
+                                }
+                            }else{
+                                result={
+                                    message : '이미 미친AI와 연동된 계정입니다.',
+                                    state : false
+                                }
+                            }
                             commit('SET_RESULT_CONNECTION',result)
                             setTimeout(function(){
                                 commit('INIT_RESULT_CONNECTION')
                             },2000)
                         }
+                        if(res.data.userBotKey){
+                            authUser.userBotKey = res.data.userBotKey
+                        }
+
+                        commit('SET_KAKAO_AUTH', authUser)
+                        localStorage.setItem('userBotKey','')
+                        commit('SET_MOBILE_CONNECTION','')
+
                     })
+                    .catch(err => console.log(err))
                 },
                 fail: error => {
                     console.log(error)

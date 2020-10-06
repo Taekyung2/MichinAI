@@ -66,6 +66,7 @@ export default {
 
 .footer-text{
   font-family: 'BMJUA' !important;
+  color: var(--main-color);
 }
 
 </style>

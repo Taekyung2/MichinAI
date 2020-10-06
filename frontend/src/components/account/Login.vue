@@ -63,23 +63,33 @@ export default {
 .login-logo{
     padding-bottom: 10px;
     flex: 1 1 auto;
-    max-height: 230px;
-    max-width: 230px;
     margin-left: -13px;
 }
 @media (min-width:0px) and (max-width: 600px) {
     .login-container{
         padding: 50px 30px 50px 30px;
     }
+    .login-logo{
+        max-height: 230px;
+        max-width: 230px;
+    }
 }
 @media (min-width:601px)  and (max-width: 1024px) {
     .login-container{
         padding: 50px 30px;
     }
+    .login-logo{
+        max-height: 200px;
+        max-width: 200px;
+    }
 }
 @media (min-width:1025px)  and (max-width: 1904px) {
     .login-container{
-        padding: 50px 50px;
+        padding: 50px 100px;
+    }
+    .login-logo{
+        max-height: 200px;
+        max-width: 200px;
     }
 }
 .login-text *{
