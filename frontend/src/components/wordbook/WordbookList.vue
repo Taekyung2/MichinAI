@@ -19,7 +19,7 @@
 
       <!-- 내 단어장 -->
       <v-row v-if="selectedMenuItem == 0" key="userWordbook">
-        <carousel-3d :count="wordbooklist.length" :width="170" :height="300" :space="150" :display="5">
+        <carousel-3d :autoplay="true" :autoplay-timeout="3000" :count="wordbooklist.length" :width="170" :height="300" :space="150" :display="5">
           <slide
             :style="{ 'background-color': colorlist[i % 5] }"
             v-for="(wordbook, i) in wordbooklist"

@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 // import router from '@/router'
 import axios from 'axios'
 
-// api ?š”ì²? URL
+// api ?ï¿½ï¿½ï¿½? URL
 // import SERVER from '@/api/drf'
 import createPersistedState from 'vuex-persistedstate'
 import Kakao from '@/store/modules/oauth/kakao.js'
@@ -14,7 +14,7 @@ import SERVER from '@/api/spring';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  // data?˜ ì§‘í•©
+  // data?ï¿½ï¿½ ì§‘í•©
   state: {
     selectedWordbook: null,
     selectedChat: null,
@@ -30,7 +30,7 @@ export default new Vuex.Store({
 
   },
   
-  // stateë¥? (ê°?ê³µí•´?„œ) ê°?? ¸?˜¬ ?•¨?ˆ˜?“¤
+  // stateï¿½? (ï¿½?ê³µí•´?ï¿½ï¿½) ï¿½??ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½
   getters: {
     wordbook(state){
       return state.selectedWordbook
@@ -67,8 +67,8 @@ export default new Vuex.Store({
     }
   },
 
-  // stateë¥? ë³?ê²½í•˜?Š” ?•¨?ˆ˜ (commit?„ ?†µ?•´ ?‹¤?–‰)
-  // ?ƒ?ˆ˜ ?´ë¦„ìœ¼ë¡? ?‘?„± - ì¤‘ìš”?•¨?„ ?‚˜???ƒ„
+  // stateï¿½? ï¿½?ê²½í•˜?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ (commit?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½)
+  // ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë¦„ìœ¼ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ - ì¤‘ìš”?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½???ï¿½ï¿½
   mutations: {
     SET_SELECTED_WORDBOOK(state, wordbook){
       state.selectedWordbook = wordbook
@@ -112,7 +112,7 @@ export default new Vuex.Store({
     },
   },
 
-  // ë²”ìš©? ?¸ ?•¨?ˆ˜?“¤ (dispatchë¥? ?†µ?•´ ?‹¤?–‰)
+  // ë²”ìš©?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ (dispatchï¿½? ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½)
   actions: {
     selectedWordbook({commit}, wordbook){
       commit('SET_SELECTED_WORDBOOK', wordbook)
