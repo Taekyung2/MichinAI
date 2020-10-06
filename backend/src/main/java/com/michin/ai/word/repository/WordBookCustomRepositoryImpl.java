@@ -65,5 +65,12 @@ public class WordBookCustomRepositoryImpl implements WordBookCustomRepository{
 		mongoTemplate.findAndModify(query, update,
 				FindAndModifyOptions.options().upsert(true), Wordbook.class);
 	}
+
+	@Override
+	public List<Wordbook> findByUserId(Long user_id) {
+		Query query = new Query();
+        query.addCriteria(Criteria.where("user_id").is(user_id));
+        return mongoTemplate.find(query,Wordbook.class);
+	}
 	
 }
