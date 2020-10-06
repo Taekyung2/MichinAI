@@ -53,11 +53,42 @@ export default {
 }
 </script>
 <style>
-:root {
-  --main-color: #7db3d9;
-  --main-sub-color: #f2cc06;
-  --main-point-color: #f48705;
 
+@media (min-width:0px) and (max-width: 400px) {
+	html{
+    font-size: 14px;
+  }
+}
+@media (min-height:0px) and (max-height: 700px) {
+	html{
+    font-size: 12px;
+  }
+}
+@media (min-width:401px) and (max-width: 600px) {
+	html{
+    font-size: 15px;
+  }
+}
+@media (min-width:601px) and (max-width: 960px) {
+	html{
+    font-size: 18px;
+  }
+}
+@media (min-width:961px) and (max-width: 1264px) {
+	html{
+    font-size: 20px;
+  }
+}
+@media (min-width:1265px) and (max-width: 1904px) {
+	html{
+    font-size: 18px;
+  }
+}
+:root{
+  --main-color : #7DB3D9;
+  --main-sub-color : #F2CC06;
+  --main-point-color :  #F48705;
+  
   /* --footer-color : #F2CC06; */
   --footer-color: #252525;
   --navigation-color: #7db3d9;
@@ -72,11 +103,13 @@ export default {
 * {
   font-family: "NanumSquare", sans-serif !important;
   /* font-family: 'BMJUA'; */
+  color: var(--font-base-color);
 }
 
-.eng-text {
-  font-family: "NanumSquareRound";
+.eng-text{
+  font-family: 'NanumSquareRound';
 }
+
 /* 글꼴 머하징 흑ㅎㄱ */
 @font-face {
   font-family: "Bazzi";

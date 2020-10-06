@@ -1,11 +1,17 @@
 <template>
 <div>
-    <a id="custom-login-btn" @click="login()">
-        <img
-            src="@/assets/kakao_logo.png"
-            width="80"
-        />
-    </a>
+    <div v-if="eventName=='login'">
+        <v-btn
+        tile
+        color="#3E2622"
+        class="login-btn"
+        justify="space-around"
+        width="100%"
+        @click="login()"
+        >
+        <span class="login-text-kakao"> Login with Kakao</span>
+        </v-btn>
+    </div>
 </div>
   
 </template>
@@ -19,9 +25,20 @@ export default {
     methods:{
         ...mapActions('Kakao', ['init','login']),
     },
+    props:{
+        eventName: String,
+    }
 }
 </script>
 
 <style>
-
+.login-text-kakao{
+    font-size: 1.2em;
+    font-family: 'BMDOHYEON' !important;
+    color: #FAED38;
+}
+.login-btn{
+    border-radius: 10px;
+    padding: 25px 0px !important;
+}
 </style>
