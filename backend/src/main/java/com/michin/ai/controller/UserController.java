@@ -29,20 +29,19 @@ public class UserController {
 		if (payload.getUserId() == 0) {
 			return Result.failure("userId가 존재하지 않습니다.");
 		}
-		
 		User origin = userService.findById(payload.getUserId());
 		String originBotKey = "";
-		if (origin != null)
+		if (origin != null) 
 			originBotKey = origin.getBotKey();
 		
 		User user = userService.save(payload.toCommand());
 		
-		if (payload.getUserBotKey() == null) {	// 로그인 요청: 봇키 있으면 봇키 리턴, 없으면 걍 
+		if (payload.getUserBotKey() == null || payload.getUserBotKey() == "") {	// 로그인 요청: 봇키 있으면 봇키 리턴, 없으면 걍 
 			if (user.getBotKey() == null)
 				return SaveUserResponse.build(false);
 			return SaveUserResponse.build(user, false);
 		} else {	// 연동 요청
-			if (originBotKey == null)	// DB에 봇 키 없으면
+			if (originBotKey == null || originBotKey == "")	// DB에 봇 키 없으면
 				return SaveUserResponse.build(user, true);
 			return SaveUserResponse.build("이미 연동된 계정입니다.", true);
 		}

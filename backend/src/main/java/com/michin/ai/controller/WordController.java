@@ -45,7 +45,8 @@ public class WordController {
 		CreateWordbookCommand command = payload.toCommand();
 		Wordbook wb = wordService.createWordbook(command);
 		if(wb == null) return Result.failure("중복된 이름입니다.");
-		return WordbookResult.build(wb);
+		List<Wordbook> wb_list = wordService.getWordbook(command.getUser_id());
+		return WordbookResult.build(wb_list);
 	}
 	
 	@GetMapping("/{id}")

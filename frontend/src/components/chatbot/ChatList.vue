@@ -12,7 +12,7 @@
 
 <script>
 import ChatListItem from '@/components/chatbot/ChatListItem.vue';
-
+import SERVER from '@/api/spring.js'
 import axios from 'axios';
 
 export default {
@@ -36,7 +36,7 @@ export default {
       getChatList() {
         // var wow = this.$store.getters["Kakao/getAccount"];
         var botKey = this.$store.state.Kakao.account.userBotKey;
-        axios.get("http://29af62145ef1.ngrok.io/api/chat/", {
+        axios.get(SERVER.URL + "/chat/", {
           params: {
             userBotKey: botKey
           }

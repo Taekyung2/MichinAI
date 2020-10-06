@@ -1,9 +1,9 @@
 export default{
-    URL: 'http://localhost:8399/api',
+    URL: 'https://michinai.cf/api',
     ROUTES:{
         login: '/user/login',
 
-        conversation: '/api/conv/:selectedDate',
+        conversation: '/conv/:selectedDate',
 
         //Word
         getWordbook: '/wordbook/', // 뒤에 유저 id
