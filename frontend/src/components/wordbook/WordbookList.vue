@@ -48,7 +48,7 @@
               :src="require(`@/assets/michinLogo02.png`)"
               style="margin-bottom: 15%"
             />
-            <h2 align="center" style="color: black">{{ wordbook.name }}</h2>
+            <h2 class="h2-font" align="center" style="color: black">{{ wordbook.name }}</h2>
           </slide>
         </carousel-3d>
       </v-row>

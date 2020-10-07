@@ -107,7 +107,7 @@ export default {
 }
 
 * {
-  font-family: "NanumSquare", sans-serif !important;
+  font-family: "NanumSquareRound", sans-serif !important;
   /* font-family: 'BMJUA'; */
   /* color: var(--font-base-color); */
 }
@@ -117,8 +117,9 @@ export default {
 }
 
 .eng-text {
-  font-family: "NanumSquareRound";
+  font-family: "Bazzi";
 }
+
 
 /* 글꼴 머하징 흑ㅎㄱ */
 @font-face {

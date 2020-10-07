@@ -26,7 +26,7 @@ public interface WordService {
 	
 	Wordbook changeCheck(ChangeCheckCommand command);
 	
-	List<Wordbook> deleteWordbook(String wordbook_id);
+	List<Wordbook> deleteWordbook(String wordbook_id, long user_id);
 	
 	Wordbook changeContent(ChangeContentCommand command);
 	
