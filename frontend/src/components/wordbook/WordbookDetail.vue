@@ -70,12 +70,12 @@
     </div>
     <div v-if="wordList.length==0">
       <img
-        class="incoming_msg_img"
-        :src="require(`@/assets/michinLogo04.png`)"
-        style="{width: 200px%; height: 400px; margin:auto;}"
+        class="no-word"
+        :src="require(`@/assets/noWords.png`)"
       />
-      <h1 align=center style="margin-bottom : 20px">단어를 추가해주세요</h1>
+      <div />
       <WordCreate :wordbook_id="wordbook.id" :isBase="isBase"/>
+      <h3 class="mt-3"> 추가하기 </h3>
     </div>
   </div>
 </template>
@@ -190,5 +190,11 @@ export default {
 }
 .delete-button {
   margin: 8px;
+}
+.no-word {
+  width: 80%;
+  height: 80%;
+  margin-top: 30%;
+  margin-bottom: 10%;
 }
 </style>

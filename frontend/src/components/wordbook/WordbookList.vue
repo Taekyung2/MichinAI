@@ -26,7 +26,7 @@
         <carousel-3d
           @after-slide-change="onAfterSlideChange"
           :autoplay="true"
-          :autoplay-timeout="1500"
+          :autoplay-timeout="3000"
           :count="wordbooklist.length"
           :width="170"
           :height="300"
@@ -80,11 +80,10 @@
         style="margin-bottom: 20%"
       >
         <img
-          class="incoming_msg_img"
-          :src="require(`@/assets/michinLogo04.png`)"
+          class="mt-16"
+          :src="require(`@/assets/noWordBooks.png`)"
           style="width: 60%"
         />
-        <h1>단어장을 추가해주세요</h1>
         <v-spacer></v-spacer>
       </div>
 
@@ -93,7 +92,7 @@
         <carousel-3d
           @after-slide-change="onAfterSlideChange"
           :autoplay="true"
-          :autoplay-timeout="1500"
+          :autoplay-timeout="3000"
           :width="170"
           :height="300"
           :space="150"
@@ -171,7 +170,6 @@ export default {
     ...mapMutations(["SET_WORDBOOK"]),
 
     del(index) {
-      console.log(index)
       axios.delete(SERVER.URL + "/wordbook/wordbook/" + this.wordbooklist[index].id + "/" + this.wordbooklist[index].user_id).then((res) => {
         this.SET_WORDBOOK(res);
       });

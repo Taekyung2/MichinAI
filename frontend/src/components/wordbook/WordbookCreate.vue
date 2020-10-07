@@ -1,12 +1,25 @@
 <template>
   <v-row justify="center">
-    <v-btn class="mx-2" fab dark color="var(--main-point-color)" @click.stop="dialog = true">
+    <v-btn
+      class="mx-2"
+      fab
+      dark
+      small
+      color="var(--main-point-color)"
+      @click.stop="dialog = true"
+    >
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
 
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
-        <v-card-title class="headline">단어장 추가</v-card-title>
+        <v-toolbar color="var(--main-sub-color)">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title><h4>단어장 추가</h4></v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
         <v-card-text>
           <div>
             <v-text-field
@@ -14,20 +27,14 @@
               :rules="rules"
               hide-details="auto"
               v-model="addWordBookInfo.name"
+              class="mt-6"
             ></v-text-field>
           </div>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-
-          <v-btn color="green darken-1" text @click="dialog = false">
-            취소
-          </v-btn>
-
-          <v-btn color="green darken-1" text @click="addWordBook">
-            저장
-          </v-btn>
+          <v-btn color="green darken-1" text @click="addWordBook"> 저장 </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -57,25 +64,27 @@ export default {
   },
   methods: {
     reset() {
-      this.addWordBookInfo.name = ""
-      this.addWordBookInfo.user_id = ""
+      this.addWordBookInfo.name = "";
+      this.addWordBookInfo.user_id = "";
     },
     addWordBook() {
       axios
         .post(SERVER.URL + SERVER.ROUTES.addWordbook, this.addWordBookInfo)
         .then((res) => {
-          this.$store.commit('SET_WORDBOOK', res)
-          this.$emit("close")
-          this.dialog = false
+          this.$store.commit("SET_WORDBOOK", res);
+          this.$emit("close");
+          this.dialog = false;
         })
         .catch((err) => console.log(err.response));
     },
   },
   computed: {
-    ...mapGetters('Kakao', ['account'])
+    ...mapGetters("Kakao", ["account"]),
   },
   created() {
-    this.addWordBookInfo.user_id = JSON.parse(localStorage.getItem('vuex')).Kakao.account.userId
-  }
+    this.addWordBookInfo.user_id = JSON.parse(
+      localStorage.getItem("vuex")
+    ).Kakao.account.userId;
+  },
 };
 </script>
