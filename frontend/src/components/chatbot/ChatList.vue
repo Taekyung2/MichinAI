@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img v-if="noChat" class="noChats" src="./components/noChats.png" alt="no chats">
+    <img v-if="noChat" class="noChats" :src="require(`@/assets/noChats.png`)" alt="no chats">
     <v-row v-else class="chat-list">
         <ChatListItem 
         :chat="eachChat"
@@ -42,7 +42,7 @@ export default {
         }).then(({data}) => {
           console.log(data);
           this.chatList = data.chatList;
-          if (data.chatList.length() == 0)
+          if (this.chatList.length == 0)
             this.noChat = true;
         })
       }

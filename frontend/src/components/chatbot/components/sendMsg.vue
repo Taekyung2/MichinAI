@@ -73,7 +73,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .sent_msg p {
   background: #7db3d9 none repeat scroll 0 0;
   border-radius: 3px;
