@@ -44,7 +44,7 @@
     </template>
     <template v-else>
       <img
-        v-if="chatChartData.labels"
+        v-if="chatChartData.labels == undefined"
         class="no-score-img"
         :src="require(`@/assets/noScore.png`)"
       />
@@ -137,6 +137,7 @@ export default {
             labels: labels,
             data: score,
           };
+          console.log(this.chatChartData.labels);
           this.chatCateCnt = cateCnt;
         });
     },
