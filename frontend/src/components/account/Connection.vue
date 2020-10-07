@@ -10,19 +10,18 @@
 
         <div class="connect-text">
           <div class="connect-text-sub1">
-            <p style="margin-top: 20px; margin-bottom: 0px">
+            <p style="margin-top: 20px; margin-bottom: 0px; font-size: 1rem">
               영어 공부, 미친AI와 대화만 하면 끝?
               <span
                 style="
                   font-weight: bold;
-                  font-size: 1.15rem;
+                  font-size: 1rem;
                   color: var(--font-base-color);
                 "
                 >NO!!</span
               >
             </p>
-            <p style="margin-top: 8px; margin-bottom: 0px">
-              Perfect한 공부를 위해
+            <p style="margin-top: 10px; margin-bottom: 0px">
               <span
                 style="
                   font-weight: bold;
@@ -32,9 +31,9 @@
                 >미친AI</span
               >는, <br />
               Spell과 Grammar 같은
-              <span class="connect-point-text">철자, 문법, 문맥 검사</span>와
+              <span class="connect-point-text">철자·문법·문맥 검사</span>와
               <br />
-              자신의 실력을 한 눈에 볼 수 있는
+              영어회화 능력을 수치로 확인하는
               <span class="connect-point-text">통계</span> 등의 서비스를 <br />
               Web Site를 통해 제공해드립니다.
             </p>
@@ -53,16 +52,8 @@
                 alt="kakao.png"
               />
             </div>
-            <p
-              style="
-                margin-top: 10px;
-                margin-bottom: 20px;
-                font-weight: bold;
-                font-size: 1.15rem;
-                color: var(--font-base-color);
-              "
-            >
-              미친AI의 1000% 활용을 위해
+            <p class="sub2-title">
+              단, 미친AI를 1000% 이용하려면
               <br />반드시
               <span style="color: var(--main-sub-color)">Kakao</span> 와
               연동해야 합니다.
@@ -85,21 +76,16 @@
       </div>
       <KakaoLogin />
     </div>
-    <div class="intro-container" v-if="false">
-      <Introduction />
-    </div>
   </div>
 </template>
 
 <script>
 import KakaoLogin from "@/components/account/KakaoLogin.vue";
-import Introduction from "@/components/Introduction.vue";
 
 export default {
   name: "Connection",
   components: {
     KakaoLogin,
-    Introduction,
   },
 };
 </script>
@@ -141,6 +127,13 @@ export default {
   margin-left: -5px;
 }
 
+.sub2-title {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: var(--font-base-color) !important;
+}
 .connect-point-text {
   font-weight: bold;
   color: var(--font-base-color);
@@ -174,6 +167,9 @@ export default {
   .connect-steps p {
     margin: 10px 0px;
   }
+  .sub2-title {
+    font-size: 1rem !important;
+  }
 }
 
 @media (min-width: 0px) and (max-width: 600px) {
@@ -185,17 +181,42 @@ export default {
     max-width: 350px;
     height: 98%;
   }
+  .sub2-title {
+    font-size: 1.1rem !important;
+  }
 }
 @media (min-width: 601px) and (max-width: 1024px) {
   .connect-container {
-    padding: 50px 30px;
+    padding: 50px 50px;
     background-size: 50vh;
+  }
+  .connect-text-sub1 p {
+    font-size: 1.2rem;
+    color: var(--font-sub-3-color);
+  }
+  .connect-text-sub2 p {
+    font-size: 1.2rem;
+    color: var(--font-sub-3-color);
+  }
+  .sub2-title {
+    font-size: 1.4rem !important;
   }
 }
 @media (min-width: 1025px) and (max-width: 1904px) {
   .connect-container {
     padding: 60px 100px;
     background-size: 50%;
+  }
+  .connect-text-sub1 p {
+    font-size: 1.1rem;
+    color: var(--font-sub-3-color);
+  }
+  .connect-text-sub2 p {
+    font-size: 1.1rem;
+    color: var(--font-sub-3-color);
+  }
+  .sub2-title {
+    font-size: 1.4rem !important;
   }
 }
 </style>
