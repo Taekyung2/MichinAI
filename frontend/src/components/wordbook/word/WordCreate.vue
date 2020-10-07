@@ -1,6 +1,6 @@
 <template>
-  <v-row justify="end">
-    <v-btn class="mx-2" fab dark color="indigo" @click.stop="dialog = true">
+<span>
+    <v-btn class="mx-2" x-small fab dark color="var(--main-point-color)" @click.stop="dialog = true">
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
 
@@ -35,7 +35,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
+</span>
 </template>
 
 <script>

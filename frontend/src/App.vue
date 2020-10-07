@@ -20,77 +20,85 @@
   </v-app>
 </template>
 <script>
-import Home from '@/components/Home.vue'
-import Connection from '@/components/account/Connection.vue'
-import Login from '@/components/account/Login.vue'
+import Home from "@/components/Home.vue";
+import Connection from "@/components/account/Connection.vue";
+import Login from "@/components/account/Login.vue";
 
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Home,
     Connection,
     Login,
   },
-  computed :{
-    ...mapGetters('Kakao', ['isLoggedIn', 'isMobileConnection', 'account']),
-    ...mapGetters(['userBotKey'])
+  computed: {
+    ...mapGetters("Kakao", ["isLoggedIn", "isMobileConnection", "account"]),
+    ...mapGetters(["userBotKey"]),
   },
   methods: {
-    ...mapMutations('Kakao', ['SET_MOBILE_CONNECTION', 'SET_MOBILE_LOGIN']),
-    ...mapActions(['getWordbook', 'getBaseWordbook'])
+    ...mapMutations("Kakao", ["SET_MOBILE_CONNECTION", "SET_MOBILE_LOGIN"]),
+    ...mapActions(["getWordbook", "getBaseWordbook"]),
   },
   created() {
-    this.SET_MOBILE_CONNECTION(localStorage.getItem('userBotKey'))
+    this.SET_MOBILE_CONNECTION(localStorage.getItem("userBotKey"));
   },
   mounted() {
-      this.getWordbook(this.account.userId)
-      this.getBaseWordbook()
-  }
-}
+    this.getWordbook(this.account.userId);
+    this.getBaseWordbook();
+  },
+};
 </script>
 <style>
-
-@media (min-width:0px) and (max-width: 400px) {
-	html{
+@media (min-width: 0px) and (max-width: 400px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-height: 0px) and (max-height: 700px) {
+  html {
     font-size: 14px;
   }
 }
-@media (min-height:0px) and (max-height: 700px) {
-	html{
-    font-size: 12px;
+@media (min-width: 401px) and (max-width: 600px) {
+  html {
+    font-size: 16px;
   }
 }
-@media (min-width:401px) and (max-width: 600px) {
-	html{
-    font-size: 15px;
-  }
-}
-@media (min-width:601px) and (max-width: 960px) {
-	html{
+@media (min-width: 601px) and (max-width: 960px) {
+  html {
     font-size: 17px;
   }
 }
-@media (min-width:961px) and (max-width: 1264px) {
-	html{
+@media (min-width: 961px) and (max-width: 1264px) {
+  html {
     font-size: 20px;
   }
 }
-@media (min-width:1265px) and (max-width: 1904px) {
-	html{
-    font-size: 18px;
+@media (min-width: 1265px) and (max-width: 1904px) {
+  html {
+    font-size: 20px;
   }
 }
-:root{
-  --main-color : #7DB3D9;
-  --main-sub-color : #F2CC06;
-  --main-point-color :  #F48705;
-  
+@media (min-width: 1905px) {
+  html {
+    font-size: 24px;
+  }
+}
+.v-application--wrap {
+  background: #f6f8f8;
+}
+:root {
+  --main-color: #7db3d9;
+  --main-sub-color: #f2cc06;
+  --main-point-color: #f48705;
+
   /* --footer-color : #F2CC06; */
   --footer-color: #252525;
   --navigation-color: #7db3d9;
   --font-base-color: #252525;
   --font-sub-color: #777777;
+  --font-sub-2-color: #5a5b5e;
   --font-soft-color: #a6a6a6;
   --font-point-color: #f48705;
   --hover-background-color: #f2f2f2;
@@ -102,9 +110,13 @@ export default {
   /* font-family: 'BMJUA'; */
   /* color: var(--font-base-color); */
 }
+.v-application .title {
+  font-family: "yg-jalnan" !important;
+  color: var(--font-sub-2-color);
+}
 
-.eng-text{
-  font-family: 'NanumSquareRound';
+.eng-text {
+  font-family: "NanumSquareRound";
 }
 
 /* 글꼴 머하징 흑ㅎㄱ */

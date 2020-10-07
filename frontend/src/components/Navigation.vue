@@ -1,28 +1,33 @@
 <template>
-   <v-card >
-        <v-app-bar
-        color="var(--main-sub-color)"
-        >
-        <!-- <v-app-bar color="white"> -->
+  <div class="navigation-container">
+    <v-app-bar color="var(--main-sub-color)" flat>
+      <!-- <v-app-bar color="white"> -->
 
-        <!-- <img src="@/assets/michinLogo2.png" width="60px" alt="logo.png"> -->
-        <!-- <img src="@/assets/michinLogo.png" width="120px" alt="logo.png">  -->
-        <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+      <!-- <img src="@/assets/michinLogo2.png" width="60px" alt="logo.png"> -->
+      <!-- <img src="@/assets/michinLogo.png" width="120px" alt="logo.png">  -->
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
-        <!-- <v-toolbar-title>Title</v-toolbar-title> -->
-        <!-- <v-icon>mdi-arrow-left</v-icon> -->
-        <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-        <v-spacer></v-spacer>
-        <v-toolbar-title class="title">{{navigationTitle}}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <!-- <v-btn icon>
+      <!-- <v-toolbar-title>Title</v-toolbar-title> -->
+      <!-- <v-icon>mdi-arrow-left</v-icon> -->
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+      <v-spacer></v-spacer>
+      <v-toolbar-title>
+        <div class="navigation-title">
+          <img src="@/assets/michinLogo05.svg" width="30px" alt="" />
+          <span class="title"> {{ navigationTitle }}</span>
+        </div>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <!-- <v-btn icon>
             <v-icon>mdi-magnify</v-icon>
         </v-btn> -->
-        <v-btn icon >
-            <v-icon @click="logout()">mdi-power</v-icon>
-        </v-btn>
+      <v-btn icon>
+        <v-icon @click="logout()" color="var(--font-sub-color)"
+          >mdi-power</v-icon
+        >
+      </v-btn>
 
-        <!-- <template v-slot:extension>
+      <!-- <template v-slot:extension>
             <v-tabs align-with-title>
             <v-tab router-link to='/conversation'>오늘의 회화</v-tab>   
             <v-tab router-link to='/chatbot/list'>챗봇</v-tab>
@@ -30,29 +35,34 @@
             <v-tab router-link to='/score'>내점수</v-tab>
             </v-tabs>
         </template> -->
-        </v-app-bar>
-    </v-card>
+    </v-app-bar>
+  </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 export default {
-    name: 'Navigation',
-    methods:{
-        ...mapActions('Kakao', ['logout']),
-       
-    },
-    computed:{
-         ...mapGetters(['navigationTitle',]),
-    }
-}
+  name: "Navigation",
+  methods: {
+    ...mapActions("Kakao", ["logout"]),
+  },
+  computed: {
+    ...mapGetters(["navigationTitle"]),
+  },
+};
 </script>
 
-<style scoped>
-.v-sheet.v-app-bar.v-toolbar:not(.v-sheet--outlined) {
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 2px 4px 0px rgb(0 0 0 / 0%), 0px 1px 5px 0px rgb(0 0 0 / 0%);
+<style>
+.navigation-container {
+  box-shadow: 1px 1px 6px -4px rgb(100, 100, 100);
 }
-.title{
-    font-family: 'NanumSquareRound';
+
+.navigation-title {
+  display: flex;
+  align-items: center;
+}
+.navigation-title img {
+  margin-right: 10px;
+  padding-bottom: 4px;
 }
 </style>

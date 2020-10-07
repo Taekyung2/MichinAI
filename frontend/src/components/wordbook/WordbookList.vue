@@ -18,30 +18,83 @@
       </v-list>
 
       <!-- 내 단어장 -->
-      <v-row v-if="selectedMenuItem == 0" key="userWordbook">
-        <carousel-3d :count="wordbooklist.length" :width="170" :height="300" :space="150" :display="5">
+      <v-row
+        v-if="selectedMenuItem == 0 && wordbooklist.length != 0"
+        key="userWordbook"
+        style="margin-bottom: 10%"
+      >
+        <carousel-3d
+          @after-slide-change="onAfterSlideChange"
+          :autoplay="true"
+          :autoplay-timeout="3000"
+          :count="wordbooklist.length"
+          :width="170"
+          :height="300"
+          :space="150"
+          :display="5"
+          :controlsVisible="true"
+          :onMainSlideClick="wordbookDetail"
+          :autoplayHoverPause="true"
+          :border="0"
+        >
           <slide
             :style="{ 'background-color': colorlist[i % 5] }"
             v-for="(wordbook, i) in wordbooklist"
             :index="i"
             :key="i"
           >
-            <UserWordbookListItem :wordbook="wordbook" />
+            <img
+              class="incoming_msg_img"
+              :src="require(`@/assets/michinLogo02.png`)"
+              style="margin-bottom: 15%"
+            />
+            <h2 align="center" style="color: black">{{ wordbook.name }}</h2>
           </slide>
         </carousel-3d>
       </v-row>
+
+      <div
+        v-if="selectedMenuItem == 0 && wordbooklist.length == 0"
+        style="margin-bottom: 20%"
+      >
+        <img
+          class="incoming_msg_img"
+          :src="require(`@/assets/michinLogo04.png`)"
+          style="width: 60%"
+        />
+        <h1>단어장을 추가해주세요</h1>
+        <v-spacer></v-spacer>
+      </div>
+
       <!-- 기본 단어장 -->
       <div v-if="selectedMenuItem == 1" key="baseWordbook">
-        <carousel-3d :width="170" :height="300" :space="150" :display="5">
+        <carousel-3d
+          @after-slide-change="onAfterSlideChange"
+          :autoplay="true"
+          :autoplay-timeout="3000"
+          :width="170"
+          :height="300"
+          :space="150"
+          :display="5"
+          :controlsVisible="true"
+          :onMainSlideClick="basewordbookDetail"
+          :autoplayHoverPause="true"
+          :border="0"
+        >
           <slide
             :style="{ 'background-color': colorlist[(i + 1) % 5] }"
             v-for="(wordbook, i) in getbaseWordbook"
             :index="i"
             :key="i"
           >
-            <BaseWordbookListItem :wordbook="wordbook">
-              {{ wordbook.level }}
-            </BaseWordbookListItem>
+            <img
+              class="incoming_msg_img"
+              :src="require(`@/assets/michinLogo04.png`)"
+              style="margin-bottom: 15%"
+            />
+            <h2 align="center" style="color: black">
+              Level {{ wordbook.level }}
+            </h2>
           </slide>
         </carousel-3d>
       </div>
@@ -59,9 +112,7 @@
 </template>
 
 <script>
-import UserWordbookListItem from "@/components/wordbook/UserWordbookListItem.vue";
-import BaseWordbookListItem from "@/components/wordbook/BaseWordbookListItem.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { Carousel3d, Slide } from "vue-carousel-3d";
 
 import WordbookCreate from "@/components/wordbook/WordbookCreate.vue";
@@ -72,27 +123,37 @@ export default {
   data() {
     return {
       selectedMenuItem: 0,
-      colorlist: ["#008080", "#c6e2ff", "#ffd0d1", "#eeab73", "#4169e1"],
+      colorlist: ["#E3F6CE", "#c6e2ff", "#ffd0d1", "#eeab73", "#4169e1"],
       wordbooklist: [],
+      curIndex: 0,
     };
   },
   components: {
-    UserWordbookListItem,
-    BaseWordbookListItem,
     Carousel3d,
     Slide,
     WordbookCreate,
     // WordbookFAB
   },
   methods: {
+    ...mapActions(["selectedWordbook"]),
+
     reset() {
       this.wordbooklist = this.getmyWordbook;
+    },
+    wordbookDetail() {
+      this.selectedWordbook(this.wordbooklist[this.curIndex]);
+    },
+    basewordbookDetail() {
+      this.selectedWordbook(this.getbaseWordbook[this.curIndex]);
+      console.log(this.getbaseWordbook[this.curIndex].id)
+    },
+    onAfterSlideChange(index) {
+      this.curIndex = index;
     },
   },
   created() {
     this.reset();
   },
-
   computed: {
     ...mapGetters(["getmyWordbook", "getbaseWordbook"]),
   },
@@ -137,5 +198,9 @@ export default {
 .carousel-3d-slider {
   width: 100px;
   height: 100px;
+}
+
+.theme--light.v-list {
+  background: transparent;
 }
 </style>
