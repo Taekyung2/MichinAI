@@ -1,5 +1,15 @@
 <template>
   <div class="container">
+      <div align="right">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="#7db3d9" dark v-bind="attrs" v-on="on">
+              mdi-information-outline
+            </v-icon>
+          </template>
+          <span>내가 보낸 채팅이 10개 이상의 경우<br> 점수 확인이 가능합니다!</span>
+        </v-tooltip>
+      </div>
     <div class="score-container">
       <LineChart
         :chart-data="chatChartData"
@@ -7,10 +17,19 @@
         class="chart"
       />
     </div>
-    <h3>감점 요소</h3>
     <h4>{{ selectDate }}</h4>
+    <h3>감점 요소</h3>
     <div class="score-container">
-      <PieChart :chart-data="pieChartData" class="chart" />
+      <v-alert
+        v-if="selectIdx == -1"
+        class="text-center"
+        outlined
+        color="#f48705"
+      >
+        점수 차트의 <strong color="#f48705">포인터</strong>를 클릭해<br />
+        감점요소를 파악해보세요 :)
+      </v-alert>
+      <PieChart v-else :chart-data="pieChartData" class="chart" />
     </div>
   </div>
 </template>
@@ -39,7 +58,7 @@ export default {
     this.init();
   },
   created() {
-    this.SET_NAVIGATION_TITLE("내점수");
+    this.SET_NAVIGATION_TITLE("채팅 점수");
   },
   methods: {
     ...mapMutations(["SET_NAVIGATION_TITLE"]),
@@ -52,9 +71,11 @@ export default {
             score = [],
             cateCnt = [];
           res.data.chatList.forEach((elem) => {
-            labels.push(elem.date);
-            score.push(elem.score.score);
-            cateCnt.push(elem.score.categoryCnt);
+            if (elem.score.score != -1) {
+              labels.push(elem.date);
+              score.push(elem.score.score);
+              cateCnt.push(elem.score.categoryCnt);
+            }
           });
           this.chatChartData = {
             labels: labels,
@@ -83,9 +104,9 @@ export default {
 
 <style>
 .score-container {
-  margin: 50px 0;
+  margin: 20px 0;
 }
 .chart {
-  height: 200px;
+  height: 180px;
 }
 </style>

@@ -132,7 +132,7 @@ public class ChatServiceImpl implements ChatService {
 				}
 
 				double s = -1;
-				if (chatCnt >= 1) {
+				if (chatCnt >= 10) {
 					s = Math.max(Math.min((wordCnt / chatCnt) * 16.7, MAX_SCORE) - checkCnt * 1.1, MIN_SCORE);
 					double engRatio = (double) engCnt / totalLen;
 					if (engRatio < 0.75) {
@@ -141,7 +141,6 @@ public class ChatServiceImpl implements ChatService {
 					}
 					s = Math.round(s * 100) / (double) 100;
 				}
-				System.out.println(categoryCnt);
 				score.setScore(s);
 				score.setCategoryCnt(categoryCnt);
 				chats.setScore(score);

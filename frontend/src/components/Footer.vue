@@ -24,7 +24,7 @@
       </v-btn>
 
       <v-btn router-link to="/score">
-        <span class="footer-text">내점수</span>
+        <span class="footer-text">채팅 점수</span>
 
         <v-icon>mdi-chart-bar</v-icon>
       </v-btn>

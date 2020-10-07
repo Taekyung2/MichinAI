@@ -26,6 +26,7 @@ export default {
           {
             label: "chat score",
             borderWidth: 3,
+            pointRadius: 5,
             borderColor: color,
             backgroundColor: color,
             // pointBorderColor: pointColor,

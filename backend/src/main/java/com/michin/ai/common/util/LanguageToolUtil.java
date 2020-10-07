@@ -22,7 +22,7 @@ public class LanguageToolUtil {
 	public LanguageToolUtil() {
 		lt = new JLanguageTool(new English());
 		try {
-			lt.activateLanguageModelRules(new File("data/ngrams-en"));
+			lt.activateLanguageModelRules(new File("/home/ubuntu/data"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
