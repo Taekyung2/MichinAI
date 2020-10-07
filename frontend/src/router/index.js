@@ -20,6 +20,11 @@ const routes = [
       component: () => import('../views/Conversation.vue')
     },
     {
+      path: '/how',
+      name: 'HowToConnect',
+      component: () => import('@/components/account/HowToConnect.vue')
+    },
+    {
       path: '/chatbot',
       name: 'Chatbot',
       component: () => import('../views/Chatbot.vue'),
