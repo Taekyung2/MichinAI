@@ -8,7 +8,7 @@
         <v-icon color="grey lighten-1" @click="back">mdi-arrow-left</v-icon>
       </v-btn>
       <v-btn icon>
-        <v-icon color="grey lighten-1">mdi-delete-outline</v-icon>
+        <v-icon color="grey lighten-1" @click="deleteChats(chat.id)">mdi-delete-outline</v-icon>
       </v-btn>
     </template>
   </v-banner>
@@ -17,6 +17,9 @@
 
 
 <script>
+import SERVER from '@/api/spring.js'
+import axios from 'axios';
+
 export default {
     name: 'chatDetailHeader',
    
@@ -27,6 +30,13 @@ export default {
    methods: {
     back(){
       this.$router.push({name:'ChatList'})
+    },
+
+    deleteChats(id) {
+      axios.delete(SERVER.URL + '/chat/list?ids=' + id)
+        .then(() =>  {
+          this.back();
+        })
     },
   }
 
