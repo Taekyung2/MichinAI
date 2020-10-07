@@ -73,10 +73,10 @@ export default {
   width: 89%;
 }
 .received_withd_msg p {
-  background: #f2f2f2 none repeat scroll 0 0;
+  background: #cfcfcf none repeat scroll 0 0;
   border-radius: 3px;
-  /* color: #f2f2f2;ebebeb */
-  color: #3d3d3d;
+  /* color: #f2f2f2;ebebeb;646464 */
+  color: #646464;
   font-size: 14px;
   margin: 0;
   padding: 5px 10px 5px 12px;
