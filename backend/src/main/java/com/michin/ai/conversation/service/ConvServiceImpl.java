@@ -33,11 +33,6 @@ public class ConvServiceImpl implements ConvService {
 		if (date == null)
 			date = LocalDate.now();
 
-		DayOfWeek dayOfWeek = date.getDayOfWeek();
-		if (dayOfWeek == DayOfWeek.SUNDAY) {
-			return null;
-		}
-
 		List<Conversation> convList = convRepo.findByDate(date);
 		if (convList.size() == 0)
 			convList = scrapService.scrapingConversation(date);

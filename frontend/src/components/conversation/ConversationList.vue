@@ -1,50 +1,37 @@
 <template>
   <div>
     <!-- <h3>오늘의 회화 리스트 입니다.</h3> -->
-
-    <Calendar />
-    <template v-for="(conv,i) in getConversationList">
-      <receive-msg :chat="conv" :key="i" v-if="conv.speaker == speaker"/>
-      <send-msg :chat="conv" :key="i" v-if="conv.speaker != speaker"/>
+    <v-row
+      ><v-col cols="5" sm="6" md="4">
+        <Calendar />
+      </v-col>
+      <v-col cols="7" sm="6" md="4">
+        <v-chip-group
+          v-model="language"
+          column
+          multiple
+          mandatory
+          class="d-flex align-end flex-column"
+        >
+          <v-chip filter outlined>영어</v-chip>
+          <v-chip filter outlined>번역</v-chip>
+        </v-chip-group>
+      </v-col>
+    </v-row>
+    <template v-for="(conv, i) in getConversationList">
+      <receive-msg
+        :chat="conv"
+        :key="i"
+        v-if="conv.speaker == speaker"
+        :lang="language"
+      />
+      <send-msg
+        :chat="conv"
+        :key="i"
+        v-if="conv.speaker != speaker"
+        :lang="language"
+      />
     </template>
-
-    <!-- <ConversationListItem 
-    :conversation="conversation" 
-    /> -->
-    <!-- <v-card
-    class="conversation-item mx-auto"
-    >
-    <v-card-title style="font-size:16px; padding-bottom: 0px" v-model="conversationList"
-    v-for="conv in getConversationList" :key="conv.id"
-    >
-    {{conv.speaker}}  : {{conv.eng}}
-    
-      
-    </v-card-title>
-
-    <v-card-actions>
-
-      <v-spacer></v-spacer>
-      해석 
-      <v-btn
-        icon
-        @click="show = !show;"
-      >
-         <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-      </v-btn>
-    </v-card-actions>
-
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text
-        v-for="conv in getConversationList" :key="conv.id">
-          {{conv.speaker}}  : {{conv.kor}}
-        </v-card-text>
-      </div>
-    </v-expand-transition>
-  </v-card> -->
   </div>
 </template>
 
@@ -60,21 +47,23 @@ export default {
   data() {
     return {
       show: false,
-      conversationList: [], 
+      conversationList: [],
+      language: [0],
     };
   },
   computed: {
     ...mapGetters(["getConversationList"]),
-    speaker(){
-      return this.getConversationList[0].speaker
-    }
+    speaker() {
+      return this.getConversationList[0].speaker;
+    },
   },
   components: {
     //        ConversationListItem,
-    Calendar,receiveMsg,sendMsg
+    Calendar,
+    receiveMsg,
+    sendMsg,
   },
-  mounted(){
-  },
+  mounted() {},
   methods: {},
 };
 </script>

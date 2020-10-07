@@ -2,13 +2,13 @@
   <div class="outgoing_msg" style="margin: 15px">
     <div class="sent_msg">
       <p class="text-capitalize">
-        {{ chat.eng }}<br />
-        <span>{{ chat.kor }}</span>
+        <span v-if="lang.includes(0)">{{ chat.eng }}<br /></span>
+        <span v-if="lang.includes(1)">{{ chat.kor }}</span>
       </p>
       <img
-        class="incoming_msg_img"
+        class="outgoing_msg_img"
         :src="require(`@/assets/convImg/${chat.speaker}.png`)"
-      /><!-- <span class="time_date">{{this.time}}</span> -->
+      /><!-- <span class="time_date">{{ this.time }}</span> -->
     </div>
   </div>
 </template>
@@ -19,6 +19,9 @@ export default {
   components: {},
   props: {
     chat: Object,
+    lang: {
+      type: Array,
+    },
   },
   data() {
     return {
@@ -28,7 +31,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .sent_msg p {
   background: #e9e9e9 none repeat scroll 0 0;
   border-radius: 3px;
@@ -44,12 +47,20 @@ export default {
 .outgoing_msg {
   overflow: hidden;
 }
+.time_date {
+  color: #747474;
+  display: block;
+  font-size: 1px;
+  margin: 5px 5px 3px;
+}
 .sent_msg {
   float: right;
   width: 85%;
 }
 .outgoing_msg_img {
   display: inline-block;
-  width: 10%;
+  width: 9%;
+  margin-left: 2px;
+  vertical-align: top;
 }
 </style>

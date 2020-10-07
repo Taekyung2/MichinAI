@@ -1,7 +1,9 @@
 <template>
-  <v-banner>
-    {{chat.date}}
-    <template v-slot:actions>
+  <v-banner class="mb-2 pa-0">
+    <!-- {{chat.date}} -->
+    <template v-slot:actions class="pa-0">
+      <h2>{{chat.date}}</h2>
+      <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon color="grey lighten-1" @click="back">mdi-arrow-left</v-icon>
       </v-btn>
@@ -32,28 +34,15 @@ export default {
 </script>
 
 <style>
-.wordbook-menu-group{
-  display: flex;
-  border: 1px solid var(--border-base-color);
-  border-radius: 24px !important;
-  width: 230px;
-  height: 48px;
+
+.padding {
+  padding: 4px 4px 10px 4px !important;
   margin-bottom: 10px;
-}
-.wordbook-menu-item{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 0;
-}
-.menu-l.v-list-item--link:before{
-  border-top-left-radius: 24px !important;
-  border-bottom-left-radius: 24px !important;
+  vertical-align: center;
 }
 
-.menu-r.v-list-item--link:before{
-  border-top-right-radius: 24px !important;
-  border-bottom-right-radius: 24px !important;
+.v-banner__wrapper {
+  padding: 5px 5px 15px 5px !important;
 }
 
 </style>

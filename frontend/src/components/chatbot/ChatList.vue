@@ -1,8 +1,7 @@
 <template>
   <div class="container">
-    <h3>채팅 목록</h3>
-    <v-divider class="mt-1 mb-3"/>
-    <v-row class="chat-list">
+    <img v-if="noChat" class="noChats" src="./components/noChats.png" alt="no chats">
+    <v-row v-else class="chat-list">
         <ChatListItem 
         :chat="eachChat"
         v-for="eachChat in chatList" :key="eachChat.date"/>
@@ -14,7 +13,6 @@
 import ChatListItem from '@/components/chatbot/ChatListItem.vue';
 import SERVER from '@/api/spring.js'
 import axios from 'axios';
-
 export default {
     name: 'ChatList',
     
@@ -25,6 +23,7 @@ export default {
     data(){
         return{
           chatList: [],
+          noChat: false,
         }
     },
    
@@ -41,8 +40,11 @@ export default {
             userBotKey: botKey
           }
         }).then(({data}) => {
-          // console.log(data);
-          this.chatList = data.chatList})
+          console.log(data);
+          this.chatList = data.chatList;
+          if (data.chatList.length() == 0)
+            this.noChat = true;
+        })
       }
 
     }
@@ -50,8 +52,14 @@ export default {
 </script>
 
 <style>
-.chat-list{
+.chat-list {
   display: flex;
   justify-content: space-around;
+}
+
+.noChats {
+  display: block;
+  width: 70%;
+  margin: 80px auto;
 }
 </style>

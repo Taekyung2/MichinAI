@@ -11,18 +11,32 @@
         <div class="connect-text">
           <div class="connect-text-sub1">
             <p style="margin-top: 20px; margin-bottom: 0px">
-              영어공부, 미친AI와 대화만 하면 끝?
-              <span style="font-weight: bold; font-size: 1.2rem">NO!!</span>
+              영어 공부, 미친AI와 대화만 하면 끝?
+              <span
+                style="
+                  font-weight: bold;
+                  font-size: 1.15rem;
+                  color: var(--font-base-color);
+                "
+                >NO!!</span
+              >
             </p>
-            <p style="margin-top: 20px; margin-bottom: 0px">
-              완벽한 영어 공부를 위해
-              <span class="connect-point-text">미친AI</span>는, <br />
+            <p style="margin-top: 8px; margin-bottom: 0px">
+              Perfect한 공부를 위해
+              <span
+                style="
+                  font-weight: bold;
+                  font-size: 1.15rem;
+                  color: var(--font-base-color);
+                "
+                >미친AI</span
+              >는, <br />
               Spell과 Grammar 같은
-              <span class="connect-point-text">철자, 문장 및 문맥 검사</span>와
+              <span class="connect-point-text">철자, 문법, 문맥 검사</span>와
               <br />
-              자신의 실력을 한 눈에 파악할 수 있는
-              <span class="connect-point-text">통계</span>등의 서비스를 Web
-              Site를 통해 제공해드립니다.
+              자신의 실력을 한 눈에 볼 수 있는
+              <span class="connect-point-text">통계</span> 등의 서비스를 <br />
+              Web Site를 통해 제공해드립니다.
             </p>
           </div>
           <div class="connect-text-sub2">
@@ -45,9 +59,10 @@
                 margin-bottom: 20px;
                 font-weight: bold;
                 font-size: 1.15rem;
+                color: var(--font-base-color);
               "
             >
-              미친AI의 1000% 활용하기 위해,
+              미친AI의 1000% 활용을 위해
               <br />반드시
               <span style="color: var(--main-sub-color)">Kakao</span> 와
               연동해야 합니다.
@@ -57,7 +72,7 @@
               <p class="connect-step-item">
                 <span class="connect-step">STEP 1. </span>
                 <span class="connect-btn-model">CONNECT WITH KAKAO</span>
-                버튼 CLICK !
+                버튼 클릭
               </p>
               <p>
                 <span class="connect-step">STEP 2. </span> 카카오 계정으로
@@ -117,6 +132,7 @@ export default {
 .connect-step {
   font-weight: bold;
   padding-right: 5px;
+  color: var(--font-base-color);
 }
 
 .connect-img {
@@ -127,6 +143,7 @@ export default {
 
 .connect-point-text {
   font-weight: bold;
+  color: var(--font-base-color);
 }
 
 .connect-btn-model {
@@ -147,9 +164,11 @@ export default {
 @media (min-width: 0px) and (max-width: 428px) {
   .connect-text-sub1 p {
     font-size: 0.9rem;
+    color: var(--font-sub-3-color);
   }
   .connect-text-sub2 p {
     font-size: 0.9rem;
+    color: var(--font-sub-3-color);
   }
 
   .connect-steps p {

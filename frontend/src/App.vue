@@ -86,7 +86,7 @@ export default {
   }
 }
 .v-application--wrap {
-  background: #f6f8f8;
+  background: #f9fafb;
 }
 :root {
   --main-color: #7db3d9;
@@ -99,6 +99,7 @@ export default {
   --font-base-color: #252525;
   --font-sub-color: #777777;
   --font-sub-2-color: #5a5b5e;
+  --font-sub-3-color: #3d3d3d;
   --font-soft-color: #a6a6a6;
   --font-point-color: #f48705;
   --hover-background-color: #f2f2f2;

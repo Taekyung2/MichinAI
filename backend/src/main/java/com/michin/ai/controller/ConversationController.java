@@ -1,5 +1,6 @@
 package com.michin.ai.controller;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -28,13 +29,17 @@ public class ConversationController {
 
 	@GetMapping(value = { "/{date}", "/" })
 	@ApiOperation(value = "회화 불러오기 date=yyyy-MM-dd/ 공백이라면 오늘의 회화")
-	public ResponseEntity conversationList(@ApiParam(defaultValue = "2020-09-28")
-			@PathVariable(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+	public ResponseEntity conversationList(
+			@ApiParam(defaultValue = "2020-09-28") @PathVariable(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 		if (date == null)
 			date = LocalDate.now();
 		LocalDate today = LocalDate.now();
-
 		
+		DayOfWeek dayOfWeek = date.getDayOfWeek();
+		if (dayOfWeek == DayOfWeek.SUNDAY) {
+			return null;
+		}
+
 		if (today.isBefore(date)) {
 			return Result.failure("현재 날짜 이후의 회화 데이터를 반활할 수 없습니다.");
 		}
