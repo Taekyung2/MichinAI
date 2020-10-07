@@ -1650,6 +1650,7 @@ class TorchAgent(ABC, Agent):
         # TODO: Migration plan: TorchAgent currently supports being passed
         # observations as vanilla dicts for legacy interop; eventually we
         # want to remove this behavior and demand that teachers return Messages
+        # 수정 불가 dict
         observation = Message(observation)
 
         # Sanity check everything is in order

@@ -16,10 +16,10 @@ from parlai.core.agents import create_agent
 import parlai.chat_service.utils.logging as log_utils
 import parlai.chat_service.utils.server as server_utils
 from parlai.utils.io import PathManager
-from parlai.chat_service.services.messenger.agents import MessengerAgent
+from parlai.for_test.messenger_app.agents import MessengerAgent
 from parlai.for_test.messenger_app.socket import ChatServiceMessageSocket
 from parlai.for_test.messenger_app.message_sender import MessageSender
-from parlai.chat_service.core.chat_service_manager import ChatServiceManager
+from parlai.for_test.messenger_app.chat_service_manager import ChatServiceManager
 
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -122,15 +122,18 @@ class MessengerManager(ChatServiceManager):
 
     def _handle_webhook_event(self, event):
         if 'message' in event:
-            if ('image_url' in event and event['image_url'] is not None) or (
-                'attachment_url' in event and event['attachment_url'] is not None
-            ):
-                event['message']['image'] = True
             self._on_new_message(event)
-        elif 'delivery' in event:
-            self.confirm_message_delivery(event)
-        elif 'read' in event:
-            self.handle_message_read(event)
+
+        # if 'message' in event:
+        #     if ('image_url' in event and event['image_url'] is not None) or (
+        #         'attachment_url' in event and event['attachment_url'] is not None
+        #     ):
+        #         event['message']['image'] = True
+        #     self._on_new_message(event)
+        # elif 'delivery' in event:
+        #     self.confirm_message_delivery(event)
+        # elif 'read' in event:
+        #     self.handle_message_read(event)
 
     def after_agent_removed(self, agent_id):
         """
@@ -253,17 +256,19 @@ class MessengerManager(ChatServiceManager):
         )
 
         self.app_token = self.get_app_token()
-        self.sender = MessageSender(self.app_token)
 
         # Set up receive
         socket_use_url = self.server_url
         if self.opt['local']:  # skip some hops for local stuff
             socket_use_url = 'https://localhost'
-        socket_use_url = 'https://localhost:8399/api/ws/websocket'
+        socket_use_url = 'https://localhost:8399/api/ws'
+        # socket_use_url = 'https://jig7357-parlai-messenger-chatb.herokuapp.com/webhook'
         self.port = 8399
+
         self.socket = ChatServiceMessageSocket(
             socket_use_url, self.port, self._handle_webhook_event
         )
+        self.sender = MessageSender(self.app_token, self.socket)
         log_utils.print_and_log(logging.INFO, 'done with websocket', should_print=True)
 
     # Agent Interaction Functions #

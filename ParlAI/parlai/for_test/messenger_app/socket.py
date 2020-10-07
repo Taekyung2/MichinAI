@@ -53,9 +53,9 @@ class ChatServiceMessageSocket:
                 # don't try to send a packet if we're still dead
                 return False
         try:
-            data = '1234567'
-            print('ws.send :', data)
+            # data = '1234'
             self.ws.send(data)
+            print('ws.send :', data)
         except websocket.WebSocketConnectionClosedException:
             # The channel died mid-send, wait for it to come back up
             return False
@@ -138,9 +138,12 @@ class ChatServiceMessageSocket:
             log_utils.print_and_log(
                 logging.DEBUG, 'Message data received: {}'.format(message_data)
             )
-            for message_packet in message_data['entry']:
-                for message in message_packet['messaging']:
-                    self.message_callback(message)
+            print('on_message : ', message_data)
+            self.message_callback(message_data)
+            # for message_packet in message_data['entry']:
+            #     for message in message_packet['messaging']:
+            #         self.message_callback(message)
+
 
         def run_socket(*args):
             url_base_name = self.server_url.split('https://')[1]

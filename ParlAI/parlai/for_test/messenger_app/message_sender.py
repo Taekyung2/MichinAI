@@ -153,13 +153,15 @@ class MessageSender:
     process of sending content.
     """
 
-    def __init__(self, secret_token):
+    def __init__(self, secret_token, socket):
         """
         server_url:           url at which the server is to be run
         port:                 port for the socket to operate on
         message_callback:     function to be called on incoming message objects (format: message_callback(self, data))
+        :type socket: ChatServiceMessageSocket
         """
         self.auth_args = {'access_token': secret_token}
+        self.socket = socket
 
     def send_sender_action(self, receiver_id, action, persona_id=None):
         api_address = f'https://graph.facebook.com/{API_VERSION}/me/messages'
@@ -218,34 +220,43 @@ class MessageSender:
         """
         Sends a message directly to messenger.
         """
-        api_address = f'https://graph.facebook.com/{API_VERSION}/me/messages'
-        if quick_replies is not None:
-            quick_replies = [create_reply_option(x, x) for x in quick_replies]
-        ms = create_text_message(message, quick_replies)
+        # api_address = f'https://graph.facebook.com/{API_VERSION}/me/messages'
+        # if quick_replies is not None:
+        #     quick_replies = [create_reply_option(x, x) for x in quick_replies]
+        # ms = create_text_message(message, quick_replies)
+
         results = []
-        for m in ms:
-            if m['text'] == '':
-                continue  # Skip blank messages
-            payload = {
-                "messaging_type": 'RESPONSE' if is_response else 'UPDATE',
-                "recipient": {"id": receiver_id},
-                "message": m,
-            }
-            if persona_id is not None:
-                payload['persona_id'] = persona_id
-            response = requests.post(api_address, params=self.auth_args, json=payload)
-            result = response.json()
-            if 'error' in result:
-                if result['error']['code'] == 1200:
-                    # temporary error please retry
-                    response = requests.post(
-                        api_address, params=self.auth_args, json=payload
-                    )
-                    result = response.json()
-            log_utils.print_and_log(
-                logging.INFO, '"Facebook response from message send: {}"'.format(result)
-            )
-            results.append(result)
+
+        if message == '':
+            return
+        payload = {
+            "message_type": 'RESPONSE' if is_response else 'UPDATE',
+            "recipient": receiver_id,
+            "text": message,
+        }
+        # if persona_id is not None:
+        #     payload['persona_id'] = persona_id
+        # response = requests.post(api_address, params=self.auth_args, json=payload)
+        self.socket._safe_send(json.dumps(payload))
+        print('sended ressult : ', payload)
+        # result = response.json()
+        import random
+        result = {
+            'recipient_id': receiver_id,
+            'message_id': str(random.random())
+        }
+        # if 'error' in result:
+        #     if result['error']['code'] == 1200:
+        #         # temporary error please retry
+        #         response = requests.post(
+        #             api_address, params=self.auth_args, json=payload
+        #         )
+        #         result = response.json()
+        log_utils.print_and_log(
+            logging.INFO, '"Facebook response from message send: {}"'.format(result)
+        )
+        results.append(result)
+
         return results
 
     def create_persona(self, name, image_url):

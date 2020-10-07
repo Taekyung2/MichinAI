@@ -60,7 +60,7 @@ class MessengerManager(ChatServiceManager):
         """
         Complete necessary setup items.
         """
-        self.setup_server()
+        # self.setup_server()
         self.init_new_state()
         self.setup_socket()
         self.start_new_run()
@@ -259,6 +259,7 @@ class MessengerManager(ChatServiceManager):
         socket_use_url = self.server_url
         if self.opt['local']:  # skip some hops for local stuff
             socket_use_url = 'https://localhost'
+        socket_use_url = 'https://jig7357-parlai-messenger-chatb.herokuapp.com/webhook'
         self.socket = ChatServiceMessageSocket(
             socket_use_url, self.port, self._handle_webhook_event
         )
