@@ -4,10 +4,10 @@
   @click="selectedChat(chat)"
   class="chat-list-item"
   >
-    <v-list-item>
+    <v-list-item three-line>
       <v-list-item-content class="chat"> 
+        <v-icon class="chat-icon mr-2">mdi-message</v-icon>
         <p class="chat-date">
-          <v-icon class="chat-icon mr-2">mdi-message</v-icon>
           {{chat.date.slice(2)}}
         </p>
       </v-list-item-content>
@@ -32,7 +32,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .chat-list-item{
   min-width: 30%;
   margin-bottom: 10px;
