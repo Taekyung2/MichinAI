@@ -1,12 +1,25 @@
 <template>
-<span>
-    <v-btn class="mx-2" x-small fab dark color="var(--main-point-color)" @click.stop="dialog = true">
+  <span>
+    <v-btn
+      class="mx-2"
+      x-small
+      fab
+      dark
+      color="var(--main-point-color)"
+      @click.stop="dialog = true"
+    >
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
 
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
-        <v-card-title class="headline">단어 추가</v-card-title>
+        <v-toolbar color="var(--main-sub-color)">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title><h4>단어 추가</h4></v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
         <v-card-text>
           <div>
             <v-text-field
@@ -26,16 +39,11 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-
-          <v-btn color="green darken-1" text @click="dialog = false">
-            취소
-          </v-btn>
-
           <v-btn color="green darken-1" text @click="addWord"> 저장 </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-</span>
+  </span>
 </template>
 
 <script>
@@ -55,7 +63,7 @@ export default {
         contents: [
           {
             eng: "",
-            kor: ""
+            kor: "",
           },
         ],
       },
@@ -63,17 +71,17 @@ export default {
   },
   props: {
     wordbook_id: String,
-    isBase: Boolean
+    isBase: Boolean,
   },
   methods: {
     ...mapActions(["selectedWordbook"]),
 
     addWord() {
-      console.log(this.addWordInfo)
+      console.log(this.addWordInfo);
       axios
         .put(SERVER.URL + SERVER.ROUTES.addWord, this.addWordInfo)
         .then((res) => {
-          this.payload = {wordbook: res.data, chk: this.isBase}
+          this.payload = { wordbook: res.data, chk: this.isBase };
           this.selectedWordbook(this.payload);
           this.dialog = false;
         })

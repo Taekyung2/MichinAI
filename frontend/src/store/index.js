@@ -75,7 +75,6 @@ export default new Vuex.Store({
   // ?��?�� ?��름으�? ?��?�� - 중요?��?�� ?��???��
   mutations: {
     SET_SELECTED_WORDBOOK(state, wordbook) {
-      console.log(wordbook)
       state.selectedWordbook = wordbook
     },
     SET_SELECTED_CHAT(state, chat) {
