@@ -1,7 +1,7 @@
 <template>
 <!-- User 입장에서 생각하기 ~.~ -->
 <div class="incoming_msg">
-    <img class="incoming_msg_img" src="./michin.png" alt="michin">
+    <img class="incoming_msg_img" :src="require(`@/assets/michinLogo02.png`)" alt="michin">
     <div class="received_msg">
         <div class="received_withd_msg">
         <p v-text="this.capitalize(chat.msg)"></p>
