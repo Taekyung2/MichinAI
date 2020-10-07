@@ -49,6 +49,7 @@ export default {
     return {
       dialog: false,
       rules: [(value) => !!value || "Required."],
+      payload: {},
       addWordInfo: {
         wordbook_id: "",
         contents: [
@@ -62,6 +63,7 @@ export default {
   },
   props: {
     wordbook_id: String,
+    isBase: Boolean
   },
   methods: {
     ...mapActions(["selectedWordbook"]),
@@ -71,7 +73,8 @@ export default {
       axios
         .put(SERVER.URL + SERVER.ROUTES.addWord, this.addWordInfo)
         .then((res) => {
-          this.selectedWordbook(res.data);
+          this.payload = {wordbook: res.data, chk: this.isBase}
+          this.selectedWordbook(this.payload);
           this.dialog = false;
         })
         .catch((err) => {

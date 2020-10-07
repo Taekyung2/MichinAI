@@ -26,7 +26,7 @@
         <carousel-3d
           @after-slide-change="onAfterSlideChange"
           :autoplay="true"
-          :autoplay-timeout="3000"
+          :autoplay-timeout="1500"
           :count="wordbooklist.length"
           :width="170"
           :height="300"
@@ -71,7 +71,7 @@
         <carousel-3d
           @after-slide-change="onAfterSlideChange"
           :autoplay="true"
-          :autoplay-timeout="3000"
+          :autoplay-timeout="1500"
           :width="170"
           :height="300"
           :space="150"
@@ -126,6 +126,7 @@ export default {
       colorlist: ["#E3F6CE", "#c6e2ff", "#ffd0d1", "#eeab73", "#4169e1"],
       wordbooklist: [],
       curIndex: 0,
+      payload: {},
     };
   },
   components: {
@@ -141,11 +142,13 @@ export default {
       this.wordbooklist = this.getmyWordbook;
     },
     wordbookDetail() {
-      this.selectedWordbook(this.wordbooklist[this.curIndex]);
+      this.payload = { wordbook: this.wordbooklist[this.curIndex], chk: false };
+      this.selectedWordbook(this.payload);
     },
     basewordbookDetail() {
-      this.selectedWordbook(this.getbaseWordbook[this.curIndex]);
-      console.log(this.getbaseWordbook[this.curIndex].id)
+      this.payload = { wordbook: this.getbaseWordbook[this.curIndex], chk: true };
+      this.selectedWordbook(this.payload);
+      console.log(this.getbaseWordbook[this.curIndex].id);
     },
     onAfterSlideChange(index) {
       this.curIndex = index;
