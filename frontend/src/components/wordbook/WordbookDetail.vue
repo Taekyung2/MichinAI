@@ -32,18 +32,6 @@
             </v-btn>
           </span>
           <WordCreate :wordbook_id="wordbook.id" :isBase="isBase"/>
-          <span class="delete-button">
-            <v-btn
-              class="mx-3"
-              fab
-              dark
-              x-small
-              color="primary"
-              @click="deleteWordbook"
-            >
-              <v-icon dark> mdi-minus </v-icon>
-            </v-btn>
-          </span>
           
           <span :class="isShowEng ? switchWord[1] : switchWord[0]"> 단어</span>
           <v-switch
@@ -98,8 +86,7 @@ import Word from "@/components/wordbook/word/Word.vue";
 import WordbookFAB from "@/components/wordbook/WordbookFAB.vue";
 import WordQuizOption from "@/components/wordbook/quiz/WordQuizOption.vue";
 import WordCreate from "@/components/wordbook/word/WordCreate.vue";
-import axios from "axios";
-import SERVER from "@/api/spring.js";
+
 
 export default {
   name: "WordbookDetail",
@@ -134,13 +121,6 @@ export default {
     },
     initQuiz() {
       this.INIT_QUIZ();
-    },
-    deleteWordbook() {
-      console.log(this.wordbook.user_id)
-      axios.delete(SERVER.URL + "/wordbook/wordbook/" + this.wordbook.id + "/" + this.wordbook.user_id).then((res) => {
-        this.SET_WORDBOOK(res);
-        this.$router.push({ name: "WordbookList" });
-      });
     },
   },
   components: {
