@@ -13,7 +13,7 @@
       </v-btn>
 
       <v-btn router-link to="/chatbot/list">
-        <span class="footer-text">채팅기록</span>
+        <span class="footer-text">채팅 기록</span>
         <v-icon>mdi-message-text</v-icon>
       </v-btn>
 

@@ -12,7 +12,7 @@ export default {
     ...mapMutations(["SET_NAVIGATION_TITLE"]),
   },
   created() {
-    this.SET_NAVIGATION_TITLE("채팅기록");
+    this.SET_NAVIGATION_TITLE("채팅 기록");
   },
 };
 </script>
