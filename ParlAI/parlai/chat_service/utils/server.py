@@ -10,7 +10,15 @@ import hashlib
 import netrc
 import os
 import platform
-import sh
+try:
+    import sh
+except ImportError:
+    # fallback: emulate the sh API with pbs
+    import pbs
+    class Sh(object):
+        def __getattr__(self, attr):
+            return pbs.Command(attr)
+    sh = Sh()
 import shlex
 import shutil
 import subprocess

@@ -5,12 +5,23 @@
 # LICENSE file in the root directory of this source tree.
 
 # Check 3rd-party dependencies
+
 try:
     import joblib  # noqa: F401
     import websocket  # noqa: F401
     import sh  # noqa: F401
 except ImportError:
-    raise SystemExit(
-        "Please install 3rd-party dependencies by running: "
-        "pip install joblib websocket-client sh"
-    )
+
+    import pbs
+
+
+    class Sh(object):
+        def __getattr__(self, attr):
+            return pbs.Command(attr)
+    sh = Sh()
+
+    # raise SystemExit(
+    #     "Please install 3rd-party dependencies by running: "
+    #     "pip install joblib websocket-client sh"
+    # )
+

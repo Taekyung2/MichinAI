@@ -409,6 +409,7 @@ class ChatServiceManager(ABC):
         :param message:
             message to put on queue
         """
+        # 'messege' 필드가 비어있으면 dict 할당
         message = self.restructure_message(message)
         agent_id = message['sender']['id']
         if not self.world_runner.is_initialized():

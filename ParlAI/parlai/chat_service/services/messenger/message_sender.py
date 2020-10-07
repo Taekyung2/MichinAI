@@ -235,6 +235,7 @@ class MessageSender:
                 payload['persona_id'] = persona_id
             response = requests.post(api_address, params=self.auth_args, json=payload)
             result = response.json()
+            print('fb response : ', result)
             if 'error' in result:
                 if result['error']['code'] == 1200:
                     # temporary error please retry

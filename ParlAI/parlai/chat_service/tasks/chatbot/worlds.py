@@ -86,6 +86,7 @@ class MessengerBotChatTaskWorld(World):
                 print(response)
                 print("~~~~~~~~~~~")
                 self.agent.observe(response)
+                # model : TransformerGenerateAgent / agent : MessengerAgent
                 print('답변 생성 시간 : {}'.format(time() - start_time))
 
     def episode_done(self):
