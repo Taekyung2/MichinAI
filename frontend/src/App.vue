@@ -13,7 +13,7 @@
 
         <!-- 비회원일 때 Main 화면 (로그인 화면) -->
         <div v-else>
-          <Login />
+          <Introduction />
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
 <script>
 import Home from "@/components/Home.vue";
 import Connection from "@/components/account/Connection.vue";
-import Login from "@/components/account/Login.vue";
+import Introduction from "@/components/Introduction.vue";
 
 import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
@@ -30,7 +30,7 @@ export default {
   components: {
     Home,
     Connection,
-    Login,
+    Introduction,
   },
   computed: {
     ...mapGetters("Kakao", ["isLoggedIn", "isMobileConnection", "account"]),
@@ -44,8 +44,10 @@ export default {
     this.SET_MOBILE_CONNECTION(localStorage.getItem("userBotKey"));
   },
   mounted() {
-    this.getWordbook(JSON.parse(localStorage.getItem('vuex')).Kakao.account.userId)
-    this.getBaseWordbook()
+    this.getWordbook(
+      JSON.parse(localStorage.getItem("vuex")).Kakao.account.userId
+    );
+    this.getBaseWordbook();
   },
 };
 </script>
@@ -77,7 +79,7 @@ export default {
 }
 @media (min-width: 1265px) and (max-width: 1904px) {
   html {
-    font-size: 20px;
+    font-size: 22px;
   }
 }
 @media (min-width: 1905px) {
@@ -93,10 +95,7 @@ export default {
   --main-sub-color: #f2cc06;
   --main-point-color: #f48705;
 
-  /* --footer-color : #F2CC06; */
-  --footer-color: #252525;
-  --navigation-color: #7db3d9;
-  --font-base-color: #252525;
+  --font-base-color: #2c2c2c;
   --font-sub-color: #777777;
   --font-sub-2-color: #5a5b5e;
   --font-sub-3-color: #3d3d3d;
@@ -104,6 +103,7 @@ export default {
   --font-point-color: #f48705;
   --hover-background-color: #f2f2f2;
   --border-base-color: #a6a6a6;
+  --background-color: #f9fafb;
 }
 
 * {
