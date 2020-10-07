@@ -8,8 +8,8 @@
     <div class="received_msg">
       <div class="received_withd_msg">
         <p class="text-capitalize">
-          {{ chat.eng }}<br />
-          <span>{{ chat.kor }}</span>
+          <span v-if="lang.includes(0)">{{ chat.eng }}<br /></span>
+          <span v-if="lang.includes(1)">{{ chat.kor }}</span>
         </p>
         <!-- <span class="time_date"> {{this.time}} </span> -->
       </div>
@@ -23,17 +23,19 @@ export default {
     chat: {
       type: Object,
     },
+    lang:{
+      type:Array
+    },
   },
   data() {
     return {
       time: "",
     };
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
-<style>
+<style scoped>
 .incoming_msg_img {
   display: inline-block;
   width: 8%;
@@ -46,7 +48,7 @@ export default {
   width: 89%;
 }
 .received_withd_msg p {
-  background: #FBB124 none repeat scroll 0 0;
+  background: #fbb124 none repeat scroll 0 0;
   border-radius: 3px;
   /* color: #f2f2f2;ebebeb */
   /* color: #fff; */

@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .incoming_msg_img {
   display: inline-block;
   width: 11%;
