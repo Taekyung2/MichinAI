@@ -4,10 +4,12 @@
   @click="selectedChat(chat)"
   class="chat-list-item"
   >
-    <v-list-item three-line>
+    <v-list-item>
       <v-list-item-content class="chat"> 
-        <v-icon class="chat-icon">mdi-message</v-icon>
-        <p class="chat-date">{{chat.date}}</p>
+        <p class="chat-date">
+          <v-icon class="chat-icon mr-2">mdi-message</v-icon>
+          {{chat.date.slice(2)}}
+        </p>
       </v-list-item-content>
     </v-list-item>
 
@@ -16,6 +18,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+
 export default {
     name: 'ChatListItem',
     props: {
@@ -24,7 +27,7 @@ export default {
     methods: {
       ...mapActions([
         'selectedChat'
-      ])
+      ]),
     }
 }
 </script>
@@ -39,7 +42,6 @@ export default {
   justify-content: center;
   align-content: center;
 }
-
 
 .chat-date{
   font-size: 16px;
