@@ -15,7 +15,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.michin.ai.common.WorldSession;
 import com.michin.ai.world.model.WorldAskMessage;
 import com.michin.ai.world.model.WorldReplyMessage;
 
@@ -40,7 +39,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 //			Receive Reply Message from World
 			WorldReplyMessage reply = new Gson().fromJson(obj.toString(), WorldReplyMessage.class);
 			System.out.println(reply.toString());
-			WorldSession.getInstance().getReplyQueue().add(reply);
+			WorldSession.getInstance().getReplyMap().put(reply.getRecipient(), reply);
 			
 		}
 	}
@@ -58,7 +57,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	public TaskScheduler taskScheduler() {
 	    TaskScheduler scheduler = new ThreadPoolTaskScheduler();
 
-	    ((ThreadPoolTaskScheduler) scheduler).setPoolSize(2);
+	    ((ThreadPoolTaskScheduler) scheduler).setPoolSize(6);
 	    ((ExecutorConfigurationSupport) scheduler).setThreadNamePrefix("scheduled-task-");
 	    ((CustomizableThreadCreator) scheduler).setDaemon(true);
 

@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.michin.ai.chat.service.ChatService;
-import com.michin.ai.common.WorldSession;
+import com.michin.ai.config.WorldSession;
 import com.michin.ai.conversation.model.Conversation;
 import com.michin.ai.conversation.service.ConvService;
 import com.michin.ai.kakao.dto.payload.Context;
@@ -67,7 +66,7 @@ public class KakaoChatController {
 	private SampleResponse sampleRes;
 
 	private WorldSession worldSession = WorldSession.getInstance();
-	private Queue<WorldReplyMessage> reply_queue = worldSession.getReplyQueue();
+	private Map<String, WorldReplyMessage> reply_map = worldSession.getReplyMap();
 	
 	private Map<String, String> emojiMap;
 
@@ -99,12 +98,16 @@ public class KakaoChatController {
 
 	@PostMapping("/chat")
 	public String chat(@RequestBody SkillPayload payload) {
+		System.out.println("도착");
+		double start = System.currentTimeMillis();
+		
 		List<Context> contextList = payload.getContexts();
 //		if (contextList.size() == 0 || contextList.get(0).getParams().size() == 0)
 //			return sampleRes.fallBackCarousel().toJson();
 
 		String userBotKey = payload.getUserRequest().getUser().getId();
 		String utterance = payload.getUserRequest().getUtterance();
+		reply_map.put(userBotKey + "##@", null);
 		
 		/////////////////////
 		
@@ -121,18 +124,25 @@ public class KakaoChatController {
 		
 		WorldReplyMessage reply = null;
 		while(reply == null) {
-			Iterator it = reply_queue.iterator();
-			while(it.hasNext()) {
-				WorldReplyMessage temp = (WorldReplyMessage) it.next();
-				System.out.println(temp.getRecipient());
-				if(temp.getRecipient().equals(tempUserId)){
-					reply = temp;
-					it.remove();
-					break;
-				}
+//			Iterator it = reply_.iterator();
+//			while(it.hasNext()) {
+//				WorldReplyMessage temp = (WorldReplyMessage) it.next();
+//				if(temp.getRecipient().equals(tempUserId)){
+//					reply = temp;
+//					it.remove();
+//					break;
+//				}
+//			}
+			
+			try {
+				reply = reply_map.get(tempUserId);
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
-		
+		System.out.println("왔다갔다 시간 : " + ((System.currentTimeMillis() - start) / 1000.0));
 //		reply == null 인 경우 : 위에서 시간 초과 만든다음에 시간초과 메세지 주면 좋지않을까?
 		return new SkillResponse(new SkillTemplate().addOutputs(
 		new SimpleText(reply == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : reply.getText())))
