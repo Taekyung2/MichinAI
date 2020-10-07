@@ -1,11 +1,10 @@
 <template>
   <div>
-    <!-- <h3>오늘의 회화 리스트 입니다.</h3> -->
-    <v-row
-      ><v-col cols="5" sm="6" md="4">
+    <div class="conversation-option">
+      <div class="calendar">
         <Calendar />
-      </v-col>
-      <v-col cols="7" sm="6" md="4">
+      </div>
+      <div>
         <v-chip-group
           v-model="language"
           column
@@ -16,8 +15,8 @@
           <v-chip filter outlined>영어</v-chip>
           <v-chip filter outlined>번역</v-chip>
         </v-chip-group>
-      </v-col>
-    </v-row>
+      </div>
+    </div>
     <div
       class="text-center"
       style="margin-top: 150px"
@@ -83,4 +82,13 @@ export default {
 </script>
 
 <style>
+.conversation-option {
+  display: flex;
+  align-items: center;
+  margin: 0px 15px;
+  justify-content: space-between;
+}
+.calendar {
+  width: 130px;
+}
 </style>
