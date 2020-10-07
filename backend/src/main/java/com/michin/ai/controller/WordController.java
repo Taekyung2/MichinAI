@@ -55,9 +55,10 @@ public class WordController {
 		return WordbookResult.build(wb_list);
 	}
 
-	@DeleteMapping("/{wordbook_id}")
-	public ResponseEntity<ApiResult> deleteWordBook(@PathVariable("wordbook_id") String wordbook_id) {
-		List<Wordbook> wb_list = wordService.deleteWordbook(wordbook_id);
+	@DeleteMapping("/wordbook/{wordbook_id}/{id}")
+	public ResponseEntity<ApiResult> deleteWordBook(@PathVariable("wordbook_id") String wordbook_id,
+													@PathVariable("id") long user_id) {
+		List<Wordbook> wb_list = wordService.deleteWordbook(wordbook_id, user_id);
 		return WordbookResult.build(wb_list);
 	}
 	

@@ -1,79 +1,81 @@
 <template>
   <div class="wordbook-detail" align="center">
-    <v-progress-circular
-      :rotate="-90"
-      :size="50"
-      :width="10"
-      :value="progress"
-      color="var(--main-color)"
-      class="wordbook-progress"
-    >
-      {{ progress }}
-    </v-progress-circular>
-    <h2 class="eng-text">{{ wordbook.name }}</h2>
-    <div>
-      <span class="wordList-lenght">단어({{ wordList.length }})</span>
-    </div>
-    <v-divider style="margin: 10px 0px 5px 0px"></v-divider>
-    <div>
-      <div class="switch-container">
-        <span class="quiz-container">
-          <v-btn
-            rounded
-            color="var(--main-point-color)"
-            dark
-            @click="initQuiz"
-            :wordList="wordList"
+    <div v-if="wordList.length != 0">
+      <v-progress-circular
+        :rotate="-90"
+        :size="50"
+        :width="10"
+        :value="progress"
+        color="var(--main-color)"
+        class="wordbook-progress"
+        v-if="!chk"
+      >
+        {{ progress }}
+      </v-progress-circular>
+      <h2 class="eng-text" v-if="!chk">{{ wordbook.name }}</h2>
+      <h2 class="eng-text" v-if="chk">Level {{ wordbook.level }}</h2>
+      <div>
+        <span class="wordList-lenght">단어({{ wordList.length }})</span>
+      </div>
+      <v-divider style="margin: 10px 0px 5px 0px"></v-divider>
+      <div v-if="!chk">
+        <div class="switch-container">
+          <span class="quiz-container">
+            <v-btn
+              rounded
+              color="var(--main-point-color)"
+              dark
+              @click="initQuiz"
+              :wordList="wordList"
+            >
+              Quiz
+            </v-btn>
+          </span>
+          <WordCreate :wordbook_id="wordbook.id" :isBase="isBase"/>
+          
+          <span :class="isShowEng ? switchWord[1] : switchWord[0]"> 단어</span>
+          <v-switch
+            class="switch-word"
+            color="var(--main-color)"
+            v-model="isShowEng"
           >
-            Quiz
-          </v-btn>
-        </span>
-        <WordCreate :wordbook_id="wordbook.id"/>
-        <span class="delete-button">
-        <v-btn
-          class="mx-3"
-          fab
-          dark
-          x-small
-          color="primary"
-          @click="deleteWordbook"
-        >
-          <v-icon dark> mdi-minus </v-icon> </v-btn
-        >
-        </span>
-        <span :class="isShowEng ? switchWord[1] : switchWord[0]"> 단어</span>
-        <v-switch
-          class="switch-word"
-          color="var(--main-color)"
-          v-model="isShowEng"
-        >
-        </v-switch>
+          </v-switch>
 
-        <span :class="isShowKor ? switchWord[1] : switchWord[0]"> 뜻</span>
-        <v-switch
-          class="switch-word"
-          color="var(--main-color)"
-          v-model="isShowKor"
-        >
-        </v-switch>
+          <span :class="isShowKor ? switchWord[1] : switchWord[0]"> 뜻</span>
+          <v-switch
+            class="switch-word"
+            color="var(--main-color)"
+            v-model="isShowKor"
+          >
+          </v-switch>
+        </div>
+      </div>
+      <div class="wordList-container">
+        <Word
+          :word="word"
+          :isShowEng="isShowEng"
+          :isShowKor="isShowKor"
+          v-for="word in wordList"
+          :key="word.id"
+        />
+      </div>
+
+      <!-- <p @click="back">뒤로가기</p> -->
+      <div v-if="false" class="wordbookFAB">
+        <WordbookFAB />
+      </div>
+      <div v-if="isSelectedQuizOption">
+        <WordQuizOption :wordList="wordList" />
       </div>
     </div>
-    <div class="wordList-container">
-      <Word
-        :word="word"
-        :isShowEng="isShowEng"
-        :isShowKor="isShowKor"
-        v-for="word in wordList"
-        :key="word.id"
+    <div v-if="wordList.length==0">
+      <img
+        class="incoming_msg_img"
+        :src="require(`@/assets/michinLogo04.png`)"
+        style="{width: 200px%; height: 400px; margin:auto;}"
       />
-    </div>
-
-    <!-- <p @click="back">뒤로가기</p> -->
-    <div v-if="false" class="wordbookFAB">
-      <WordbookFAB />
-    </div>
-    <div v-if="isSelectedQuizOption">
-      <WordQuizOption :wordList="wordList" />
+      <h1 align=center style="margin-bottom : 20px">단어를 추가해주세요</h1>
+      <WordCreate :wordbook_id="wordbook.id" :isBase="isBase"/>
     </div>
   </div>
 </template>
@@ -84,8 +86,7 @@ import Word from "@/components/wordbook/word/Word.vue";
 import WordbookFAB from "@/components/wordbook/WordbookFAB.vue";
 import WordQuizOption from "@/components/wordbook/quiz/WordQuizOption.vue";
 import WordCreate from "@/components/wordbook/word/WordCreate.vue";
-import axios from "axios";
-import SERVER from "@/api/spring.js";
+
 
 export default {
   name: "WordbookDetail",
@@ -100,9 +101,18 @@ export default {
       progress: 0,
     };
   },
-
+  props: {
+    isBase: {
+      type: Boolean,
+      default: true
+    }
+  },
   computed: {
     ...mapGetters(["wordbook", "isSelectedQuizOption"]),
+
+    chk() {
+      return this.isBase
+    }
   },
   methods: {
     ...mapMutations(["INIT_QUIZ", "SET_WORDBOOK"]),
@@ -111,12 +121,6 @@ export default {
     },
     initQuiz() {
       this.INIT_QUIZ();
-    },
-    deleteWordbook() {
-      axios.delete(SERVER.URL + "/wordbook/" + this.wordbook.id).then((res) => {
-        this.SET_WORDBOOK(res);
-        this.$router.push({ name: "WordbookList" });
-      });
     },
   },
   components: {
@@ -132,7 +136,6 @@ export default {
       if (word.check) {
         count++;
       }
-      console.log(this.wordbook.id)
     });
 
     this.interval = setInterval(() => {
@@ -186,6 +189,6 @@ export default {
   margin: 10px 0px;
 }
 .delete-button {
-  margin : 8px
+  margin: 8px;
 }
 </style>

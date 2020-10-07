@@ -83,10 +83,10 @@ public class WordServiceImpl implements WordService{
 	}
 
 	@Override
-	public List<Wordbook> deleteWordbook(String wordbook_id) {
+	public List<Wordbook> deleteWordbook(String wordbook_id, long user_id) {
 		Wordbook wb = wordBookRepo.findById(new ObjectId(wordbook_id)).get();
 		wordBookRepo.delete(wb);
-		return wordBookRepo.findAll(Sort.by(Sort.Direction.ASC, "id"));
+		return wordBookRepo.findByUserId(user_id);
 	}
 
 	@Override

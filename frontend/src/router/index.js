@@ -50,6 +50,7 @@ const routes = [
         {
           path: 'detail',
           name: 'WordbookDetail',
+          props: true,
           component: () => import('@/components/wordbook/WordbookDetail.vue')
         },
       ]

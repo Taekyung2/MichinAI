@@ -26,7 +26,7 @@
         <carousel-3d
           @after-slide-change="onAfterSlideChange"
           :autoplay="true"
-          :autoplay-timeout="3000"
+          :autoplay-timeout="1500"
           :count="wordbooklist.length"
           :width="170"
           :height="300"
@@ -43,12 +43,34 @@
             :index="i"
             :key="i"
           >
+            <h2
+              class="h2-font"
+              align="center"
+              style="
+                 {
+                  color: black;
+                  margin-top: 35%;
+                  margin-bottom: 35%;
+                }
+              "
+            >
+              {{ wordbook.name }}
+            </h2>
             <img
-              class="incoming_msg_img"
-              :src="require(`@/assets/michinLogo02.png`)"
-              style="margin-bottom: 15%"
+              class="logo-image"
+              :src="require(`@/assets/michinLogo03.svg`)"
             />
-            <h2 align="center" style="color: black">{{ wordbook.name }}</h2>
+            <span class="delete-button" @click.stop="del(i)">
+              <v-btn
+                class="mx-3"
+                fab
+                dark
+                x-small
+                color="red"
+              >
+                <v-icon> mdi-close </v-icon>
+              </v-btn>
+            </span>
           </slide>
         </carousel-3d>
       </v-row>
@@ -71,7 +93,7 @@
         <carousel-3d
           @after-slide-change="onAfterSlideChange"
           :autoplay="true"
-          :autoplay-timeout="3000"
+          :autoplay-timeout="1500"
           :width="170"
           :height="300"
           :space="150"
@@ -87,14 +109,22 @@
             :index="i"
             :key="i"
           >
-            <img
-              class="incoming_msg_img"
-              :src="require(`@/assets/michinLogo04.png`)"
-              style="margin-bottom: 15%"
-            />
-            <h2 align="center" style="color: black">
+            <h2
+              align="center"
+              style="
+                 {
+                  color: black;
+                  margin-top: 35%;
+                  margin-bottom: 35%;
+                }
+              "
+            >
               Level {{ wordbook.level }}
             </h2>
+            <img
+              class="logo-image"
+              :src="require(`@/assets/michinLogo02.png`)"
+            />
           </slide>
         </carousel-3d>
       </div>
@@ -112,9 +142,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import { Carousel3d, Slide } from "vue-carousel-3d";
-
+import axios from "axios";
+import SERVER from "@/api/spring.js";
 import WordbookCreate from "@/components/wordbook/WordbookCreate.vue";
 // import WordbookFAB from '@/components/wordbook/WordbookFAB.vue'
 
@@ -126,6 +157,7 @@ export default {
       colorlist: ["#E3F6CE", "#c6e2ff", "#ffd0d1", "#eeab73", "#4169e1"],
       wordbooklist: [],
       curIndex: 0,
+      payload: {},
     };
   },
   components: {
@@ -136,16 +168,28 @@ export default {
   },
   methods: {
     ...mapActions(["selectedWordbook"]),
+    ...mapMutations(["SET_WORDBOOK"]),
 
+    del(index) {
+      console.log(index)
+      axios.delete(SERVER.URL + "/wordbook/wordbook/" + this.wordbooklist[index].id + "/" + this.wordbooklist[index].user_id).then((res) => {
+        this.SET_WORDBOOK(res);
+      });
+    },
     reset() {
       this.wordbooklist = this.getmyWordbook;
     },
     wordbookDetail() {
-      this.selectedWordbook(this.wordbooklist[this.curIndex]);
+      this.payload = { wordbook: this.wordbooklist[this.curIndex], chk: false };
+      this.selectedWordbook(this.payload);
     },
     basewordbookDetail() {
-      this.selectedWordbook(this.getbaseWordbook[this.curIndex]);
-      console.log(this.getbaseWordbook[this.curIndex].id)
+      this.payload = {
+        wordbook: this.getbaseWordbook[this.curIndex],
+        chk: true,
+      };
+      this.selectedWordbook(this.payload);
+      console.log(this.getbaseWordbook[this.curIndex].id);
     },
     onAfterSlideChange(index) {
       this.curIndex = index;
@@ -202,5 +246,16 @@ export default {
 
 .theme--light.v-list {
   background: transparent;
+}
+.logo-image {
+  width: 40%;
+  margin-top: 10%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+.delete-button {
+  float:right;
+  margin : 0;
+  padding : 0;
 }
 </style>
