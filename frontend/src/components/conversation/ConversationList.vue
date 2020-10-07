@@ -18,19 +18,33 @@
         </v-chip-group>
       </v-col>
     </v-row>
-    <template v-for="(conv, i) in getConversationList">
-      <receive-msg
-        :chat="conv"
-        :key="i"
-        v-if="conv.speaker == speaker"
-        :lang="language"
-      />
-      <send-msg
-        :chat="conv"
-        :key="i"
-        v-if="conv.speaker != speaker"
-        :lang="language"
-      />
+    <div
+      class="text-center"
+      style="margin-top: 150px"
+      v-if="!getLoadingConversation"
+    >
+      <v-progress-circular
+        :size="70"
+        :width="7"
+        color="#7db3d9"
+        indeterminate
+      ></v-progress-circular>
+    </div>
+    <template v-else>
+      <template v-for="(conv, i) in getConversationList">
+        <receive-msg
+          :chat="conv"
+          :key="i"
+          v-if="conv.speaker == speaker"
+          :lang="language"
+        />
+        <send-msg
+          :chat="conv"
+          :key="i"
+          v-if="conv.speaker != speaker"
+          :lang="language"
+        />
+      </template>
     </template>
   </div>
 </template>
@@ -52,7 +66,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getConversationList"]),
+    ...mapGetters(["getConversationList", "getLoadingConversation"]),
     speaker() {
       return this.getConversationList[0].speaker;
     },

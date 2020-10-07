@@ -55,6 +55,9 @@ export default new Vuex.Store({
     getConversationList(state) {
       return state.conversationList
     },
+    getLoadingConversation(state){
+      return state.loadingConversation
+    },
 
     navigationTitle(state){
       return state.navigationTitle
@@ -110,7 +113,11 @@ export default new Vuex.Store({
     },
     SET_CONVERSATIONLIST(state, conv) {
       state.conversationList = conv
+      state.loadingConversation = true
     },
+    LOADING_CONVERSATION(state){
+      state.loadingConversation = false
+    }
   },
 
   // 범용?��?�� ?��?��?�� (dispatch�? ?��?�� ?��?��)
@@ -141,7 +148,7 @@ export default new Vuex.Store({
         .catch(err => {
           console.log('error' + err.response)
         })
-    }
+    },
   },
 
   modules: {
