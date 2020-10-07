@@ -149,7 +149,7 @@ class ChatServiceMessageSocket:
             url_base_name = self.server_url.split('https://')[1]
             while self.keep_running:
                 try:
-                    sock_addr = "ws://{}".format(url_base_name)
+                    sock_addr = "wss://{}".format(url_base_name)
                     print(sock_addr)
                     self.ws = websocket.WebSocketApp(
                         sock_addr,
