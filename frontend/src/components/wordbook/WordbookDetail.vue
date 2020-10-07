@@ -132,6 +132,7 @@ export default {
       if (word.check) {
         count++;
       }
+      console.log(this.wordbook.id)
     });
 
     this.interval = setInterval(() => {

@@ -35,6 +35,7 @@
           :controlsVisible="true"
           :onMainSlideClick="wordbookDetail"
           :autoplayHoverPause="true"
+          :border="0"
         >
           <slide
             :style="{ 'background-color': colorlist[i % 5] }"
@@ -78,6 +79,7 @@
           :controlsVisible="true"
           :onMainSlideClick="basewordbookDetail"
           :autoplayHoverPause="true"
+          :border="0"
         >
           <slide
             :style="{ 'background-color': colorlist[(i + 1) % 5] }"
@@ -121,7 +123,7 @@ export default {
   data() {
     return {
       selectedMenuItem: 0,
-      colorlist: ["#008080", "#c6e2ff", "#ffd0d1", "#eeab73", "#4169e1"],
+      colorlist: ["#E3F6CE", "#c6e2ff", "#ffd0d1", "#eeab73", "#4169e1"],
       wordbooklist: [],
       curIndex: 0,
     };
@@ -143,6 +145,7 @@ export default {
     },
     basewordbookDetail() {
       this.selectedWordbook(this.getbaseWordbook[this.curIndex]);
+      console.log(this.getbaseWordbook[this.curIndex].id)
     },
     onAfterSlideChange(index) {
       this.curIndex = index;

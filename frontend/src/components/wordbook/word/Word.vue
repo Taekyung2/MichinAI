@@ -26,8 +26,8 @@
       <v-icon v-if="!word.check" style="color:var(--border-base-color)">mdi-bookmark-outline</v-icon> 
       <v-icon v-if="word.check" style="color:var(--main-sub-color)">mdi-bookmark</v-icon>
       </div>
-      <p class="display-1 text--primary" v-if="isShowEng" style="float:0; width:80%; margin : 0; padding: 0px">
-        {{word.eng}}
+      <p class="title text--primary" style="float:0; width:80%; margin : 0; padding: 0px" >
+        <span :class="isShowEng ? 'word-show' : 'word-noshow'">{{word.eng}}</span>
       </p>
       <div :class="isShowKor ? 'word-show' : 'word-noshow'">{{word.kor}}</div>
     </v-card-text>
