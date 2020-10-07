@@ -83,6 +83,12 @@ export default {
   padding: 5px 10px 5px 12px;
   width: 100%;
 }
+.time_date {
+  color: #747474;
+  display: block;
+  font-size: 1px;
+  margin: 5px 5px 3px;
+}
 .outgoing_msg {
   overflow: hidden;
 }

@@ -1,38 +1,37 @@
 <template>
-<!-- User 입장에서 생각하기 ~.~ -->
-<div class="incoming_msg">
-    <img class="incoming_msg_img" src="./michin.png" alt="sunil">
+  <!-- User 입장에서 생각하기 ~.~ -->
+  <div class="incoming_msg">
+    <img class="incoming_msg_img" src="./michin.png" alt="sunil" />
     <div class="received_msg">
-        <div class="received_withd_msg">
-        <p class="text-capitalize">{{chat.msg}}</p>
-        <span class="time_date"> {{this.time}} </span>
-        </div>
+      <div class="received_withd_msg">
+        <p class="text-capitalize">{{ chat.msg }}</p>
+        <span class="time_date"> {{ this.time }} </span>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-
 export default {
-    name: 'receiveMsg',
-    props: {
-        chat: {
-            type: Object,
-            required: true,
-        }
+  name: "receiveMsg",
+  props: {
+    chat: {
+      type: Object,
+      required: true,
     },
+  },
 
-    data(){
-        return {
-            time: '',
-        }
-    },
+  data() {
+    return {
+      time: "",
+    };
+  },
 
-    created() {
-        var moment = require('moment');
-        this.time = moment(this.chat.time.slice(0,8), ['HH:mm a']).format('LT');
-    }
-}
+  created() {
+    var moment = require("moment");
+    this.time = moment(this.chat.time.slice(0, 8), ["HH:mm a"]).format("LT");
+  },
+};
 </script>
 
 <style scoped>
@@ -46,8 +45,8 @@ export default {
   padding: 0 0 0 5px;
   vertical-align: top;
   width: 89%;
- }
- .received_withd_msg p {
+}
+.received_withd_msg p {
   background: #f2f2f2 none repeat scroll 0 0;
   border-radius: 3px;
   /* color: #f2f2f2;ebebeb */
@@ -63,5 +62,7 @@ export default {
   font-size: 1px;
   margin: 5px 5px 3px;
 }
-.received_withd_msg { width: 57%;}
+.received_withd_msg {
+  width: 57%;
+}
 </style>

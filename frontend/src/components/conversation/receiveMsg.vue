@@ -11,7 +11,7 @@
           <span v-if="lang.includes(0)">{{ chat.eng }}<br /></span>
           <span v-if="lang.includes(1)">{{ chat.kor }}</span>
         </p>
-        <!-- <span class="time_date"> {{this.time}} </span> -->
+        <!-- <span class="time_date"> {{ this.time }} </span> -->
       </div>
     </div>
   </div>
@@ -23,8 +23,8 @@ export default {
     chat: {
       type: Object,
     },
-    lang:{
-      type:Array
+    lang: {
+      type: Array,
     },
   },
   data() {

@@ -8,7 +8,7 @@
       <img
         class="outgoing_msg_img"
         :src="require(`@/assets/convImg/${chat.speaker}.png`)"
-      /><!-- <span class="time_date">{{this.time}}</span> -->
+      /><!-- <span class="time_date">{{ this.time }}</span> -->
     </div>
   </div>
 </template>
@@ -46,6 +46,12 @@ export default {
 }
 .outgoing_msg {
   overflow: hidden;
+}
+.time_date {
+  color: #747474;
+  display: block;
+  font-size: 1px;
+  margin: 5px 5px 3px;
 }
 .sent_msg {
   float: right;
