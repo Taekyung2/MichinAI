@@ -261,7 +261,9 @@ class MessengerManager(ChatServiceManager):
         socket_use_url = self.server_url
         if self.opt['local']:  # skip some hops for local stuff
             socket_use_url = 'https://localhost'
-        socket_use_url = 'https://localhost:8399/api/ws'
+        # socket_use_url = 'https://localhost:8399/api/ws'
+        socket_use_url = 'https://michinai.cf/api/ws'
+        # socket_use_url = 'https://d4008293ad0.ngrok.io/api/ws'
         # socket_use_url = 'https://jig7357-parlai-messenger-chatb.herokuapp.com/webhook'
         self.port = 8399
 
