@@ -194,9 +194,9 @@ export default {
         function () {
           if (check == "X") {
             this.wrongCount++;
-            this.quizWordList[this.quizWordIndex++].check = false;
-          } else {
             this.quizWordList[this.quizWordIndex++].check = true;
+          } else {
+            this.quizWordList[this.quizWordIndex++].check = false;
           }
           this.showKor = false;
 
