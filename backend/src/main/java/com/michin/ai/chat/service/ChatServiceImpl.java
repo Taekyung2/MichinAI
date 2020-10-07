@@ -139,6 +139,8 @@ public class ChatServiceImpl implements ChatService {
 						categoryCnt.put("notEnglish", (int) Math.round(checkCnt * engRatio));
 						s *= engRatio;
 					}
+					if ((wordCnt / chatCnt) < 6)
+						categoryCnt.put("Too Short", 6 - (wordCnt / chatCnt));
 					s = Math.round(s * 100) / (double) 100;
 				}
 				score.setScore(s);

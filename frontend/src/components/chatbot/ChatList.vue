@@ -40,7 +40,6 @@ export default {
             userBotKey: botKey
           }
         }).then(({data}) => {
-          console.log(data);
           this.chatList = data.chatList;
           if (this.chatList.length == 0)
             this.noChat = true;

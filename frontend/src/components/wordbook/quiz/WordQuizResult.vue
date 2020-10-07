@@ -1,39 +1,38 @@
 <template>
-  <div class="text-center">
+  <div>
     <v-dialog
       v-model="isResultQuiz"
       width="500"
       persistent
     >
       <v-card>
-        <v-card-title class="headline grey lighten-2">
-          퀴즈결과
+        <v-card-title class="headline orange--text">
+          RESULT
         </v-card-title>
         <v-card-title>
           <h1>{{ resultText() }}</h1>
         </v-card-title>
-        <v-card-text>
+        <v-card-text class="layout justify-center">
           <v-progress-circular
             :rotate="-90"
             :size="100"
             :width="15"
             :value="value"
-            color="primary"
+            color="#7db3d9"
           >
             {{ value }}
           </v-progress-circular>
         </v-card-text>
         <v-card-text>
-        <div>맞은개수 : {{resultCount}}</div>
-        <div>틀린개수 : {{resultWordList.length - resultCount}}</div>
+        <div>맞은개수 : {{resultCount}} / 틀린개수 : {{resultWordList.length - resultCount}}</div>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-text>
+        <!-- <v-card-text>
           <div v-for="(wordList,index) in resultWordList" :key="index">
             <li>{{wordList.eng}} | {{wordList.kor}} | {{ wordList.check?'O':'X'}}</li>
           </div>
-        </v-card-text>
-        <v-divider></v-divider>
+        </v-card-text> -->
+        <!-- <v-divider></v-divider> -->
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -41,7 +40,7 @@
             text
             @click="END_QUIZ"
           >
-            끝내기
+            나가기
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -67,13 +66,13 @@ export default {
         ]),
         resultText(){
           if(this.percentage>=90)
-            return 'Perfect'
+            return 'Perfect!'
           else if(this.percentage>=70)
             return 'Great'
           else if(this.percentage>=50)
-            return 'Good'
+            return 'Good '
           else
-            return 'Try Again'
+            return 'Try Again :('
         }
     },
     data () {
@@ -85,7 +84,7 @@ export default {
     },
     mounted () {
       this.interval = setInterval(() => {
-        return this.value = (this.resultCount/this.resultWordList.length)*100
+        return this.value = ((this.resultCount/this.resultWordList.length)*100).toFixed(2)
       }, 1000)
     },
 }

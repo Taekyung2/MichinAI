@@ -1,15 +1,18 @@
 <template>
   <div class="container">
-      <div align="right">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon color="#7db3d9" dark v-bind="attrs" v-on="on">
-              mdi-information-outline
-            </v-icon>
-          </template>
-          <span>내가 보낸 채팅이 10개 이상의 경우<br> 점수 확인이 가능합니다!</span>
-        </v-tooltip>
-      </div>
+    <div align="right">
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon color="#7db3d9" dark v-bind="attrs" v-on="on">
+            mdi-information-outline
+          </v-icon>
+        </template>
+        <span
+          >내가 보낸 채팅이 10개 이상의 경우<br />
+          점수 확인이 가능합니다!</span
+        >
+      </v-tooltip>
+    </div>
     <div class="score-container">
       <LineChart
         :chart-data="chatChartData"
@@ -17,8 +20,8 @@
         class="chart"
       />
     </div>
-    <h4>{{ selectDate }}</h4>
     <h3>감점 요소</h3>
+    <h4>{{ selectDate }}</h4>
     <div class="score-container">
       <v-alert
         v-if="selectIdx == -1"
@@ -63,6 +66,7 @@ export default {
   methods: {
     ...mapMutations(["SET_NAVIGATION_TITLE"]),
     init() {
+      var moment = require("moment");
       const userBotKey = this.$store.state.Kakao.account.userBotKey;
       axios
         .get(SERVER.URL + "/chat/score?userBotKey=" + userBotKey)
@@ -72,7 +76,7 @@ export default {
             cateCnt = [];
           res.data.chatList.forEach((elem) => {
             if (elem.score.score != -1) {
-              labels.push(elem.date);
+              labels.push(moment(elem.date).format("MM-DD"));
               score.push(elem.score.score);
               cateCnt.push(elem.score.categoryCnt);
             }
