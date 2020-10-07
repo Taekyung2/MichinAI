@@ -120,7 +120,7 @@ export default {
     },
     watch: {
       wordbook(val) {
-        console.log(val)
+        // console.log(val)
         this.wordList = val.words
       }
     }

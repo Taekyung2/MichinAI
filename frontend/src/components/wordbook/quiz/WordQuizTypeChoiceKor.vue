@@ -44,7 +44,7 @@ export default {
       setTimeout(
         function () {
           eventClass.remove("wrong-word");
-          console.log(document.getElementsByClassName("answer-word")[0]);
+          // console.log(document.getElementsByClassName("answer-word")[0]);
           document
             .getElementsByClassName("answer-word")[0]
             .classList.remove("answer-word");

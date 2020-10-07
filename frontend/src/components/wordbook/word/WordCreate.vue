@@ -77,7 +77,7 @@ export default {
     ...mapActions(["selectedWordbook"]),
 
     addWord() {
-      console.log(this.addWordInfo);
+      // console.log(this.addWordInfo);
       axios
         .put(SERVER.URL + SERVER.ROUTES.addWord, this.addWordInfo)
         .then((res) => {

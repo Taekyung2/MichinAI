@@ -139,7 +139,7 @@ export default {
   filters: {
     time: (val) => {
       var moment = require("moment");
-      console.log(val);
+      // console.log(val);
       return moment(val.slice(0, 8), ["HH:mm a"]).format("LT");
     }
   },

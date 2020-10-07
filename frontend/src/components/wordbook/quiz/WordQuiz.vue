@@ -130,7 +130,7 @@ export default {
     initWordList() {
       let questionNumber = this.quizOption.selectedQuestionNumber;
       if (questionNumber.type == "사용자 정의") {
-        console.log(questionNumber.number);
+        // console.log(questionNumber.number);
         this.quizWordList = this.wordList.slice(0, questionNumber.number);
       } else if (questionNumber.type == "미암기 단어") {
         let list = [];
@@ -141,7 +141,7 @@ export default {
       } else {
         this.quizWordList = this.wordList;
       }
-      console.log(this.quizWordList);
+      // console.log(this.quizWordList);
     },
 
     setChoiceKorList(questionWord) {
@@ -178,7 +178,7 @@ export default {
           break;
         }
       }
-      console.log(this.choiceKorList);
+      // console.log(this.choiceKorList);
     },
     async initOption() {
       await this.initSequence();
@@ -188,7 +188,7 @@ export default {
     },
 
     nextQuiz(check) {
-      console.log("다음 문제!", check);
+      // console.log("다음 문제!", check);
       this.showKor = true;
       setTimeout(
         function () {

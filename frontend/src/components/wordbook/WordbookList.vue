@@ -187,7 +187,7 @@ export default {
         chk: true,
       };
       this.selectedWordbook(this.payload);
-      console.log(this.getbaseWordbook[this.curIndex].id);
+      // console.log(this.getbaseWordbook[this.curIndex].id);
     },
     onAfterSlideChange(index) {
       this.curIndex = index;

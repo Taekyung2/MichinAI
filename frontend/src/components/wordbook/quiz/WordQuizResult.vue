@@ -60,11 +60,11 @@ export default {
       else return "Try Again :(";
     },
     close() {
-      console.log(SERVER.URL + "/wordbook/check", this.changechkInfo)
+      // console.log(SERVER.URL + "/wordbook/check", this.changechkInfo)
       axios
         .put(SERVER.URL + "/wordbook/check", this.changechkInfo)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.SET_SELECTED_WORDBOOK(res.data)
         })
         .catch((err) => {
