@@ -237,7 +237,8 @@ class MessageSender:
         # if persona_id is not None:
         #     payload['persona_id'] = persona_id
         # response = requests.post(api_address, params=self.auth_args, json=payload)
-        self.socket._safe_send(json.dumps(payload))
+        # self.socket._safe_send(json.dumps(payload))
+        print(requests.post("http://localhost:8399/api/test", json=payload).text)
         print('sended ressult : ', payload)
         # result = response.json()
         import random
