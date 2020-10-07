@@ -69,7 +69,7 @@ export default {
     }
 }
 </script>
-// 05728f
+
 <style>
 .sent_msg p {
   background: #7DB3D9 none repeat scroll 0 0;

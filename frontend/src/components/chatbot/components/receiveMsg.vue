@@ -1,10 +1,10 @@
 <template>
 <!-- User 입장에서 생각하기 ~.~ -->
 <div class="incoming_msg">
-    <img class="incoming_msg_img" src="./michin.png" alt="sunil">
+    <img class="incoming_msg_img" src="./michin.png" alt="michin">
     <div class="received_msg">
         <div class="received_withd_msg">
-        <p class="text-capitalize">{{chat.msg}}</p>
+        <p v-text="this.capitalize(chat.msg)"></p>
         <span class="time_date"> {{this.time}} </span>
         </div>
     </div>
@@ -31,6 +31,32 @@ export default {
     created() {
         var moment = require('moment');
         this.time = moment(this.chat.time.slice(0,8), ['HH:mm a']).format('LT');
+    },
+
+    methods: {
+        capitalize(msg) {
+            msg = msg.replace(/\s\./gm, ".");
+            msg = msg.replace(/\s,/gm, ",");
+            msg = msg.replace(/\s!/gm, "!");
+            msg = msg.replace(/\s\?/gm, "?");
+            msg = msg.replace(/\s'\s/gm, "'");
+            // var newmsg = msg.split(/([^\n\.]*\.|[^\n\.]*\!|[^\n\.]*\?)\s);
+            // var newmsg = msg.split(/([^\n\.]/*/\.|[^\n\.]/*/\!/|/[^\n\.]/*/\?/)\s/);
+            var newmsg = msg.split(/(\.|\?|!)\s/);
+            // var newmsg = msg.split(/\.\s/);
+            msg = "";
+            newmsg.forEach(function(sentence){
+                sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+                if (sentence == "." || sentence == "!" || sentence == "?") {
+                    msg += sentence + " ";
+                } else {
+                    msg += sentence;
+                }
+            })
+
+            // console.log(msg);
+            return msg;
+        }
     }
 }
 </script>
