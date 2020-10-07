@@ -1,12 +1,17 @@
 package com.michin.ai.controller;
 
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.michin.ai.chat.model.BotChat;
 import com.michin.ai.chat.service.ChatService;
+import com.michin.ai.common.WorldSession;
 import com.michin.ai.conversation.model.Conversation;
 import com.michin.ai.conversation.service.ConvService;
 import com.michin.ai.kakao.dto.payload.Context;
@@ -38,8 +43,9 @@ import com.michin.ai.user.service.UserService;
 import com.michin.ai.word.model.Word;
 import com.michin.ai.word.model.Wordbook;
 import com.michin.ai.word.service.WordService;
-
-import springfox.documentation.annotations.ApiIgnore;
+import com.michin.ai.world.model.AskContent;
+import com.michin.ai.world.model.WorldAskMessage;
+import com.michin.ai.world.model.WorldReplyMessage;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
@@ -60,6 +66,9 @@ public class KakaoChatController {
 	@Autowired
 	private SampleResponse sampleRes;
 
+	private WorldSession worldSession = WorldSession.getInstance();
+	private Queue<WorldReplyMessage> reply_queue = worldSession.getReplyQueue();
+	
 	private Map<String, String> emojiMap;
 
 	public KakaoChatController() {
@@ -77,12 +86,13 @@ public class KakaoChatController {
 
 //		BotChat botChat = chatService.interactBot(user.getBotKey(), "[BEGIN]");
 		System.out.println(LocalTime.now());
-		BotChat botChat = chatService.startBot(payload.getUserRequest().getUser().getId());
+//		BotChat botChat = chatService.startBot(payload.getUserRequest().getUser().getId());
 		System.out.println(LocalTime.now());
-		System.out.println(botChat);
-		return new SkillResponse(new SkillTemplate().addOutputs(new SimpleText("대화는 200자 이내의 문자만 인식합니다.\n연속으로 3초 이내에 발송시 제대로 인식하지 못할 수 있습니다😥")).addOutputs(
-				new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
-						.toJson();
+//		System.out.println(botChat);
+//		return new SkillResponse(new SkillTemplate().addOutputs(new SimpleText("대화는 200자 이내의 문자만 인식합니다.\n연속으로 3초 이내에 발송시 제대로 인식하지 못할 수 있습니다😥")).addOutputs(
+//				new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
+//						.toJson();
+		return null;
 
 //		return new SampleResponse().fallBackCarousel().toJson();
 	}
@@ -90,17 +100,55 @@ public class KakaoChatController {
 	@PostMapping("/chat")
 	public String chat(@RequestBody SkillPayload payload) {
 		List<Context> contextList = payload.getContexts();
-		if (contextList.size() == 0 || contextList.get(0).getParams().size() == 0)
-			return sampleRes.fallBackCarousel().toJson();
+//		if (contextList.size() == 0 || contextList.get(0).getParams().size() == 0)
+//			return sampleRes.fallBackCarousel().toJson();
 
 		String userBotKey = payload.getUserRequest().getUser().getId();
 		String utterance = payload.getUserRequest().getUtterance();
-
-		BotChat botChat = chatService.interactBot(userBotKey, utterance);
-
+		
+		/////////////////////
+		
+		String tempUserId = userBotKey + "##@";
+		String tempmId = new BigInteger(130, new SecureRandom()).toString(32);
+		
+		WorldAskMessage<AskContent> ask = new WorldAskMessage<AskContent>("new_packet", new AskContent(tempUserId, userBotKey, new AskContent.Message(utterance, tempmId)));
+		
+		try {
+			worldSession.send(ask);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		WorldReplyMessage reply = null;
+		while(reply == null) {
+			Iterator it = reply_queue.iterator();
+			while(it.hasNext()) {
+				WorldReplyMessage temp = (WorldReplyMessage) it.next();
+				System.out.println(temp.getRecipient());
+				if(temp.getRecipient().equals(tempUserId)){
+					reply = temp;
+					it.remove();
+					break;
+				}
+			}
+		}
+		
+//		reply == null 인 경우 : 위에서 시간 초과 만든다음에 시간초과 메세지 주면 좋지않을까?
 		return new SkillResponse(new SkillTemplate().addOutputs(
-				new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
-						.toJson();
+		new SimpleText(reply == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : reply.getText())))
+				.toJson();
+
+		
+		/////////////////////
+		
+
+//		BotChat botChat = chatService.interactBot(userBotKey, utterance);
+
+//		return new SkillResponse(new SkillTemplate().addOutputs(
+//				new SimpleText(botChat == null ? "대화를 시작하던 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요!" : botChat.getText())))
+//						.toJson();
+		
+		
 	}
 
 	@PostMapping("/conv/eng")
