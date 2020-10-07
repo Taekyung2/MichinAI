@@ -120,6 +120,7 @@ public class KakaoChatController {
 				e.printStackTrace();
 			}
 		}
+		reply_map.put(userBotKey + "##@", null);
 		
 		ask = new WorldAskMessage<AskContent>("new_packet",
 				new AskContent(tempUserId, userBotKey, new AskContent.Message("begin", tempmId)));

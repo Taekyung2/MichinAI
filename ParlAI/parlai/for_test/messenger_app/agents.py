@@ -34,10 +34,10 @@ class MessengerAgent(ChatServiceAgent):
                 act.get('persona_id', None),
             )
         else:
-            if act['id'] != '':
-                msg = '{}: {}'.format(act['id'], act['text'])
-            else:
-                msg = act['text']
+            # if act['id'] != '':
+            #     msg = '{}: {}'.format(act['id'], act['text'])
+            # else:
+            msg = act['text']
             resp = self.manager.observe_message(
                 self.id,
                 msg,
