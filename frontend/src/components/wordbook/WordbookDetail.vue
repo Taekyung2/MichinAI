@@ -136,7 +136,8 @@ export default {
       this.INIT_QUIZ();
     },
     deleteWordbook() {
-      axios.delete(SERVER.URL + "/wordbook/" + this.wordbook.id + "/" + this.wordbook.user_id).then((res) => {
+      console.log(this.wordbook.user_id)
+      axios.delete(SERVER.URL + "/wordbook/wordbook/" + this.wordbook.id + "/" + this.wordbook.user_id).then((res) => {
         this.SET_WORDBOOK(res);
         this.$router.push({ name: "WordbookList" });
       });
