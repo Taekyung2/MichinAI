@@ -30,7 +30,7 @@ export default {
 </script>
 <style>
 .sent_msg p {
-  background: #f2f2f2 none repeat scroll 0 0;
+  background: #e9e9e9 none repeat scroll 0 0;
   border-radius: 3px;
   font-size: 14px;
   margin: 0;

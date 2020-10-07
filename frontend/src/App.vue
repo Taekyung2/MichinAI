@@ -86,7 +86,7 @@ export default {
   }
 }
 .v-application--wrap {
-  background: #f7f8f8;
+  background: #f6f8f8;
 }
 :root {
   --main-color: #7db3d9;

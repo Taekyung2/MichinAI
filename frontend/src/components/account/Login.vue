@@ -6,11 +6,10 @@
         <p><span class="point-name">미친AI</span>와 함께하는</p>
         <!-- <p>Fantastic한</p> -->
         <p><span class="point-eng">미친영어</span> 공부</p>
-
-        <p class="point-tag" style="font-size: 1rem">#언제_어디서나</p>
-        <p class="point-tag-2" style="font-size: 1rem">
-          #미국친구AI #미친AI #미친아이
-        </p>
+        <div class="point-tag">
+          <p style="font-size: 1rem">#언제_어디서나</p>
+          <p style="font-size: 1rem">#미국친구AI #미친AI #미친아이</p>
+        </div>
       </div>
       <div class="login-logo-container">
         <img
@@ -35,7 +34,7 @@
         <KakaoLogin :eventName="eventName" />
       </div>
     </div>
-    <div class="intro-container">
+    <div class="intro-container" v-if="false">
       <Introduction />
     </div>
   </div>
@@ -171,12 +170,11 @@ export default {
 .pointer-icon {
   margin-bottom: 10px;
 }
-
 .point-tag {
   margin-top: 15px;
-  font-family: "NanumSquare", sans-serif !important;
 }
-.point-tag-2 {
-  font-family: "NanumSquare", sans-serif !important;
+.point-tag p {
+  font-family: "BMJUA" !important;
+  color: var(--font-sub-2-color);
 }
 </style>
