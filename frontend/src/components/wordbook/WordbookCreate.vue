@@ -65,7 +65,6 @@ export default {
         .post(SERVER.URL + SERVER.ROUTES.addWordbook, this.addWordBookInfo)
         .then((res) => {
           this.$store.commit('SET_WORDBOOK', res)
-          this.reset();
           this.$emit("close")
           this.dialog = false
         })
@@ -75,8 +74,8 @@ export default {
   computed: {
     ...mapGetters('Kakao', ['account'])
   },
-  mounted() {
-    this.addWordBookInfo.user_id = this.account.userId
+  created() {
+    this.addWordBookInfo.user_id = JSON.parse(localStorage.getItem('vuex')).Kakao.account.userId
   }
 };
 </script>

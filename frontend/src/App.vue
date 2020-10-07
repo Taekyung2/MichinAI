@@ -44,8 +44,8 @@ export default {
     this.SET_MOBILE_CONNECTION(localStorage.getItem("userBotKey"));
   },
   mounted() {
-    this.getWordbook(this.account.userId);
-    this.getBaseWordbook();
+    this.getWordbook(JSON.parse(localStorage.getItem('vuex')).Kakao.account.userId)
+    this.getBaseWordbook()
   },
 };
 </script>
