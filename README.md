@@ -42,7 +42,8 @@
   - 기본 단어장 제공, 개인 단어장 생성 가능
   <img src="../readmeImgs/7.png" width="300">
   <img src="../readmeImgs/8.png" width="300">
-  <img src="../readmeImgs/9.png" width="300">
+  <img src="../readmeImgs/9.png" width="300">  
+
   - 단어장 단어 기반 단어 퀴즈 
   <img src="../readmeImgs/11.jpg" width="300">
 - 채팅 점수
