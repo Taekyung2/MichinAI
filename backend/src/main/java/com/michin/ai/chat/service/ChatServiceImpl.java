@@ -109,8 +109,8 @@ public class ChatServiceImpl implements ChatService {
 
 		for (ChatList chats : chatList) {
 			Map<String, Integer> categoryCnt = new HashMap<String, Integer>();
-			if (chats.getScore() == null || chats.getScore().getScore() == 0
-					|| chats.getDate().isEqual(LocalDate.now())) {
+//			if (chats.getScore() == null || chats.getScore().getScore() == 0
+//					|| chats.getDate().isEqual(LocalDate.now())) {
 				Score score = new Score();
 				int chatCnt = 0, checkCnt = 0, wordCnt = 0, engCnt = 0, totalLen = 0;
 				for (Chat chat : chats.getChats()) {
@@ -132,7 +132,7 @@ public class ChatServiceImpl implements ChatService {
 				}
 
 				double s = -1;
-				if (chatCnt >= 10) {
+				if (chatCnt >= 5) {
 					s = Math.max(Math.min((wordCnt / chatCnt) * 16.7, MAX_SCORE) - checkCnt * 1.1, MIN_SCORE);
 					double engRatio = (double) engCnt / totalLen;
 					if (engRatio < 0.75) {
@@ -146,7 +146,7 @@ public class ChatServiceImpl implements ChatService {
 				score.setScore(s);
 				score.setCategoryCnt(categoryCnt);
 				chats.setScore(score);
-			}
+//			}
 			updateChatList.add(chats);
 		}
 
