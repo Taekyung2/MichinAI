@@ -44,7 +44,7 @@
   <img src="../readmeImgs/8.png" width="300">
   <img src="../readmeImgs/9.png" width="300">
   - 단어장 단어 기반 단어 퀴즈 
-  <img src="../readmeImgs/11.png" width="300">
+  <img src="../readmeImgs/11.jpg" width="300">
 - 채팅 점수
   - 미친AI와의 대화에서 나타난 철자, 문법, 문맥 등의 오류
   <img src="../readmeImgs/10.png" width="300">
