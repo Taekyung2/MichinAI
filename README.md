@@ -29,7 +29,7 @@
 
   - 홈페이지의 `채팅 기록` 탭에서 날짜 별 채팅 기록 확인 가능 
     - 형광펜 표시 위에 커서를 올리면 Spelling, Grammar 교정내역 표시
-    
+
   <table>
   	<tr>
   		<td><img src="./readmeImgs/3.png" width="250"></td>
@@ -37,6 +37,8 @@
   		<td><img src="./readmeImgs/4_2.png" width="250"></td>
   	</tr>
   </table>
+
+
 
 - 오늘의 회화
   - 네이버 크롤링을 통해, 1년 이내의 오늘의 회화를 통해 영어 회화 학습 가능
@@ -58,7 +60,7 @@
   </table>
 
   - 단어장 단어 기반으로 한 단어 퀴즈 제공
-   <table>
+ <table>
   	<tr>
   		<td><img src="./readmeImgs/selectQuizType.jpg" width="250"></td>
   		<td><img src="./readmeImgs/11.jpg" width="250"></td>
