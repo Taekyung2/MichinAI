@@ -20,36 +20,54 @@
 
 - 미친AI와 대화하기
   - 카카오톡에서 `미국친구AI` 친구 추가 후, `대화하기` 클릭  
-  <img src="./readmeImgs/1.png" width="300">
-  <img src="./readmeImgs/2.png" width="300">
+  <table>
+  	<tr>
+  		<td><img src="./readmeImgs/1.png" width="250"></td>
+  		<td><img src="./readmeImgs/2.png" width="250"></td>
+  	</tr>
+  </table>
 
   - 홈페이지의 `채팅 기록` 탭에서 날짜 별 채팅 기록 확인 가능 
-  
     - 형광펜 표시 위에 커서를 올리면 Spelling, Grammar 교정내역 표시
-  
-    <img src="./readmeImgs/3.png" width="300">
-    <img src="./readmeImgs/4.png" width="300">
     
-    <img src="./readmeImgs/4_2.png" width="300">
+  <table>
+  	<tr>
+  		<td><img src="./readmeImgs/3.png" width="250"></td>
+  		<td><img src="./readmeImgs/4.png" width="250"></td>
+  		<td><img src="./readmeImgs/4_2.png" width="250"></td>
+  	</tr>
+  </table>
+
 - 오늘의 회화
   - 네이버 크롤링을 통해, 1년 이내의 오늘의 회화를 통해 영어 회화 학습 가능
-  <img src="./readmeImgs/6.png" width="300">
-  <img src="./readmeImgs/5.png" width="300">
+   <table>
+  	<tr>
+  		<td><img src="./readmeImgs/6.png" width="250"></td>
+  		<td><img src="./readmeImgs/5.png" width="250"></td>
+  	</tr>
+  </table>
+
 - 단어장
   - 기본 단어장 제공, 개인 단어장 생성 가능
-  <img src="./readmeImgs/7.png" width="300">
-  <img src="./readmeImgs/8.png" width="300">
-  <img src="./readmeImgs/9.png" width="300">  
+   <table>
+  	<tr>
+  		<td><img src="./readmeImgs/7.png" width="250"></td>
+  		<td><img src="./readmeImgs/8.png" width="250"></td>
+  		<td><img src="./readmeImgs/9.png" width="250"></td>
+  	</tr>
+  </table>
 
   - 단어장 단어 기반으로 한 단어 퀴즈 제공
-    <img src="./readmeImgs/selectQuizType.jpg" width="300">
-  
-    <img src="./readmeImgs/11.jpg" width="300">
-  
-    <img src="./readmeImgs/quizChoice.jpg" width="300">
+   <table>
+  	<tr>
+  		<td><img src="./readmeImgs/selectQuizType.jpg" width="250"></td>
+  		<td><img src="./readmeImgs/11.jpg" width="250"></td>
+  		<td><img src="./readmeImgs/quizChoice.jpg" width="250"></td>
+  	</tr>
+  </table>
 - 채팅 점수
   - 미친AI와의 대화에서 나타난 철자, 문법, 문맥 등의 오류를 통해 점수를 계산하여 동기 부여 효과를 제공
-  <img src="./readmeImgs/10.png" width="300">
+  <img src="./readmeImgs/10.png" width="250">
 
 
 
@@ -61,8 +79,8 @@
 
 ### Front-End
 
-- HTML/JS/CSS
-- Vue.js/Vuetify
+- HTML / JS / CSS
+- Vue.js / Vuetify
 
 ### Back-End
 
