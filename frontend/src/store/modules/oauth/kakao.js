@@ -53,8 +53,7 @@ const Kakao = {
     },
     actions: {
         init() {
-            window.Kakao.init('ba9c2e1cc89511e843660f021588fb20')
-            // window.Kakao.init(process.env.VUE_APP_KAKAO_API_KEY)
+            window.Kakao.init(process.env.VUE_APP_KAKAO_API_KEY)
         },
         getAuthUserInfo({ commit }, authObj) {
             // console.log(authObj)
